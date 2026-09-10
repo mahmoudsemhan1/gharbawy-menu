@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Al-Gharbawy - Digital Menu</title>
+    <title>Al-Gharbawy - Digital Menu</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -23,7 +23,7 @@
                     <img src="logo-01.png" alt="Al-Gharbawy" class="w-full h-full object-contain">
                 </div>
                 <div>
-                    <h1 class="text-xs font-black tracking-wider text-stone-900 uppercase"> Al-Gharbawy</h1>
+                    <h1 class="text-xs font-black tracking-wider text-stone-900 uppercase">Al-Gharbawy</h1>
                     <p class="text-[10px] text-stone-400">Digital Menu • Est. 1970</p>
                 </div>
             </div>
@@ -107,8 +107,25 @@
         </div>
     </main>
 
+    <!-- Item Details Modal -->
+    <div id="itemModal" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-stone-100 relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
+            <img id="modalImage" src="" class="w-full h-48 rounded-2xl object-cover bg-stone-100 shadow-inner">
+            <div class="space-y-1.5">
+                <span id="modalCategory" class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md inline-block"></span>
+                <h2 id="modalName" class="text-base font-black text-stone-900"></h2>
+                <p id="modalDesc" class="text-xs text-stone-500 leading-relaxed pt-1"></p>
+            </div>
+            <div class="flex justify-between items-center pt-3 border-t border-stone-100">
+                <span class="text-xs text-stone-400 font-semibold">Price:</span>
+                <span id="modalPrice" class="text-base font-black text-stone-900"></span>
+            </div>
+        </div>
+    </div>
+
     <footer class="text-center py-6 text-[11px] text-stone-400 border-t border-stone-200 mt-auto bg-white">
-         Al-Gharbawy © 2026 ☕ All Rights Reserved
+        Al-Gharbawy © 2026 ☕ All Rights Reserved
     </footer>
 
     <script>
@@ -120,73 +137,42 @@
         ];
 
         let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_en_v2')) || [
-            // Hot Coffee
             { id: 1, name: 'Espresso', category: 'Hot Coffee', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'Strong, rich, and aromatic shot of pure coffee.' },
             { id: 2, name: 'Double Espresso', category: 'Hot Coffee', price: 45, image: 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=500&q=80', desc: 'Double shot of concentrated premium roasted espresso.' },
             { id: 3, name: 'Cappuccino', category: 'Hot Coffee', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with steamed milk and a deep layer of foam.' },
             { id: 4, name: 'Café Latte', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'Smooth espresso balanced with plenty of steamed milk.' },
             { id: 5, name: 'Flat White', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=500&q=80', desc: 'Ristretto shots topped with velvety microfoam.' },
             { id: 6, name: 'Turkish Coffee', category: 'Hot Coffee', price: 30, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'Traditional finely ground coffee brewed in a cezve.' },
-
-            // Specialty Coffee
             { id: 7, name: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with textured milk and sweet condensed milk.' },
             { id: 8, name: 'V60 Pour Over', category: 'Specialty Coffee', price: 80, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', desc: 'Single-origin craft filter coffee brewed manually.' },
             { id: 9, name: 'Chemex Coffee', category: 'Specialty Coffee', price: 85, image: 'https://images.unsplash.com/photo-1507133754945-2f8409418a03?auto=format&fit=crop&w=500&q=80', desc: 'Clean, bright, and aromatic specialty pour over.' },
-
-            // Iced Coffee
             { id: 10, name: 'Iced Americano', category: 'Iced Coffee', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'Espresso poured over chilled water and ice.' },
             { id: 11, name: 'Iced Spanish Latte', category: 'Iced Coffee', price: 75, image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80', desc: 'Chilled espresso, fresh milk, and sweet condensed milk.' },
             { id: 12, name: 'Iced Caramel Macchiato', category: 'Iced Coffee', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'Cold espresso, fresh milk, and rich caramel drizzle.' },
-
-            // Iced Frappe
             { id: 13, name: 'Mocha Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Blended ice, espresso, chocolate, and milk with whipped cream.' },
             { id: 14, name: 'Caramel Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1589396114880-873b40098997?auto=format&fit=crop&w=500&q=80', desc: 'Blended coffee and caramel syrup with whipped topping.' },
-
-            // Milkshake
             { id: 15, name: 'Oreo Milkshake', category: 'Milkshake', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', desc: 'Rich vanilla ice cream blended with crushed Oreo cookies.' },
             { id: 16, name: 'Belgian Chocolate Shake', category: 'Milkshake', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Thick milkshake infused with authentic Belgian chocolate.' },
-
-            // Smoothie
             { id: 17, name: 'Mango Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing blended fresh tropical mango fruit.' },
             { id: 18, name: 'Strawberry Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=500&q=80', desc: 'Sweet and tangy fresh strawberry blended smooth.' },
-
-            // Non-Coffee
             { id: 19, name: 'Hot Belgian Chocolate', category: 'Non-Coffee', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'Warm, thick, and rich melted chocolate drink.' },
             { id: 20, name: 'Matcha Latte', category: 'Non-Coffee', price: 75, image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=500&q=80', desc: 'Ceremonial grade Japanese green tea with steamed milk.' },
-
-            // Mojito
             { id: 21, name: 'Classic Mint Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing soda with fresh mint, lime, and mojito syrup.' },
             { id: 22, name: 'Blue Berry Mojito', category: 'Mojito', price: 60, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Sparkling soda infused with sweet blueberry and mint.' },
-
-            // Soft Drink
             { id: 23, name: 'Coca-Cola', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', desc: 'Chilled classic refreshing soda.' },
             { id: 24, name: 'Sprite', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80', desc: 'Crisp lemon-lime flavored carbonated drink.' },
-
-            // Fresh Juice
             { id: 25, name: 'Fresh Orange Juice', category: 'Fresh Juice', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', desc: 'Squeezed 100% natural fresh oranges.' },
             { id: 26, name: 'Fresh Lemon Mint', category: 'Fresh Juice', price: 45, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Blended fresh lemons with aromatic mint leaves.' },
-
-            // Cookie & Cake
             { id: 27, name: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', desc: 'Decadent multi-layered chocolate cake slice.' },
             { id: 28, name: 'Cheesecake Slice', category: 'Cookie & Cake', price: 70, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'New York style creamy cheesecake with berry topping.' },
-
-            // Cold Sandwich
             { id: 29, name: 'Smoked Turkey Sandwich', category: 'Cold Sandwich', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', desc: 'Sliced smoked turkey with cheese and lettuce in fresh bread.' },
             { id: 30, name: 'Roast Beef Sandwich', category: 'Cold Sandwich', price: 95, image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80', desc: 'Tender roast beef slices with mustard and fresh veggies.' },
-
-            // Main Dish
             { id: 31, name: 'Grilled Chicken Pasta', category: 'Main Dish', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', desc: 'Penne pasta with creamy white sauce and tender grilled chicken.' },
             { id: 32, name: 'Chicken Mushroom Risotto', category: 'Main Dish', price: 135, image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=500&q=80', desc: 'Creamy arborio rice with fresh mushrooms and grilled chicken.' },
-
-            // Salad
             { id: 33, name: 'Caesar Salad', category: 'Salad', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', desc: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.' },
             { id: 34, name: 'Greek Salad', category: 'Salad', price: 70, image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80', desc: 'Fresh tomatoes, cucumbers, olives, and feta cheese.' },
-
-            // Bakery
             { id: 35, name: 'Butter Croissant', category: 'Bakery', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', desc: 'Flaky, buttery, freshly baked French pastry.' },
             { id: 36, name: 'Chocolate Danish', category: 'Bakery', price: 45, image: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=500&q=80', desc: 'Sweet pastry filled with rich Belgian chocolate.' },
-
-            // Breakfast
             { id: 37, name: 'Classic Breakfast Platter', category: 'Breakfast', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', desc: 'Eggs, toast, cheese, and fresh side salad.' },
             { id: 38, name: 'Shakshuka Breakfast', category: 'Breakfast', price: 80, image: 'https://images.unsplash.com/photo-1590412200988-a46697078ad5?auto=format&fit=crop&w=500&q=80', desc: 'Eggs poached in a simmering tomato and pepper sauce with bread.' }
         ];
@@ -227,12 +213,26 @@
             alert('Item added successfully!');
         }
 
-        function deleteItem(id) {
+        function deleteItem(id, event) {
+            event.stopPropagation();
             if (confirm('Are you sure you want to delete this item?')) {
                 menuItems = menuItems.filter(item => item.id !== id);
                 localStorage.setItem('gharbaoui_menu_en_v2', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
+        }
+
+        function openItemDetails(name, category, price, image, desc) {
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalPrice').innerText = price + ' EGP';
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('itemModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('itemModal').classList.add('hidden');
         }
 
         function renderCustomerMenu() {
@@ -267,8 +267,12 @@
                 return;
             }
 
-            gridContainer.innerHTML = filtered.map(item => `
-                <div class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 transition">
+            gridContainer.innerHTML = filtered.map(item => {
+                const safeName = item.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeDesc = (item.desc || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                return `
+                <div onclick="openItemDetails('${safeName}', '${item.category}', ${item.price}, '${item.image}', '${safeDesc}')" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition">
                     <img src="${item.image}" class="w-20 h-20 rounded-xl object-cover bg-stone-100 flex-shrink-0">
                     <div class="flex-grow min-w-0">
                         <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block mb-1">${item.category}</span>
@@ -276,9 +280,10 @@
                         <p class="text-[11px] text-stone-400 truncate mt-0.5">${item.desc}</p>
                         <div class="mt-2 font-black text-stone-900 text-xs">${item.price} <span class="text-[10px] font-normal text-stone-400">EGP</span></div>
                     </div>
-                    ${isAdminMode ? `<button onclick="deleteItem(${item.id})" class="absolute top-2 left-2 bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition">Delete</button>` : ''}
+                    ${isAdminMode ? `<button onclick="deleteItem(${item.id}, event)" class="absolute top-2 left-2 bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition z-10">Delete</button>` : ''}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
     </script>
 </body>
