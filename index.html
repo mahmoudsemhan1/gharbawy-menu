@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بن الغرباوي - المنيو الرقمي وإدارة الفرع</title>
+    <title>بن الغرباوي - المنيو الرقمي</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -22,13 +22,12 @@
                 <img src="logo-01.png" alt="بن الغرباوي" class="w-12 h-12 object-contain bg-white rounded-2xl p-1 shadow-md">
                 <div>
                     <h1 class="text-sm font-black tracking-wide text-amber-500">بن الغرباوي</h1>
-                    <p id="headerSubtitle" class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
+                    <p class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
                 </div>
             </div>
-            <!-- زر لو يظهر للأدمن لو هو في وضع الإدارة -->
-            <div id="adminBadge" class="hidden text-xs text-amber-400 font-bold bg-amber-950/80 px-3 py-1.5 rounded-xl border border-amber-800/40 flex items-center gap-2">
-                <span>⚙️ لوحة التحكم نشطة</span>
-                <a href="?view=menu" class="bg-stone-800 text-stone-300 px-2 py-0.5 rounded text-[10px] hover:bg-stone-700">معاينة كزبون</a>
+            <!-- يظهر فقط لو فتحت من الكمبيوتر/اللابتوب -->
+            <div id="adminBadge" class="hidden text-xs text-amber-400 font-bold bg-amber-950/80 px-3 py-1.5 rounded-xl border border-amber-800/40">
+                ⚙️ لوحة التحكم (كمبيوتر)
             </div>
             <div id="customerBadge" class="text-xs text-amber-400 font-bold bg-amber-950/60 px-3 py-1.5 rounded-xl border border-amber-800/40">
                 ☕ متاح طوال أيام الأسبوع
@@ -38,11 +37,11 @@
 
     <main class="max-w-4xl mx-auto p-4 flex-grow w-full space-y-6">
         
-        <!-- قسم لوحة التحكم (يظهر فقط للأدمن الرابط الرئيسي) -->
+        <!-- قسم لوحة التحكم (يظهر للكمبيوتر فقط) -->
         <div id="adminPanelSection" class="hidden bg-white p-6 rounded-3xl shadow-md border border-amber-900/20 space-y-4">
             <div class="flex justify-between items-center border-b pb-3">
                 <h2 class="text-lg font-black text-amber-900">🛠️ لوحة التحكم والإضافة السريعة</h2>
-                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full">خاص بالإدارة فقط</span>
+                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full">تظهر من الكمبيوتر فقط</span>
             </div>
             <form id="addItemForm" onsubmit="addNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -100,7 +99,6 @@
     </footer>
 
     <script>
-        // جلب البيانات المخزنة محلياً أو استخدام الافتراضية
         let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu')) || [
             { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة من بن الغرباوي الأصلي.' },
             { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر على الوجاق بالطريقة الأصلية.' },
@@ -111,14 +109,17 @@
         let isAdminMode = false;
 
         window.onload = function() {
-            // فحص الرابط إذا كان يحتوي على ?view=menu يصبح وضع زبون، وإلا يصبح أدمن
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('view') === 'menu') {
+            // التحقق هل الجهاز موبايل أم كمبيوتر
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // لو الموبايل عمل سكان أو فتح اللينك -> يفتح المنيو فقط
                 isAdminMode = false;
                 document.getElementById('adminPanelSection').classList.add('hidden');
                 document.getElementById('adminBadge').classList.add('hidden');
                 document.getElementById('customerBadge').classList.remove('hidden');
             } else {
+                // لو تم فتحه من الكمبيوتر (اللابتوب الخاص بك) -> يفتح كأدمن
                 isAdminMode = true;
                 document.getElementById('adminPanelSection').classList.remove('hidden');
                 document.getElementById('adminBadge').classList.remove('hidden');
@@ -144,11 +145,11 @@
             
             document.getElementById('addItemForm').reset();
             renderCustomerMenu();
-            alert('تمت إضافة الصنف بنجاح وتم تحديث المنيو فوراً!');
+            alert('تمت إضافة الصنف بنجاح!');
         }
 
         function deleteItem(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الصنف من المنيو؟')) {
+            if (confirm('هل أنت متأكد من حذف هذا الصنف؟')) {
                 menuItems = menuItems.filter(item => item.id !== id);
                 localStorage.setItem('gharbaoui_menu', JSON.stringify(menuItems));
                 renderCustomerMenu();
