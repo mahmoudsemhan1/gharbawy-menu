@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منيو الغرباوي الرقمي</title>
+    <!-- Tailwind CSS للتصميم الاحترافي -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- شريط التحكم العلوي -->
+    <header class="bg-slate-900 text-white shadow sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-base font-bold flex items-center gap-2">
+                <span>☕</span> الغرباوي - المنيو الرقمي
+            </h1>
+            <div class="flex items-center gap-2">
+                <button onclick="switchMode('customer')" id="btnCustomer" class="px-3 py-1 text-xs font-bold rounded-lg bg-emerald-600 text-white transition">عرض الزبون (QR)</button>
+                <button onclick="switchMode('admin')" id="btnAdmin" class="px-3 py-1 text-xs font-bold rounded-lg bg-slate-800 text-slate-300 transition">لوحة الأدمن</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-4 flex-grow w-full">
+
+        <!-- ================= لوحة الأدمن ================= -->
+        <div id="adminSection" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-lg font-bold text-slate-900 mb-4 pb-2 border-b">إضافة صنف جديد</h2>
+                <form id="addItemForm" onsubmit="handleAddItem(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1 text-slate-600">اسم الصنف</label>
+                        <input type="text" id="itemName" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="مثال: قهوة تركي مظبوطة">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1 text-slate-600">القسم</label>
+                        <select id="itemCategory" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+                            <option value="مشروبات ساخنة">مشروبات ساخنة</option>
+                            <option value="مشروبات باردة">مشروبات باردة</option>
+                            <option value="حلويات">حلويات</option>
+                            <option value="وجبات سريعة">وجبات سريعة</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1 text-slate-600">السعر (ج.م)</label>
+                        <input type="number" id="itemPrice" step="0.5" required class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="40">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1 text-slate-600">صورة الصنف</label>
+                        <input type="file" id="itemImageFile" accept="image/*" required class="w-full px-2 py-1 border rounded-xl text-xs bg-slate-50 file:py-1 file:px-2 file:rounded-lg file:border-0 file:bg-amber-100 file:text-amber-800 font-semibold cursor-pointer">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold mb-1 text-slate-600">وصف مختصر</label>
+                        <input type="text" id="itemDesc" class="w-full px-3 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="مكونات الصنف أو تفاصيل خفيفة...">
+                    </div>
+                    <div class="md:col-span-2">
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2.5 rounded-xl transition text-sm">حفظ وإضافة الصنف للمنيو</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- قائمة التعديل والحذف للأدمن -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h2 class="text-lg font-bold text-slate-900 mb-4">الأصناف الحالية</h2>
+                <div id="adminItemsList" class="space-y-3">
+                    <!-- تتعبئ تلقائياً -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= عرض المنيو للزبون (QR Scan View) ================= -->
+        <div id="customerSection" class="space-y-6">
+            <!-- الهيدر الخاص بالمطعم -->
+            <div class="text-center py-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl shadow-md px-4 border-b-4 border-amber-500">
+                <h2 class="text-3xl font-black mb-1">مطعم وكافيه الغرباوي</h2>
+                <p class="text-slate-300 text-xs">أجود المشروبات والحلويات .. وبالهناء والشفاء</p>
+            </div>
+
+            <!-- تصفح الأقسام -->
+            <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
+                <!-- تتعبئ تلقائياً -->
+            </div>
+
+            <!-- شبكة الأصناف -->
+            <div id="customerMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- تتعبئ تلقائياً -->
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-6 text-xs text-slate-400">
+        جميع الحقوق محفوظة © مطعم الغرباوي
+    </footer>
+
+    <script>
+        let menuItems = JSON.parse(localStorage.getItem('gharbawy_menu_items')) || [];
+        let activeCategory = 'الكل';
+
+        function switchMode(mode) {
+            const adminSec = document.getElementById('adminSection');
+            const custSec = document.getElementById('customerSection');
+            const btnAdmin = document.getElementById('btnAdmin');
+            const btnCustomer = document.getElementById('btnCustomer');
+
+            if (mode === 'admin') {
+                adminSec.classList.remove('hidden');
+                custSec.classList.add('hidden');
+                btnAdmin.className = "px-3 py-1 text-xs font-bold rounded-lg bg-amber-600 text-white transition";
+                btnCustomer.className = "px-3 py-1 text-xs font-bold rounded-lg bg-slate-800 text-slate-300 transition";
+                renderAdminItems();
+            } else {
+                adminSec.classList.add('hidden');
+                custSec.classList.remove('hidden');
+                btnCustomer.className = "px-3 py-1 text-xs font-bold rounded-lg bg-emerald-600 text-white transition";
+                btnAdmin.className = "px-3 py-1 text-xs font-bold rounded-lg bg-slate-800 text-slate-300 transition";
+                renderCustomerMenu();
+            }
+        }
+
+        function handleAddItem(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('itemImageFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('اختر صورة الصنف لو سمحت');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                const newItem = {
+                    id: Date.now(),
+                    name: document.getElementById('itemName').value,
+                    category: document.getElementById('itemCategory').value,
+                    price: parseFloat(document.getElementById('itemPrice').value),
+                    image: uploadEvent.target.result,
+                    desc: document.getElementById('itemDesc').value
+                };
+
+                menuItems.push(newItem);
+                localStorage.setItem('gharbawy_menu_items', JSON.stringify(menuItems));
+                
+                document.getElementById('addItemForm').reset();
+                renderAdminItems();
+                alert('تمت إضافة الصنف بنجاح!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function deleteItem(id) {
+            if (confirm('متأكد من حذف الصنف؟')) {
+                menuItems = menuItems.filter(item => item.id !== id);
+                localStorage.setItem('gharbawy_menu_items', JSON.stringify(menuItems));
+                renderAdminItems();
+            }
+        }
+
+        function renderAdminItems() {
+            const list = document.getElementById('adminItemsList');
+            if (menuItems.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">مفيش أصناف مضافة لسه.</p>`;
+                return;
+            }
+            list.innerHTML = menuItems.map(item => `
+                <div class="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg border">
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-900">${item.name}</h4>
+                            <span class="text-xs text-slate-500">${item.category} | <b class="text-amber-600">${item.price} ج.م</b></span>
+                        </div>
+                    </div>
+                    <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold hover:bg-red-100 transition">حذف</button>
+                </div>
+            `).join('');
+        }
+
+        function renderCustomerMenu() {
+            const categories = ['الكل', ...new Set(menuItems.map(i => i.category))];
+            
+            const tabsContainer = document.getElementById('categoryTabs');
+            tabsContainer.innerHTML = categories.map(cat => `
+                <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${activeCategory === cat ? 'bg-amber-600 text-white shadow' : 'bg-white text-slate-600 border hover:bg-slate-50'}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            const gridContainer = document.getElementById('customerMenuGrid');
+            const filtered = activeCategory === 'الكل' ? menuItems : menuItems.filter(i => i.category === activeCategory);
+
+            if (filtered.length === 0) {
+                gridContainer.innerHTML = `<div class="col-span-2 text-center py-12 text-slate-400 text-sm">عذراً، لا توجد أصناف متاحة في هذا القسم حالياً.</div>`;
+                return;
+            }
+
+            gridContainer.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="h-44 overflow-hidden relative">
+                            <img src="${item.image}" class="w-full h-full object-cover">
+                            <span class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur text-white text-[10px] px-2.5 py-1 rounded-full font-bold">${item.category}</span>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-base text-slate-900 mb-1">${item.name}</h3>
+                            <p class="text-xs text-slate-500 line-clamp-2">${item.desc || ''}</p>
+                        </div>
+                    </div>
+                    <div class="p-4 pt-0 flex items-center justify-between mt-2">
+                        <span class="text-amber-600 font-black text-lg">${item.price} <span class="text-xs font-normal text-slate-500">ج.م</span></span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            renderCustomerMenu();
+        }
+
+        switchMode('customer');
+    </script>
+</body>
+</html>
