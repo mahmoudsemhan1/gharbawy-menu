@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بن الغرباوي - نظام إدارة المنيو والطلبات</title>
+    <title>بن الغرباوي - المنيو الرقمي</title>
     <!-- Tailwind CSS للتصميم الاحترافي -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -14,19 +14,6 @@
     </style>
 </head>
 <body class="text-stone-800 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
-
-    <!-- نافذة تسجيل دخول الأدمن/الكاشير -->
-    <div id="adminLoginModal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-stone-200">
-            <h3 class="text-lg font-black text-stone-900 mb-2">تسجيل دخول الإدارة والكاشير</h3>
-            <p class="text-xs text-stone-500 mb-4">أدخل كلمة المرور الخاصة بلوحة التحكم:</p>
-            <input type="password" id="adminPasswordInput" placeholder="كلمة المرور (1234)..." class="w-full px-4 py-3 border border-stone-300 rounded-xl text-sm mb-4 outline-none focus:ring-2 focus:ring-amber-800">
-            <div class="flex gap-2">
-                <button onclick="verifyAdminPassword()" class="flex-1 bg-amber-900 hover:bg-amber-950 text-white py-2.5 rounded-xl font-bold text-sm transition shadow-md">دخول</button>
-                <button onclick="closeAdminLogin()" class="px-4 bg-stone-100 hover:bg-stone-200 text-stone-600 py-2.5 rounded-xl font-bold text-sm transition">إلغاء</button>
-            </div>
-        </div>
-    </div>
 
     <!-- درج السلة للزبون -->
     <div id="cartDrawer" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex justify-end">
@@ -57,130 +44,52 @@
                     <span>الإجمالي الكلي:</span>
                     <span id="cartTotalPrice" class="text-amber-900 text-lg font-black">0 ج.م</span>
                 </div>
-                <button onclick="submitOrderToCashier()" class="w-full bg-amber-900 hover:bg-amber-950 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">تأكيد وإرسال الطلب للكاشير ☕</button>
+                <button onclick="submitOrderToCashier()" class="w-full bg-amber-900 hover:bg-amber-950 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">تأكيد وإرسال الطلب للكافيه ☕</button>
             </div>
         </div>
     </div>
 
-    <!-- رأس الصفحة العصري -->
+    <!-- رأس الصفحة للزبون فقط -->
     <header class="bg-stone-900 text-white shadow-xl sticky top-0 z-40 border-b border-amber-900/30">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="logo-01.png" alt="بن الغرباوي" class="w-12 h-12 object-contain bg-white rounded-2xl p-1 shadow-md">
                 <div>
                     <h1 class="text-sm font-black tracking-wide text-amber-500">بن الغرباوي</h1>
-                    <p class="text-[10px] text-stone-300">المنيو الرقمي ونظام الطلبات</p>
+                    <p class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <button onclick="toggleCart()" class="relative bg-amber-900/40 border border-amber-800/50 hover:bg-amber-900 text-amber-400 p-2.5 rounded-2xl transition flex items-center gap-1.5 text-xs font-bold">
-                    🛒 <span id="cartCount" class="bg-amber-500 text-stone-950 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">0</span>
-                </button>
-                <button onclick="openAdminLogin()" class="text-stone-500 hover:text-stone-300 text-xs px-2 py-1 transition" title="لوحة الكاشير والأدمن">
-                    ⚙️ الكاشير
+            <div>
+                <button onclick="toggleCart()" class="relative bg-amber-900/40 border border-amber-800/50 hover:bg-amber-900 text-amber-400 px-3.5 py-2 rounded-2xl transition flex items-center gap-1.5 text-xs font-bold">
+                    🛒 السلة <span id="cartCount" class="bg-amber-500 text-stone-950 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 flex-grow w-full">
+    <main class="max-w-4xl mx-auto p-4 flex-grow w-full space-y-6">
+        <!-- بانر ترحيبي فخم -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-white p-8 shadow-xl border border-amber-900/30 text-center flex flex-col items-center">
+            <img src="logo-01.png" alt="بن الغرباوي" class="w-28 h-28 object-contain mb-3 drop-shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-black mb-1 text-amber-400">كيف نضبط قهوتك اليوم؟</h2>
+            <p class="text-stone-300 text-xs sm:text-sm max-w-md">اختر مشروبك المفضل وحدد طاولتك ليصلك طازجاً.</p>
+        </div>
 
-        <!-- ================= قسم الزبون ================= -->
-        <div id="customerSection" class="space-y-6">
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-white p-8 shadow-xl border border-amber-900/30 text-center flex flex-col items-center">
-                <img src="logo-01.png" alt="بن الغرباوي" class="w-32 h-32 object-contain mb-3 drop-shadow-lg">
-                <h2 class="text-2xl sm:text-3xl font-black mb-1 text-amber-400">كيف نضبط قهوتك اليوم؟</h2>
-                <p class="text-stone-300 text-xs sm:text-sm max-w-md">اختر طلبك واطلبها مباشرة لتصلك حتى طاولتك.</p>
+        <!-- شريط البحث والأقسام -->
+        <div class="space-y-3">
+            <div class="relative">
+                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك المفضل..." class="w-full px-4 py-3.5 pr-11 bg-white border border-stone-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-900 outline-none">
+                <span class="absolute right-4 top-4 text-stone-400 text-base">🔍</span>
             </div>
-
-            <div class="space-y-3">
-                <div class="relative">
-                    <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك المفضل..." class="w-full px-4 py-3.5 pr-11 bg-white border border-stone-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-900 outline-none">
-                    <span class="absolute right-4 top-4 text-stone-400 text-base">🔍</span>
-                </div>
-                <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
-                    <!-- تتعبئ تلقائياً -->
-                </div>
-            </div>
-
-            <div id="customerMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
                 <!-- تتعبئ تلقائياً -->
             </div>
         </div>
 
-        <!-- ================= لوحة الكاشير والأدمن المتكاملة ================= -->
-        <div id="adminSection" class="hidden space-y-6">
-            <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-stone-200">
-                <div class="flex items-center gap-2">
-                    <img src="logo-01.png" class="w-8 h-8 object-contain">
-                    <h2 class="font-bold text-stone-900 text-sm">شاشة الكاشير وإدارة المنيو</h2>
-                </div>
-                <button onclick="logoutAdmin()" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل خروج</button>
-            </div>
-
-            <!-- تبويبات لوحة التحكم (الطلبات الواردة vs إدارة الأصناف) -->
-            <div class="flex gap-2 border-b pb-3">
-                <button onclick="switchAdminTab('orders')" id="tabOrdersBtn" class="bg-amber-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-sm">طلبات الزبائن الواردة (<span id="liveOrdersCount">0</span>)</button>
-                <button onclick="switchAdminTab("items")" id="tabItemsBtn" class="bg-white text-stone-600 border px-5 py-2.5 rounded-xl text-xs font-bold transition">إضافة وتعديل الأصناف</button>
-            </div>
-
-            <!-- قسم طلبات الكاشير الواردة -->
-            <div id="cashierOrdersPanel" class="space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-stone-900 text-sm">الطلبات الحية (تتحدث فوراً مع طلبات الزبائن)</h3>
-                    <button onclick="clearAllOrders()" class="text-xs text-red-600 hover:underline">مسح الكل</button>
-                </div>
-                <div id="cashierOrdersList" class="space-y-3">
-                    <!-- تتعبئ تلقائياً بالطلبات -->
-                </div>
-            </div>
-
-            <!-- قسم إدارة الأصناف والمنيو -->
-            <div id="adminItemsPanel" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h3 class="text-base font-bold text-stone-900 mb-4 pb-2 border-b">إضافة صنف جديد للقائمة</h3>
-                    <form id="addItemForm" onsubmit="handleAddItem(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold mb-1 text-stone-600">اسم الصنف</label>
-                            <input type="text" id="itemName" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-900 outline-none" placeholder="مثال: موكا حارة فاخرة">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1 text-stone-600">القسم</label>
-                            <select id="itemCategory" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-900 outline-none bg-white">
-                                <option value="قهوة مختصة">قهوة مختصة</option>
-                                <option value="مشروبات ساخنة">مشروبات ساخنة</option>
-                                <option value="مشروبات باردة">مشروبات باردة</option>
-                                <option value="عصائر فريش">عصائر فريش</option>
-                                <option value="حلويات">حلويات</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1 text-stone-600">السعر (ج.م)</label>
-                            <input type="number" id="itemPrice" step="0.5" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-900 outline-none" placeholder="45">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1 text-stone-600">صورة الصنف</label>
-                            <input type="file" id="itemImageFile" accept="image/*" required class="w-full px-2 py-1.5 border rounded-xl text-xs bg-stone-50 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-amber-100 file:text-amber-900 font-semibold cursor-pointer">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-bold mb-1 text-stone-600">وصف الصنف</label>
-                            <input type="text" id="itemDesc" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-900 outline-none" placeholder="المكونات والتفاصيل...">
-                        </div>
-                        <div class="md:col-span-2">
-                            <button type="submit" class="w-full bg-amber-900 hover:bg-amber-950 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">حفظ وإضافة الصنف</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                    <h3 class="text-base font-bold text-stone-900 mb-4">الأصناف الحالية</h3>
-                    <div id="adminItemsList" class="space-y-3">
-                        <!-- تتعبئ تلقائياً -->
-                    </div>
-                </div>
-            </div>
+        <!-- شبكة الأصناف -->
+        <div id="customerMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- تتعبئ تلقائياً -->
         </div>
-
     </main>
 
     <footer class="text-center py-6 text-xs text-stone-500 border-t border-stone-200 mt-auto bg-white">
@@ -188,6 +97,7 @@
     </footer>
 
     <script>
+        // الأصناف الافتراضية أو المسحوبة من التخزين المحلي لو تم تحديثها من الإدارة
         let menuItems = JSON.parse(localStorage.getItem('gharbawy_menu_items')) || [
             { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة.', badge: 'الأكثر طلباً ⭐' },
             { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر بالطريقة الأصلية.', badge: 'مميز ☕' },
@@ -197,127 +107,12 @@
         ];
 
         let cart = [];
-        let cashierOrders = JSON.parse(localStorage.getItem('gharbawy_cashier_orders')) || [];
         let activeCategory = 'الكل';
 
         window.onload = function() {
             renderCustomerMenu();
             updateCartUI();
-            updateCashierOrdersUI();
         };
-
-        function openAdminLogin() {
-            if (sessionStorage.getItem('gharbawy_is_admin') === 'true') {
-                showAdminPanel();
-                return;
-            }
-            document.getElementById('adminLoginModal').classList.remove('hidden');
-            document.getElementById('adminPasswordInput').value = '';
-            document.getElementById('adminPasswordInput').focus();
-        }
-
-        function closeAdminLogin() {
-            document.getElementById('adminLoginModal').classList.add('hidden');
-        }
-
-        function verifyAdminPassword() {
-            const pass = document.getElementById('adminPasswordInput').value;
-            if (pass === '1234') {
-                sessionStorage.setItem('gharbawy_is_admin', 'true');
-                closeAdminLogin();
-                showAdminPanel();
-            } else {
-                alert('كلمة المرور غير صحيحة!');
-            }
-        }
-
-        function showAdminPanel() {
-            document.getElementById('customerSection').classList.add('hidden');
-            document.getElementById('adminSection').classList.remove('hidden');
-            switchAdminTab('orders');
-        }
-
-        function logoutAdmin() {
-            sessionStorage.removeItem('gharbawy_is_admin');
-            document.getElementById('adminSection').classList.add('hidden');
-            document.getElementById('customerSection').classList.remove('hidden');
-            renderCustomerMenu();
-        }
-
-        function switchAdminTab(tab) {
-            const ordersPanel = document.getElementById('cashierOrdersPanel');
-            const itemsPanel = document.getElementById('adminItemsPanel');
-            const ordersBtn = document.getElementById('tabOrdersBtn');
-            const itemsBtn = document.getElementById('tabItemsBtn');
-
-            if (tab === 'orders') {
-                ordersPanel.classList.remove('hidden');
-                itemsPanel.classList.add('hidden');
-                ordersBtn.className = "bg-amber-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-sm";
-                itemsBtn.className = "bg-white text-stone-600 border px-5 py-2.5 rounded-xl text-xs font-bold transition";
-                updateCashierOrdersUI();
-            } else {
-                ordersPanel.classList.add('hidden');
-                itemsPanel.classList.remove('hidden');
-                itemsBtn.className = "bg-amber-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition shadow-sm";
-                ordersBtn.className = "bg-white text-stone-600 border px-5 py-2.5 rounded-xl text-xs font-bold transition";
-                renderAdminItems();
-            }
-        }
-
-        function handleAddItem(e) {
-            e.preventDefault();
-            const fileInput = document.getElementById('itemImageFile');
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(uploadEvent) {
-                const newItem = {
-                    id: Date.now(),
-                    name: document.getElementById('itemName').value,
-                    category: document.getElementById('itemCategory').value,
-                    price: parseFloat(document.getElementById('itemPrice').value),
-                    image: uploadEvent.target.result,
-                    desc: document.getElementById('itemDesc').value,
-                    badge: 'جديد 🔥'
-                };
-                menuItems.push(newItem);
-                localStorage.setItem('gharbawy_menu_items', JSON.stringify(menuItems));
-                document.getElementById('addItemForm').reset();
-                renderAdminItems();
-                alert('✅ تم إضافة الصنف بنجاح!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function deleteItem(id) {
-            if (confirm('هل أنت متأكد من الحذف؟')) {
-                menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbawy_menu_items', JSON.stringify(menuItems));
-                renderAdminItems();
-            }
-        }
-
-        function renderAdminItems() {
-            const list = document.getElementById('adminItemsList');
-            if (menuItems.length === 0) {
-                list.innerHTML = `<p class="text-xs text-stone-400 text-center py-4">لا توجد أصناف.</p>`;
-                return;
-            }
-            list.innerHTML = menuItems.map(item => `
-                <div class="flex items-center justify-between p-3 border rounded-xl bg-stone-50">
-                    <div class="flex items-center gap-3">
-                        <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg border">
-                        <div>
-                            <h4 class="font-bold text-sm text-stone-900">${item.name}</h4>
-                            <span class="text-xs text-stone-500">${item.category} | <b class="text-amber-900">${item.price} ج.م</b></span>
-                        </div>
-                    </div>
-                    <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">حذف</button>
-                </div>
-            `).join('');
-        }
 
         function renderCustomerMenu() {
             const categories = ['الكل', ...new Set(menuItems.map(i => i.category))];
@@ -434,7 +229,6 @@
             updateCartUI();
         }
 
-        // إرسال الطلب للكاشير فوراً
         function submitOrderToCashier() {
             if (cart.length === 0) {
                 alert('السلة فارغة!');
@@ -443,6 +237,9 @@
 
             const tableNum = document.getElementById('tableNumberSelect').value;
             const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+            // جلب الطلبات القديمة أو إنشاء مصفوفة جديدة
+            let cashierOrders = JSON.parse(localStorage.getItem('gharbawy_cashier_orders')) || [];
 
             const newOrder = {
                 id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
@@ -453,71 +250,14 @@
                 status: 'جديد'
             };
 
-            cashierOrders.unshift.call(cashierOrders, newOrder);
+            cashierOrders.unshift(newOrder);
             localStorage.setItem('gharbawy_cashier_orders', JSON.stringify(cashierOrders));
 
             cart = [];
             updateCartUI();
             toggleCart();
 
-            alert(`✅ تم إرسال طلبك بنجاح (${tableNum})! الكاشير استلم الطلب وجاري تجهيزه.`);
-        }
-
-        function updateCashierOrdersUI() {
-            document.getElementById('liveOrdersCount').innerText = cashierOrders.length;
-            const list = document.getElementById('cashierOrdersList');
-
-            if (cashierOrders.length === 0) {
-                list.innerHTML = `<div class="text-center py-16 text-stone-400 text-sm bg-white rounded-2xl border">لا توجد طلبات واردة حالياً من الزبائن.</div>`;
-                return;
-            }
-
-            list.innerHTML = cashierOrders.map(order => `
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-stone-200 flex flex-col gap-3">
-                    <div class="flex justify-between items-center border-b pb-3">
-                        <div>
-                            <span class="bg-amber-100 text-amber-900 px-3 py-1 rounded-full text-xs font-black">${order.table}</span>
-                            <span class="text-xs text-stone-400 mr-2">طلب #${order.id} (${order.time})</span>
-                        </div>
-                        <span class="text-xs font-bold px-3 py-1 rounded-lg ${order.status === 'جديد' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}">${order.status}</span>
-                    </div>
-                    <div class="space-y-1">
-                        ${order.items.map(i => `<div class="text-xs text-stone-700 flex justify-between"><span>• ${i.name} × <b>${i.qty}</b></span><span>${i.price * i.qty} ج.م</span></div>`).join('')}
-                    </div>
-                    <div class="flex justify-between items-center pt-2 border-t mt-1">
-                        <span class="text-sm font-black text-amber-900">الإجمالي: ${order.total} ج.م</span>
-                        <div class="flex gap-2">
-                            <button onclick="toggleOrderStatus('${order.id}')" class="bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1.5 rounded-xl text-xs font-bold transition">تغيير الحالة</button>
-                            <button onclick="deleteCashierOrder('${order.id}')" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">حذف / تم الدفع</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleOrderStatus(id) {
-            const order = cashierOrders.find(o => o.id === id);
-            if (order) {
-                order.status = order.status === 'جديد' ? 'جاري التحضير ☕' : 'مكتمل / تم التسليم ✅';
-                localStorage.setItem('gharbawy_cashier_orders', JSON.stringify(cashierOrders));
-                updateCashierOrdersUI();
-            }
-        }
-
-        function deleteCashierOrder(id) {
-            if (confirm('هل أنت متأكد من مسح الطلب بعد المحاسبة؟')) {
-                cashierOrders = cashierOrders.filter(o => o.id !== id);
-                localStorage.setItem('gharbawy_cashier_orders', JSON.stringify(cashierOrders));
-                updateCashierOrdersUI();
-            }
-        }
-
-        function clearAllOrders() {
-            if (confirm('مسح كل الطلبات؟')) {
-                cashierOrders = [];
-                localStorage.removeItem('gharbawy_cashier_orders');
-                updateCashierOrdersUI();
-            }
+            alert(`✅ تم إرسال طلبك بنجاح (${tableNum})! سيتم تجهيزه وتقديمه لطاولتك فوراً.`);
         }
     </script>
 </body>
