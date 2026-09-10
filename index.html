@@ -42,11 +42,12 @@
         <!-- Admin Panel (Visible on Desktop) -->
         <div id="adminPanelSection" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-stone-200 space-y-4">
             <div class="flex justify-between items-center border-b border-stone-100 pb-3">
-                <h2 class="text-xs font-black text-stone-900">🛠️ Add New Menu Item</h2>
-                <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-md">Live Update</span>
+                <h2 id="formTitle" class="text-xs font-black text-stone-900">🛠️ Add New Menu Item</h2>
+                <button type="button" id="cancelEditBtn" onclick="resetForm()" class="hidden text-[10px] bg-stone-200 text-stone-700 font-bold px-2.5 py-0.5 rounded-md">Cancel Edit</button>
             </div>
             
-            <form id="addItemForm" onsubmit="addNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <form id="addItemForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input type="hidden" id="editIndex" value="">
                 <div>
                     <label class="block text-[10px] font-bold text-stone-500 mb-1">Item Name</label>
                     <input type="text" id="newName" required placeholder="e.g. Spanish Latte" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
@@ -77,15 +78,19 @@
                     <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Image URL</label>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Image URL (Optional if uploading file)</label>
                     <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Or Upload Image from Device</label>
+                    <input type="file" id="imageFile" accept="image/*" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-stone-900 file:text-white hover:file:bg-stone-800">
                 </div>
                 <div class="sm:col-span-2">
                     <label class="block text-[10px] font-bold text-stone-500 mb-1">Description</label>
                     <input type="text" id="newDesc" placeholder="Short description of ingredients..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div class="sm:col-span-2 flex justify-end pt-1">
-                    <button type="submit" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2 rounded-xl text-xs font-bold transition">Add Item ➕</button>
+                    <button type="submit" id="submitBtn" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2 rounded-xl text-xs font-bold transition">Add Item ➕</button>
                 </div>
             </form>
         </div>
@@ -112,11 +117,9 @@
     </footer>
 
     <script>
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_v4')) || [
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_v5')) || [
             { id: 1, name: 'Double Espresso', category: 'Hot Coffee', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'Rich and intense shot of pure roasted coffee.' },
-            { id: 2, name: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with textured milk and sweet condensed milk.' },
-            { id: 3, name: 'Iced Caramel Macchiato', category: 'Iced Coffee', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'Cold espresso, fresh milk, and caramel drizzle.' },
-            { id: 4, name: 'Classic Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing soda with fresh mint, lime, and syrup.' }
+            { id: 2, name: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with textured milk and sweet condensed milk.' }
         ];
 
         let activeCategory = 'All';
@@ -138,27 +141,88 @@
             renderCustomerMenu();
         };
 
-        function addNewItem(e) {
+        function handleFormSubmit(e) {
             e.preventDefault();
-            const newItem = {
-                id: Date.now(),
-                name: document.getElementById('newName').value,
-                category: document.getElementById('newCategory').value,
-                price: parseFloat(document.getElementById('newPrice').value),
-                image: document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80',
-                desc: document.getElementById('newDesc').value || 'Freshly prepared.'
-            };
-            menuItems.push(newItem);
-            localStorage.setItem('gharbaoui_menu_v4', JSON.stringify(menuItems));
-            document.getElementById('addItemForm').reset();
+            const editId = document.getElementById('editIndex').value;
+            const name = document.getElementById('newName').value;
+            const category = document.getElementById('newCategory').value;
+            const price = parseFloat(document.getElementById('newPrice').value);
+            const desc = document.getElementById('newDesc').value || 'Freshly prepared.';
+            const urlInput = document.getElementById('newImage').value;
+            const fileInput = document.getElementById('imageFile').files[0];
+
+            if (fileInput) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    saveItemData(editId, name, category, price, uploadEvent.target.result, desc);
+                };
+                reader.readAsDataURL(fileInput);
+            } else {
+                const defaultImage = urlInput || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80';
+                saveItemData(editId, name, category, price, defaultImage, desc);
+            }
+        }
+
+        function saveItemData(editId, name, category, price, image, desc) {
+            if (editId) {
+                // تعديل صنف موجود
+                let item = menuItems.find(i => i.id == editId);
+                if (item) {
+                    item.name = name;
+                    item.category = category;
+                    item.price = price;
+                    item.image = image;
+                    item.desc = desc;
+                }
+                alert('Item updated successfully!');
+            } else {
+                // إضافة صنف جديد
+                const newItem = {
+                    id: Date.now(),
+                    name: name,
+                    category: category,
+                    price: price,
+                    image: image,
+                    desc: desc
+                };
+                menuItems.push(newItem);
+                alert('Item added successfully!');
+            }
+
+            localStorage.setItem('gharbaoui_menu_v5', JSON.stringify(menuItems));
+            resetForm();
             renderCustomerMenu();
-            alert('Item added successfully!');
+        }
+
+        function editItem(id) {
+            const item = menuItems.find(i => i.id == id);
+            if (!item) return;
+
+            document.getElementById('editIndex').value = item.id;
+            document.getElementById('newName').value = item.name;
+            document.getElementById('newCategory').value = item.category;
+            document.getElementById('newPrice').value = item.price;
+            document.getElementById('newImage').value = item.image.startsWith('data:') ? '' : item.image;
+            document.getElementById('newDesc').value = item.desc;
+
+            document.getElementById('formTitle').innerText = '🛠️ Edit Menu Item';
+            document.getElementById('submitBtn').innerText = 'Update Item 💾';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetForm() {
+            document.getElementById('addItemForm').reset();
+            document.getElementById('editIndex').value = '';
+            document.getElementById('formTitle').innerText = '🛠️ Add New Menu Item';
+            document.getElementById('submitBtn').innerText = 'Add Item ➕';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
         function deleteItem(id) {
             if (confirm('Are you sure you want to delete this item?')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_v4', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_v5', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
@@ -205,7 +269,12 @@
                         <p class="text-[11px] text-stone-400 truncate mt-0.5">${item.desc}</p>
                         <div class="mt-2 font-black text-stone-900 text-xs">${item.price} <span class="text-[10px] font-normal text-stone-400">EGP</span></div>
                     </div>
-                    ${isAdminMode ? `<button onclick="deleteItem(${item.id})" class="absolute top-2 right-2 bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition">Delete</button>` : ''}
+                    ${isAdminMode ? `
+                        <div class="absolute top-2 right-2 flex gap-1">
+                            <button onclick="editItem(${item.id})" class="bg-amber-50 text-amber-800 text-[10px] px-2 py-1 rounded-lg font-bold border border-amber-200 hover:bg-amber-800 hover:text-white transition">Edit</button>
+                            <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition">Delete</button>
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
         }
