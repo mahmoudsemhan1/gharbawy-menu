@@ -15,41 +15,7 @@
 </head>
 <body class="text-stone-800 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
 
-    <!-- درج السلة للزبون -->
-    <div id="cartDrawer" class="fixed inset-0 bg-stone-950/70 backdrop-blur-sm z-50 hidden flex justify-end">
-        <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl animate-in slide-in-from-left duration-300">
-            <div class="p-5 bg-stone-900 text-white flex justify-between items-center">
-                <h3 class="font-black text-base flex items-center gap-2">🛒 سلة الطلبات الخاصة بك</h3>
-                <button onclick="toggleCart()" class="text-stone-400 hover:text-white font-bold text-lg">✕</button>
-            </div>
-            
-            <div class="p-4 bg-amber-50 border-b border-amber-100 flex items-center gap-3">
-                <label class="font-bold text-xs text-amber-900 whitespace-nowrap">رقم الطاولة:</label>
-                <select id="tableNumberSelect" class="w-full px-3 py-2 bg-white border border-amber-200 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-amber-800">
-                    <option value="ترابيزة 1">ترابيزة 1</option>
-                    <option value="ترابيزة 2">ترابيزة 2</option>
-                    <option value="ترابيزة 3">ترابيزة 3</option>
-                    <option value="ترابيزة 4">ترابيزة 4</option>
-                    <option value="ترابيزة 5">ترابيزة 5</option>
-                    <option value="توصيل / دليفري">توصيل / دليفري</option>
-                    <option value="تيك أواي">تيك أواي</option>
-                </select>
-            </div>
-
-            <div id="cartItemsList" class="p-5 flex-grow overflow-y-auto space-y-3">
-                <!-- العناصر المضافة -->
-            </div>
-            <div class="p-5 bg-stone-50 border-t border-stone-200 space-y-3">
-                <div class="flex justify-between items-center text-base font-bold">
-                    <span>الإجمالي الكلي:</span>
-                    <span id="cartTotalPrice" class="text-amber-900 text-lg font-black">0 ج.م</span>
-                </div>
-                <button onclick="submitOrderToCashier()" class="w-full bg-amber-900 hover:bg-amber-950 text-white font-bold py-3.5 rounded-2xl transition shadow-lg text-sm">تأكيد وإرسال الطلب للكافيه ☕</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- رأس الصفحة للزبون فقط -->
+    <!-- رأس الصفحة العصري -->
     <header class="bg-stone-900 text-white shadow-xl sticky top-0 z-40 border-b border-amber-900/30">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -59,10 +25,8 @@
                     <p class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
                 </div>
             </div>
-            <div>
-                <button onclick="toggleCart()" class="relative bg-amber-900/40 border border-amber-800/50 hover:bg-amber-900 text-amber-400 px-3.5 py-2 rounded-2xl transition flex items-center gap-1.5 text-xs font-bold">
-                    🛒 السلة <span id="cartCount" class="bg-amber-500 text-stone-950 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">0</span>
-                </button>
+            <div class="text-xs text-amber-400 font-bold bg-amber-950/60 px-3 py-1.5 rounded-xl border border-amber-800/40">
+                ☕ متاح طوال أيام الأسبوع
             </div>
         </div>
     </header>
@@ -72,13 +36,13 @@
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-white p-8 shadow-xl border border-amber-900/30 text-center flex flex-col items-center">
             <img src="logo-01.png" alt="بن الغرباوي" class="w-28 h-28 object-contain mb-3 drop-shadow-lg">
             <h2 class="text-2xl sm:text-3xl font-black mb-1 text-amber-400">كيف نضبط قهوتك اليوم؟</h2>
-            <p class="text-stone-300 text-xs sm:text-sm max-w-md">اختر مشروبك المفضل وحدد طاولتك ليصلك طازجاً.</p>
+            <p class="text-stone-300 text-xs sm:text-sm max-w-md">أجود أنواع البن المحموص طازجاً والمشروبات المصنوعة بحرفية خصيصاً لك.</p>
         </div>
 
         <!-- شريط البحث والأقسام -->
         <div class="space-y-3">
             <div class="relative">
-                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك المفضل..." class="w-full px-4 py-3.5 pr-11 bg-white border border-stone-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-900 outline-none">
+                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك المفضل، اسبريسو، لوتس..." class="w-full px-4 py-3.5 pr-11 bg-white border border-stone-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-900 outline-none">
                 <span class="absolute right-4 top-4 text-stone-400 text-base">🔍</span>
             </div>
             <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
@@ -97,21 +61,18 @@
     </footer>
 
     <script>
-        // الأصناف الافتراضية أو المسحوبة من التخزين المحلي لو تم تحديثها من الإدارة
-        let menuItems = JSON.parse(localStorage.getItem('gharbawy_menu_items')) || [
-            { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة.', badge: 'الأكثر طلباً ⭐' },
-            { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر بالطريقة الأصلية.', badge: 'مميز ☕' },
-            { id: 3, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو بارد مع الحليب وصوص الكراميل.' },
-            { id: 4, name: 'موخيتو ليمون ونعناع', category: 'عصائر فريش', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'مشروب منعش للغاية بالنعناع والليمون.', badge: 'منعش ❄️' },
-            { id: 5, name: 'تشيز كيك لوتس غني', category: 'حلويات', price: 65, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'قطعة تشيز كيك طازجة بزبدة اللوتس.' }
+        const menuItems = [
+            { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة من بن الغرباوي الأصلي.', badge: 'الأكثر طلباً ⭐' },
+            { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر على الوجاق بالطريقة الأصلية.', badge: 'مميز ☕' },
+            { id: 3, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو بارد مع الحليب المثلج وصوص الكراميل الفاخر.' },
+            { id: 4, name: 'موخيتو ليمون ونعناع', category: 'عصائر فريش', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'مشروب منعش للغاية بالنعناع الفريش والليمون والصودا.', badge: 'منعش ❄️' },
+            { id: 5, name: 'تشيز كيك لوتس غني', category: 'حلويات', price: 65, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'قطعة تشيز كيك طازجة مغطاة بزبدة وبسكويت اللوتس المقرمش.' }
         ];
 
-        let cart = [];
         let activeCategory = 'الكل';
 
         window.onload = function() {
             renderCustomerMenu();
-            updateCartUI();
         };
 
         function renderCustomerMenu() {
@@ -160,104 +121,10 @@
                     </div>
                     <div class="p-5 pt-0 flex items-center justify-between mt-2">
                         <span class="text-amber-900 font-black text-xl">${item.price} <span class="text-xs font-normal text-stone-400">ج.م</span></span>
-                        <button onclick="addToCart(${item.id})" class="bg-amber-100 hover:bg-amber-900 hover:text-white text-amber-900 px-4 py-2.5 rounded-2xl font-bold text-xs transition flex items-center gap-1.5">
-                            + إِضافة للطلب
-                        </button>
+                        <span class="text-xs font-bold text-stone-400 bg-stone-50 px-3 py-1.5 rounded-xl border">طازج يومياً</span>
                     </div>
                 </div>
             `).join('');
-        }
-
-        function addToCart(id) {
-            const item = menuItems.find(i => i.id === id);
-            const existing = cart.find(i => i.id === id);
-            if (existing) {
-                existing.qty++;
-            } else {
-                cart.push({ ...item, qty: 1 });
-            }
-            updateCartUI();
-            document.getElementById('cartDrawer').classList.remove('hidden');
-        }
-
-        function toggleCart() {
-            document.getElementById('cartDrawer').classList.toggle('hidden');
-        }
-
-        function updateCartUI() {
-            const count = cart.reduce((sum, i) => sum + i.qty, 0);
-            document.getElementById('cartCount').innerText = count;
-
-            const list = document.getElementById('cartItemsList');
-            if (cart.length === 0) {
-                list.innerHTML = `<div class="text-center py-20 text-stone-400 text-sm">سلة الطلبات فارغة حالياً ☕</div>`;
-                document.getElementById('cartTotalPrice').innerText = '0 ج.م';
-                return;
-            }
-
-            let total = 0;
-            list.innerHTML = cart.map(item => {
-                total += item.price * item.qty;
-                return `
-                    <div class="flex items-center justify-between p-3 bg-stone-50 border rounded-2xl">
-                        <div class="flex items-center gap-3">
-                            <img src="${item.image}" class="w-12 h-12 object-cover rounded-xl">
-                            <div>
-                                <h4 class="font-bold text-xs text-stone-900">${item.name}</h4>
-                                <span class="text-xs text-amber-900 font-black">${item.price * item.qty} ج.م</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 bg-stone-200 rounded-lg font-bold text-xs">-</button>
-                            <span class="text-xs font-bold">${item.qty}</span>
-                            <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 bg-amber-900 text-white rounded-lg font-bold text-xs">+</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('cartTotalPrice').innerText = total + ' ج.م';
-        }
-
-        function changeQty(id, delta) {
-            const item = cart.find(i => i.id === id);
-            if (!item) return;
-            item.qty += delta;
-            if (item.qty <= 0) {
-                cart = cart.filter(i => i.id !== id);
-            }
-            updateCartUI();
-        }
-
-        function submitOrderToCashier() {
-            if (cart.length === 0) {
-                alert('السلة فارغة!');
-                return;
-            }
-
-            const tableNum = document.getElementById('tableNumberSelect').value;
-            const totalAmount = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
-            // جلب الطلبات القديمة أو إنشاء مصفوفة جديدة
-            let cashierOrders = JSON.parse(localStorage.getItem('gharbawy_cashier_orders')) || [];
-
-            const newOrder = {
-                id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
-                table: tableNum,
-                items: [...cart],
-                total: totalAmount,
-                time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' }),
-                status: 'جديد'
-            };
-
-            cashierOrders.unshift(newOrder);
-            localStorage.setItem('gharbawy_cashier_orders', JSON.stringify(cashierOrders));
-
-            cart = [];
-            updateCartUI();
-            toggleCart();
-
-            alert(`✅ تم إرسال طلبك بنجاح (${tableNum})! سيتم تجهيزه وتقديمه لطاولتك فوراً.`);
         }
     </script>
 </body>
