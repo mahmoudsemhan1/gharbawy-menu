@@ -1,62 +1,38 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> الغرباوي </title>
+    <title>Bin Al-Gharbawy - Digital Menu</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Cairo:wght@400;600;700;900&display=swap');
-        
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background-color: #f7f4ed; 
-            background-image: radial-gradient(#e3dac9 0.8px, transparent 0.8px);
-            background-size: 20px 20px;
-        }
-
-        h1, h2, h3, .vintage-title {
-            font-family: 'Playfair Display', 'Cairo', serif;
-        }
-
-        .luxury-card {
-            background: #ffffff;
-            border: 1px solid #dfd3c3;
-            box-shadow: 0 4px 20px -4px rgba(44, 34, 30, 0.06);
-            transition: all 0.3s ease;
-        }
-        .luxury-card:hover {
-            transform: translateY(-3px);
-            border-color: #b89778;
-            box-shadow: 0 10px 25px -5px rgba(184, 151, 120, 0.2);
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfbfa; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="text-[#2c221e] min-h-screen flex flex-col selection:bg-[#b89778] selection:text-white">
+<body class="text-stone-900 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
 
-    <!-- Header فخم ومنضبط -->
-    <header class="bg-[#1f1714] text-[#f7f4ed] border-b-2 border-[#b89778] sticky top-0 z-50 shadow-lg">
-        <div class="max-w-3xl mx-auto px-4 py-3.5 flex justify-between items-center">
-            <div class="flex items-center space-x-3.5 space-x-reverse">
-                <!-- لوجو   -->
-                <div class="w-14 h-14 bg-[#2c221e] rounded-2xl p-1 shadow-inner flex items-center justify-center border-2 border-[#b89778]">
-                    <img src="logo-01.png" alt="الغرباوي" class="w-full h-full object-contain filter contrast-110">
+    <!-- Header -->
+    <header class="bg-white border-b border-stone-200/85 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-stone-900 rounded-xl p-1 shadow-sm flex items-center justify-center border border-amber-800/30">
+                    <img src="logo-01.png" alt="Bin Al-Gharbawy" class="w-full h-full object-contain">
                 </div>
                 <div>
-                    <h1 class="text-base font-black tracking-wider text-[#f7f4ed] vintage-title">بن ومقهى الغرباوي</h1>
-                    <p class="text-[10px] text-[#b89778] tracking-widest uppercase font-semibold">أكثر من 50 سنة خبرة وعراقة</p>
+                    <h1 class="text-xs font-black tracking-wider text-stone-900 uppercase">Bin Al-Gharbawy</h1>
+                    <p class="text-[10px] text-stone-400">Digital Menu • Est. 1970</p>
                 </div>
             </div>
             
-            <div id="adminBadge" class="hidden text-[10px] text-[#1f1714] font-bold bg-[#b89778] px-3 py-1.5 rounded-lg border border-[#8c6d53] shadow">
-                ⚙️ وضع الإدارة
+            <div id="adminBadge" class="hidden text-[11px] text-amber-800 font-bold bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">
+                ⚙️ Admin Mode
             </div>
-            <div id="customerBadge" class="text-[10px] text-[#b89778] font-semibold bg-[#2c221e] px-3 py-1.5 rounded-lg border border-[#43332c] shadow">
-                ☕ كيف المزاج العالي
+            <div id="customerBadge" class="text-[11px] text-stone-600 font-semibold bg-stone-100 px-3 py-1 rounded-lg">
+                ☕ Freshly Roasted
             </div>
         </div>
     </header>
@@ -64,79 +40,158 @@
     <main class="max-w-3xl mx-auto p-4 flex-grow w-full space-y-6">
         
         <!-- Admin Panel -->
-        <div id="adminPanelSection" class="hidden bg-[#ffffff] p-5 rounded-2xl shadow-md border border-[#dfd3c3] space-y-4">
-            <div class="flex justify-between items-center border-b border-[#f0eae1] pb-3">
-                <h2 id="formTitle" class="text-xs font-bold text-[#1f1714]">🛠️ إضافة أو تعديل صنف في القائمة</h2>
-                <button type="button" id="cancelEditBtn" onclick="resetForm()" class="hidden text-[10px] bg-[#dfd3c3] text-[#1f1714] font-bold px-2.5 py-0.5 rounded-md">إلغاء</button>
+        <div id="adminPanelSection" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-stone-200 space-y-4">
+            <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+                <h2 class="text-xs font-black text-stone-900">🛠️ Add New Menu Item</h2>
+                <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-md">Live Update</span>
             </div>
             
-            <form id="addItemForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input type="hidden" id="editIndex" value="">
+            <form id="addItemForm" onsubmit="addNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">اسم الصنف</label>
-                    <input type="text" id="newName" required placeholder="مثال: إسبريسو" class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Item Name</label>
+                    <input type="text" id="newName" required placeholder="e.g. Spanish Latte" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">التصنيف</label>
-                    <select id="newCategory" required class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
-                        <option value="قهوة ساخنة">قهوة ساخنة</option>
-                        <option value="قهوة مختصة">قهوة مختصة</option>
-                        <option value="مشروبات مثلجة">مشروبات مثلجة</option>
-                        <option value="مشروبات ساخنة">مشروبات ساخنة</option>
-                        <option value="عصائر طازجة">عصائر طازجة</option>
-                        <option value="حلويات وكيك">حلويات وكيك</option>
-                        <option value="ساندويتشات">ساندويتشات</option>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Category</label>
+                    <select id="newCategory" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                        <option value="Hot Coffee">Hot Coffee</option>
+                        <option value="Specialty Coffee">Specialty Coffee</option>
+                        <option value="Iced Coffee">Iced Coffee</option>
+                        <option value="Iced Frappe">Iced Frappe</option>
+                        <option value="Milkshake">Milkshake</option>
+                        <option value="Smoothie">Smoothie</option>
+                        <option value="Non-Coffee">Non-Coffee</option>
+                        <option value="Mojito">Mojito</option>
+                        <option value="Soft Drink">Soft Drink</option>
+                        <option value="Fresh Juice">Fresh Juice</option>
+                        <option value="Cookie & Cake">Cookie & Cake</option>
+                        <option value="Cold Sandwich">Cold Sandwich</option>
+                        <option value="Main Dish">Main Dish</option>
+                        <option value="Salad">Salad</option>
+                        <option value="Bakery">Bakery</option>
+                        <option value="Breakfast">Breakfast</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">السعر (جنيه)</label>
-                    <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Price (EGP)</label>
+                    <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">رابط الصورة</label>
-                    <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Image URL</label>
+                    <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div class="sm:col-span-2">
-                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">وصف الصنف</label>
-                    <input type="text" id="newDesc" placeholder="تفاصيل الصنف..." class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Description</label>
+                    <input type="text" id="newDesc" placeholder="Short ingredients description..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div class="sm:col-span-2 flex justify-end pt-1">
-                    <button type="submit" id="submitBtn" class="bg-[#1f1714] hover:bg-[#2c221e] text-[#f7f4ed] px-5 py-2 rounded-xl text-xs font-bold transition shadow">حفظ الصنف ➕</button>
+                    <button type="submit" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2 rounded-xl text-xs font-bold transition">Add Item ➕</button>
                 </div>
             </form>
         </div>
 
         <!-- Search & Categories Bar -->
-        <div class="space-y-3 sticky top-14 bg-[#f7f4ed] py-2 z-40">
+        <div class="space-y-3 sticky top-14 bg-[#fcfbfa] py-2 z-40">
             <div class="relative">
-                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث في القائمة..." class="w-full px-4 py-2.5 pr-10 bg-[#ffffff] border border-[#dfd3c3] rounded-2xl text-xs outline-none focus:border-[#1f1714] shadow-sm transition">
-                <span class="absolute right-3.5 top-3 text-[#b89778] text-sm">🔍</span>
+                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="Search menu items..." class="w-full px-4 py-2.5 pl-10 bg-white border border-stone-200 rounded-2xl text-xs outline-none focus:border-stone-900 shadow-sm transition">
+                <span class="absolute left-3.5 top-3 text-stone-400 text-sm">🔍</span>
             </div>
-            <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-1 no-scrollbar"></div>
+            <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
+                <!-- Categories dynamically loaded -->
+            </div>
         </div>
 
-        <!-- Menu Grid: عنصرين جنب بعض بتصميم نظيف وفاخر -->
-        <div id="customerMenuGrid" class="grid grid-cols-2 gap-3.5"></div>
+        <!-- Menu Grid -->
+        <div id="customerMenuGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Items dynamically loaded -->
+        </div>
     </main>
 
-    <footer class="text-center py-6 text-[11px] text-[#7a6b63] border-t border-[#dfd3c3] mt-auto bg-[#ffffff] space-y-1">
-        <p class="font-bold text-[#1f1714]">بن ومقهى الغرباوي • أصالة التراث وعراقة الصنعة</p>
-        <p>جميع الحقوق محفوظة © 2026 ☕</p>
+    <footer class="text-center py-6 text-[11px] text-stone-400 border-t border-stone-200 mt-auto bg-white">
+        Bin Al-Gharbawy © 2026 ☕ All Rights Reserved
     </footer>
 
     <script>
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_final_v1')) || [
-            { id: 1, name: 'إسبريسو', category: 'قهوة ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'شوت قهوة مركز على أصوله.' },
-            { id: 2, name: 'كابتشينو', category: 'قهوة ساخنة', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو مع حليب مبخر ورغوة ناعمة.' },
-            { id: 3, name: 'كافيه لاتيه', category: 'قهوة ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'مزيج ناعم من الإسبريسو والحليب الطازج.' },
-            { id: 4, name: 'سبانيش لاتيه', category: 'قهوة مختصة', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو وحليب مكثف محلى فاخر.' },
-            { id: 5, name: 'في 60 دريب', category: 'قهوة مختصة', price: 80, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'قهوة مختصة محضرة يدوياً.' },
-            { id: 6, name: 'أمريكانو مثلج', category: 'مشروبات مثلجة', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو مصبوب فوق الثلج والماء البارد.' },
-            { id: 7, name: 'كاراميل ماكياتو', category: 'مشروبات مثلجة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو وحليب مثلج مع صوص الكراميل.' },
-            { id: 8, name: 'هوت شوكليت', category: 'مشروبات ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'مشروب شوكولاتة دافئ وكثيف.' }
+        const categoriesList = [
+            'All', 'Hot Coffee', 'Specialty Coffee', 'Iced Coffee', 'Iced Frappe', 
+            'Milkshake', 'Smoothie', 'Non-Coffee', 'Mojito', 'Soft Drink', 
+            'Fresh Juice', 'Cookie & Cake', 'Cold Sandwich', 'Main Dish', 
+            'Salad', 'Bakery', 'Breakfast'
         ];
 
-        let activeCategory = 'الكل';
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_en_v2')) || [
+            // Hot Coffee
+            { id: 1, name: 'Espresso', category: 'Hot Coffee', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'Strong, rich, and aromatic shot of pure coffee.' },
+            { id: 2, name: 'Double Espresso', category: 'Hot Coffee', price: 45, image: 'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=500&q=80', desc: 'Double shot of concentrated premium roasted espresso.' },
+            { id: 3, name: 'Cappuccino', category: 'Hot Coffee', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with steamed milk and a deep layer of foam.' },
+            { id: 4, name: 'Café Latte', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'Smooth espresso balanced with plenty of steamed milk.' },
+            { id: 5, name: 'Flat White', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=500&q=80', desc: 'Ristretto shots topped with velvety microfoam.' },
+            { id: 6, name: 'Turkish Coffee', category: 'Hot Coffee', price: 30, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'Traditional finely ground coffee brewed in a cezve.' },
+
+            // Specialty Coffee
+            { id: 7, name: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with textured milk and sweet condensed milk.' },
+            { id: 8, name: 'V60 Pour Over', category: 'Specialty Coffee', price: 80, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', desc: 'Single-origin craft filter coffee brewed manually.' },
+            { id: 9, name: 'Chemex Coffee', category: 'Specialty Coffee', price: 85, image: 'https://images.unsplash.com/photo-1507133754945-2f8409418a03?auto=format&fit=crop&w=500&q=80', desc: 'Clean, bright, and aromatic specialty pour over.' },
+
+            // Iced Coffee
+            { id: 10, name: 'Iced Americano', category: 'Iced Coffee', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'Espresso poured over chilled water and ice.' },
+            { id: 11, name: 'Iced Spanish Latte', category: 'Iced Coffee', price: 75, image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80', desc: 'Chilled espresso, fresh milk, and sweet condensed milk.' },
+            { id: 12, name: 'Iced Caramel Macchiato', category: 'Iced Coffee', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'Cold espresso, fresh milk, and rich caramel drizzle.' },
+
+            // Iced Frappe
+            { id: 13, name: 'Mocha Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Blended ice, espresso, chocolate, and milk with whipped cream.' },
+            { id: 14, name: 'Caramel Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1589396114880-873b40098997?auto=format&fit=crop&w=500&q=80', desc: 'Blended coffee and caramel syrup with whipped topping.' },
+
+            // Milkshake
+            { id: 15, name: 'Oreo Milkshake', category: 'Milkshake', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', desc: 'Rich vanilla ice cream blended with crushed Oreo cookies.' },
+            { id: 16, name: 'Belgian Chocolate Shake', category: 'Milkshake', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Thick milkshake infused with authentic Belgian chocolate.' },
+
+            // Smoothie
+            { id: 17, name: 'Mango Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing blended fresh tropical mango fruit.' },
+            { id: 18, name: 'Strawberry Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=500&q=80', desc: 'Sweet and tangy fresh strawberry blended smooth.' },
+
+            // Non-Coffee
+            { id: 19, name: 'Hot Belgian Chocolate', category: 'Non-Coffee', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'Warm, thick, and rich melted chocolate drink.' },
+            { id: 20, name: 'Matcha Latte', category: 'Non-Coffee', price: 75, image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=500&q=80', desc: 'Ceremonial grade Japanese green tea with steamed milk.' },
+
+            // Mojito
+            { id: 21, name: 'Classic Mint Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing soda with fresh mint, lime, and mojito syrup.' },
+            { id: 22, name: 'Blue Berry Mojito', category: 'Mojito', price: 60, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Sparkling soda infused with sweet blueberry and mint.' },
+
+            // Soft Drink
+            { id: 23, name: 'Coca-Cola', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', desc: 'Chilled classic refreshing soda.' },
+            { id: 24, name: 'Sprite', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80', desc: 'Crisp lemon-lime flavored carbonated drink.' },
+
+            // Fresh Juice
+            { id: 25, name: 'Fresh Orange Juice', category: 'Fresh Juice', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', desc: 'Squeezed 100% natural fresh oranges.' },
+            { id: 26, name: 'Fresh Lemon Mint', category: 'Fresh Juice', price: 45, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Blended fresh lemons with aromatic mint leaves.' },
+
+            // Cookie & Cake
+            { id: 27, name: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', desc: 'Decadent multi-layered chocolate cake slice.' },
+            { id: 28, name: 'Cheesecake Slice', category: 'Cookie & Cake', price: 70, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'New York style creamy cheesecake with berry topping.' },
+
+            // Cold Sandwich
+            { id: 29, name: 'Smoked Turkey Sandwich', category: 'Cold Sandwich', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', desc: 'Sliced smoked turkey with cheese and lettuce in fresh bread.' },
+            { id: 30, name: 'Roast Beef Sandwich', category: 'Cold Sandwich', price: 95, image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80', desc: 'Tender roast beef slices with mustard and fresh veggies.' },
+
+            // Main Dish
+            { id: 31, name: 'Grilled Chicken Pasta', category: 'Main Dish', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', desc: 'Penne pasta with creamy white sauce and tender grilled chicken.' },
+            { id: 32, name: 'Chicken Mushroom Risotto', category: 'Main Dish', price: 135, image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=500&q=80', desc: 'Creamy arborio rice with fresh mushrooms and grilled chicken.' },
+
+            // Salad
+            { id: 33, name: 'Caesar Salad', category: 'Salad', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', desc: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.' },
+            { id: 34, name: 'Greek Salad', category: 'Salad', price: 70, image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80', desc: 'Fresh tomatoes, cucumbers, olives, and feta cheese.' },
+
+            // Bakery
+            { id: 35, name: 'Butter Croissant', category: 'Bakery', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', desc: 'Flaky, buttery, freshly baked French pastry.' },
+            { id: 36, name: 'Chocolate Danish', category: 'Bakery', price: 45, image: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=500&q=80', desc: 'Sweet pastry filled with rich Belgian chocolate.' },
+
+            // Breakfast
+            { id: 37, name: 'Classic Breakfast Platter', category: 'Breakfast', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', desc: 'Eggs, toast, cheese, and fresh side salad.' },
+            { id: 38, name: 'Shakshuka Breakfast', category: 'Breakfast', price: 80, image: 'https://images.unsplash.com/photo-1590412200988-a46697078ad5?auto=format&fit=crop&w=500&q=80', desc: 'Eggs poached in a simmering tomato and pepper sauce with bread.' }
+        ];
+
+        let activeCategory = 'All';
         let isAdminMode = false;
 
         window.onload = function() {
@@ -155,74 +210,36 @@
             renderCustomerMenu();
         };
 
-        function handleFormSubmit(e) {
+        function addNewItem(e) {
             e.preventDefault();
-            const editId = document.getElementById('editIndex').value;
-            const name = document.getElementById('newName').value;
-            const category = document.getElementById('newCategory').value;
-            const price = parseFloat(document.getElementById('newPrice').value);
-            const desc = document.getElementById('newDesc').value || 'تحضير طازج.';
-            const image = document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80';
-
-            if (editId) {
-                let item = menuItems.find(i => i.id == editId);
-                if (item) {
-                    item.name = name;
-                    item.category = category;
-                    item.price = price;
-                    item.image = image;
-                    item.desc = desc;
-                }
-                alert('تم التعديل بنجاح!');
-            } else {
-                menuItems.push({ id: Date.now(), name, category, price, image, desc });
-                alert('تمت الإضافة بنجاح!');
-            }
-
-            localStorage.setItem('gharbaoui_menu_final_v1', JSON.stringify(menuItems));
-            resetForm();
-            renderCustomerMenu();
-        }
-
-        function editItem(id) {
-            const item = menuItems.find(i => i.id == id);
-            if (!item) return;
-
-            document.getElementById('editIndex').value = item.id;
-            document.getElementById('newName').value = item.name;
-            document.getElementById('newCategory').value = item.category;
-            document.getElementById('newPrice').value = item.price;
-            document.getElementById('newImage').value = item.image;
-            document.getElementById('newDesc').value = item.desc;
-
-            document.getElementById('formTitle').innerText = '🛠️ تعديل الصنف';
-            document.getElementById('submitBtn').innerText = 'تحديث';
-            document.getElementById('cancelEditBtn').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function resetForm() {
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('newName').value,
+                category: document.getElementById('newCategory').value,
+                price: parseFloat(document.getElementById('newPrice').value),
+                image: document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80',
+                desc: document.getElementById('newDesc').value || 'Freshly prepared.'
+            };
+            menuItems.push(newItem);
+            localStorage.setItem('gharbaoui_menu_en_v2', JSON.stringify(menuItems));
             document.getElementById('addItemForm').reset();
-            document.getElementById('editIndex').value = '';
-            document.getElementById('formTitle').innerText = '🛠️ إضافة أو تعديل صنف في القائمة';
-            document.getElementById('submitBtn').innerText = 'حفظ الصنف ➕';
-            document.getElementById('cancelEditBtn').classList.add('hidden');
+            renderCustomerMenu();
+            alert('Item added successfully!');
         }
 
         function deleteItem(id) {
-            if (confirm('هل أنت متأكد من الحذف؟')) {
+            if (confirm('Are you sure you want to delete this item?')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_final_v1', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_en_v2', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
 
         function renderCustomerMenu() {
-            const categories = ['الكل', 'قهوة ساخنة', 'قهوة مختصة', 'مشروبات مثلجة', 'مشروبات ساخنة', 'عصائر طازجة', 'حلويات وكيك', 'ساندويتشات'];
             const tabsContainer = document.getElementById('categoryTabs');
             
-            tabsContainer.innerHTML = categories.map(cat => `
-                <button onclick="filterCategory('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-[#1f1714] text-[#f7f4ed] shadow-md border border-[#b89778]' : 'bg-[#ffffff] text-[#7a6b63] border border-[#dfd3c3] hover:bg-[#f7f4ed]'}">
+            tabsContainer.innerHTML = categoriesList.map(cat => `
+                <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-stone-900 text-white shadow-sm' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
                     ${cat}
                 </button>
             `).join('');
@@ -240,35 +257,26 @@
             const gridContainer = document.getElementById('customerMenuGrid');
 
             let filtered = menuItems.filter(item => {
-                const matchesCategory = (activeCategory === 'الكل' || item.category === activeCategory);
+                const matchesCategory = (activeCategory === 'All' || item.category === activeCategory);
                 const matchesSearch = item.name.toLowerCase().includes(searchVal) || (item.desc && item.desc.toLowerCase().includes(searchVal));
                 return matchesCategory && matchesSearch;
             });
 
             if (filtered.length === 0) {
-                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-[#7a6b63] text-xs">لا توجد نتائج مطابقة.</div>`;
+                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-stone-400 text-xs">No items found matching your search.</div>`;
                 return;
             }
 
             gridContainer.innerHTML = filtered.map(item => `
-                <div class="luxury-card rounded-2xl p-3 flex flex-col justify-between relative group">
-                    <div>
-                        <div class="overflow-hidden rounded-xl mb-2.5 border border-[#dfd3c3]">
-                            <img src="${item.image}" class="w-full h-28 object-cover group-hover:scale-105 transition duration-500">
-                        </div>
-                        <span class="text-[9px] font-bold text-[#b89778] bg-[#f7f4ed] px-2 py-0.5 rounded-md inline-block mb-1 border border-[#dfd3c3]">${item.category}</span>
-                        <h3 class="font-bold text-xs sm:text-sm text-[#1f1714] truncate vintage-title">${item.name}</h3>
-                        <p class="text-[10px] text-[#7a6b63] line-clamp-2 mt-0.5 leading-relaxed">${item.desc}</p>
+                <div class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 transition">
+                    <img src="${item.image}" class="w-20 h-20 rounded-xl object-cover bg-stone-100 flex-shrink-0">
+                    <div class="flex-grow min-w-0">
+                        <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block mb-1">${item.category}</span>
+                        <h3 class="font-black text-xs sm:text-sm text-stone-900 truncate">${item.name}</h3>
+                        <p class="text-[11px] text-stone-400 truncate mt-0.5">${item.desc}</p>
+                        <div class="mt-2 font-black text-stone-900 text-xs">${item.price} <span class="text-[10px] font-normal text-stone-400">EGP</span></div>
                     </div>
-                    <div class="mt-3 flex items-center justify-between pt-2 border-t border-[#f0eae1]">
-                        <div class="font-black text-[#1f1714] text-xs">${item.price} <span class="text-[9px] font-normal text-[#b89778]">جنيه</span></div>
-                    </div>
-                    ${isAdminMode ? `
-                        <div class="absolute top-2 left-2 flex gap-1 bg-white/95 p-1 rounded-lg backdrop-blur-sm shadow-sm border border-[#dfd3c3]">
-                            <button onclick="editItem(${item.id})" class="bg-[#f7f4ed] text-[#1f1714] text-[9px] px-1.5 py-0.5 rounded-md font-bold border border-[#dfd3c3] hover:bg-[#1f1714] hover:text-white transition">تعديل</button>
-                            <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-700 text-[9px] px-1.5 py-0.5 rounded-md font-bold border border-red-200 hover:bg-red-700 hover:text-white transition">حذف</button>
-                        </div>
-                    ` : ''}
+                    ${isAdminMode ? `<button onclick="deleteItem(${item.id})" class="absolute top-2 left-2 bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition">Delete</button>` : ''}
                 </div>
             `).join('');
         }
