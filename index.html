@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بن ومقهى الغرباوي - أصالة وعراقة منذ 50 عاماً</title>
+    <title>بن ومقهى الغرباوي - القائمة الرقمية الفاخرة</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Cairo:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Cairo:wght@400;600;700;900&display=swap');
         
         body { 
             font-family: 'Cairo', sans-serif; 
-            background-color: #f3efe6; 
-            background-image: radial-gradient(#dfd4be 0.8px, transparent 0.8px);
-            background-size: 18px 18px;
+            background-color: #f7f4ed; 
+            background-image: radial-gradient(#e3dac9 0.8px, transparent 0.8px);
+            background-size: 20px 20px;
         }
 
         h1, h2, h3, .vintage-title {
             font-family: 'Playfair Display', 'Cairo', serif;
         }
 
+        /* كارت فخم بلمسة ذهبية خفيفة */
+        .luxury-card {
+            background: #ffffff;
+            border: 1px solid #dfd3c3;
+            box-shadow: 0 4px 20px -4px rgba(44, 34, 30, 0.06);
+            transition: all 0.3s ease;
+        }
+        .luxury-card:hover {
+            transform: translateY(-3px);
+            border-color: #b89778;
+            box-shadow: 0 10px 25px -5px rgba(184, 151, 120, 0.2);
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="text-[#2c221e] min-h-screen flex flex-col selection:bg-[#785942] selection:text-white">
+<body class="text-[#2c221e] min-h-screen flex flex-col selection:bg-[#b89778] selection:text-white">
 
-    <!-- Header Fakhir -->
-    <header class="bg-[#1c1412] text-[#f3efe6] border-b-4 border-[#c5a059] sticky top-0 z-50 shadow-2xl">
+    <!-- Header فخم ومنضبط -->
+    <header class="bg-[#1f1714] text-[#f7f4ed] border-b-2 border-[#b89778] sticky top-0 z-50 shadow-lg">
         <div class="max-w-3xl mx-auto px-4 py-3.5 flex justify-between items-center">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <!-- اللوجو المحسن والبارز بإطار ذهبي ملكي -->
-                <div class="w-16 h-16 sm:w-18 sm:h-18 bg-[#2a1f1b] rounded-2xl p-1.5 shadow-inner flex items-center justify-center border-2 border-[#c5a059] relative group">
-                    <img src="logo-01.png" alt="الغرباوي" class="w-full h-full object-contain filter contrast-125 brightness-110 group-hover:scale-105 transition duration-300">
+            <div class="flex items-center space-x-3.5 space-x-reverse">
+                <!-- لوجو كبير وبارز -->
+                <div class="w-14 h-14 bg-[#2c221e] rounded-2xl p-1 shadow-inner flex items-center justify-center border-2 border-[#b89778]">
+                    <img src="logo-01.png" alt="الغرباوي" class="w-full h-full object-contain filter contrast-110">
                 </div>
                 <div>
-                    <h1 class="text-base sm:text-lg font-black tracking-wider text-[#f3efe6] vintage-title">بن ومقهى الغرباوي</h1>
-                    <div class="flex items-center gap-1.5 mt-0.5">
-                        <span class="bg-[#c5a059] text-[#1c1412] text-[9px] font-black px-2 py-0.5 rounded shadow">تراث 50 عاماً</span>
-                        <p class="text-[10px] text-[#d6c9b3] tracking-widest uppercase font-semibold">تاريخ يرويه الكيف</p>
-                    </div>
+                    <h1 class="text-base font-black tracking-wider text-[#f7f4ed] vintage-title">بن ومقهى الغرباوي</h1>
+                    <p class="text-[10px] text-[#b89778] tracking-widest uppercase font-semibold">أكثر من 50 سنة خبرة وعراقة</p>
                 </div>
             </div>
             
-            <div id="adminBadge" class="hidden text-[10px] text-[#1c1412] font-bold bg-[#c5a059] px-3 py-1.5 rounded-lg border border-[#a38244] shadow">
+            <div id="adminBadge" class="hidden text-[10px] text-[#1f1714] font-bold bg-[#b89778] px-3 py-1.5 rounded-lg border border-[#8c6d53] shadow">
                 ⚙️ وضع الإدارة
             </div>
-            <div id="customerBadge" class="text-[10px] text-[#c5a059] font-semibold bg-[#2a1f1b] px-3 py-1.5 rounded-lg border border-[#3d2e28] shadow">
+            <div id="customerBadge" class="text-[10px] text-[#b89778] font-semibold bg-[#2c221e] px-3 py-1.5 rounded-lg border border-[#43332c] shadow">
                 ☕ كيف المزاج العالي
             </div>
         </div>
@@ -54,111 +64,77 @@
 
     <main class="max-w-3xl mx-auto p-4 flex-grow w-full space-y-6">
         
-        <!-- بانر العراقة والخبرة الفاخر -->
-        <div class="bg-gradient-to-r from-[#2c221e] via-[#3a2d28] to-[#2c221e] text-[#f3efe6] p-4.5 rounded-2xl shadow-lg border border-[#c5a059] text-center space-y-1.5 relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10 text-6xl">☕</div>
-            <h2 class="text-xs sm:text-sm font-bold tracking-wide text-[#c5a059] vintage-title">خمسة عقود من الخبرة في تحميص وتقديم أجود أنواغ البن</h2>
-            <p class="text-[10px] text-[#d6c9b3]">نقدم لك طعم السنين والأصول الطيبة.. حكاية عراقة تبدأ من الحبة وحتى فنجانك.</p>
-        </div>
-
         <!-- Admin Panel -->
-        <div id="adminPanelSection" class="hidden bg-[#fdfbf7] p-5 rounded-2xl shadow-md border border-[#d6c9b3] space-y-4">
-            <div class="flex justify-between items-center border-b border-[#e6dcce] pb-3">
-                <h2 id="formTitle" class="text-xs font-bold text-[#2c221e]">🛠️ إضافة أو تعديل صنف في القائمة</h2>
-                <button type="button" id="cancelEditBtn" onclick="resetForm()" class="hidden text-[10px] bg-[#d6c9b3] text-[#2c221e] font-bold px-2.5 py-0.5 rounded-md">إلغاء التعديل</button>
+        <div id="adminPanelSection" class="hidden bg-[#ffffff] p-5 rounded-2xl shadow-md border border-[#dfd3c3] space-y-4">
+            <div class="flex justify-between items-center border-b border-[#f0eae1] pb-3">
+                <h2 id="formTitle" class="text-xs font-bold text-[#1f1714]">🛠️ إضافة أو تعديل صنف في القائمة</h2>
+                <button type="button" id="cancelEditBtn" onclick="resetForm()" class="hidden text-[10px] bg-[#dfd3c3] text-[#1f1714] font-bold px-2.5 py-0.5 rounded-md">إلغاء</button>
             </div>
             
             <form id="addItemForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input type="hidden" id="editIndex" value="">
                 <div>
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">اسم الصنف (عربي وإنجليزي)</label>
-                    <input type="text" id="newName" required placeholder="مثال: إسبريسو | Espresso" class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition">
+                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">اسم الصنف</label>
+                    <input type="text" id="newName" required placeholder="مثال: إسبريسو" class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">التصنيف</label>
-                    <select id="newCategory" required class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition">
-                        <option value="توليفة الغرباوي الخاصة">توليفة الغرباوي الخاصة (House Blend)</option>
-                        <option value="قهوة ساخنة">قهوة ساخنة (Hot Coffee)</option>
-                        <option value="قهوة مختصة">قهوة مختصة (Specialty Coffee)</option>
-                        <option value="مشروبات مثلجة">مشروبات مثلجة (Iced Coffee)</option>
-                        <option value="فرابتشينو">فرابتشينو (Frappe)</option>
-                        <option value="ميلك شيك">ميلك شيك (Milkshake)</option>
-                        <option value="سموذي فواكه">سموذي فواكه (Smoothie)</option>
-                        <option value="مشروبات ساخنة">مشروبات ساخنة (Hot Drinks)</option>
-                        <option value="موهيتو ومنعشات">موهيتو ومنعشات (Mojito)</option>
-                        <option value="مياه ومشروبات غازية">مياه ومشروبات غازية (Soft Drinks)</option>
-                        <option value="عصائر طازجة">عصائر طازجة (Fresh Juice)</option>
-                        <option value="حلويات وكيك">حلويات وكيك (Dessert & Cake)</option>
-                        <option value="ساندويتشات باردة">ساندويتشات باردة (Sandwiches)</option>
-                        <option value="وجبات رئيسية">وجبات رئيسية (Main Dish)</option>
-                        <option value="سلطات">سلطات (Salad)</option>
-                        <option value="معجنات ومخبوزات">معجنات ومخبوزات (Bakery)</option>
-                        <option value="إفطار صباحي">إفطار صباحي (Breakfast)</option>
+                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">التصنيف</label>
+                    <select id="newCategory" required class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
+                        <option value="قهوة ساخنة">قهوة ساخنة</option>
+                        <option value="قهوة مختصة">قهوة مختصة</option>
+                        <option value="مشروبات مثلجة">مشروبات مثلجة</option>
+                        <option value="مشروبات ساخنة">مشروبات ساخنة</option>
+                        <option value="عصائر طازجة">عصائر طازجة</option>
+                        <option value="حلويات وكيك">حلويات وكيك</option>
+                        <option value="ساندويتشات">ساندويتشات</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">السعر (جنيه مصري)</label>
-                    <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition">
+                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">السعر (جنيه)</label>
+                    <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">رابط الصورة (اختياري)</label>
-                    <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition">
+                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">رابط الصورة</label>
+                    <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
                 </div>
                 <div class="sm:col-span-2">
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">أو ارفع صورة من الجهاز</label>
-                    <input type="file" id="imageFile" accept="image/*" class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#2c221e] file:text-[#f3efe6] hover:file:bg-[#3d302a]">
-                </div>
-                <div class="sm:col-span-2">
-                    <label class="block text-[10px] font-bold text-[#6e5d53] mb-1">وصف الصنف</label>
-                    <input type="text" id="newDesc" placeholder="تفاصيل الصنف بشكل لطيف..." class="w-full px-3 py-2 bg-[#f3efe6] border border-[#d6c9b3] rounded-xl text-xs outline-none focus:border-[#2c221e] transition">
+                    <label class="block text-[10px] font-bold text-[#7a6b63] mb-1">وصف الصنف</label>
+                    <input type="text" id="newDesc" placeholder="تفاصيل الصنف..." class="w-full px-3 py-2 bg-[#f7f4ed] border border-[#dfd3c3] rounded-xl text-xs outline-none focus:border-[#1f1714] transition">
                 </div>
                 <div class="sm:col-span-2 flex justify-end pt-1">
-                    <button type="submit" id="submitBtn" class="bg-[#2c221e] hover:bg-[#3d302a] text-[#f3efe6] px-5 py-2 rounded-xl text-xs font-bold transition">حفظ الصنف ➕</button>
+                    <button type="submit" id="submitBtn" class="bg-[#1f1714] hover:bg-[#2c221e] text-[#f7f4ed] px-5 py-2 rounded-xl text-xs font-bold transition shadow">حفظ الصنف ➕</button>
                 </div>
             </form>
         </div>
 
         <!-- Search & Categories Bar -->
-        <div class="space-y-3 sticky top-16 bg-[#f3efe6] py-2 z-40">
+        <div class="space-y-3 sticky top-14 bg-[#f7f4ed] py-2 z-40">
             <div class="relative">
-                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="دور على مشروبك المفضّل... Search..." class="w-full px-4 py-2.5 pr-10 bg-[#fdfbf7] border border-[#c5a059]/60 rounded-2xl text-xs outline-none focus:border-[#2c221e] shadow-sm transition">
-                <span class="absolute right-3.5 top-3 text-[#c5a059] text-sm">🔍</span>
+                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث في القائمة..." class="w-full px-4 py-2.5 pr-10 bg-[#ffffff] border border-[#dfd3c3] rounded-2xl text-xs outline-none focus:border-[#1f1714] shadow-sm transition">
+                <span class="absolute right-3.5 top-3 text-[#b89778] text-sm">🔍</span>
             </div>
             <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-1 no-scrollbar"></div>
         </div>
 
-        <!-- Menu Grid (عنصرين جنب بعض بتصميم فاخر) -->
-        <div id="customerMenuGrid" class="grid grid-cols-2 gap-3"></div>
+        <!-- Menu Grid: عنصرين جنب بعض بتصميم نظيف وفاخر -->
+        <div id="customerMenuGrid" class="grid grid-cols-2 gap-3.5"></div>
     </main>
 
-    <footer class="text-center py-6 text-[11px] text-[#8c6d53] border-t border-[#d6c9b3] mt-auto bg-[#fdfbf7] space-y-1">
-        <p class="font-bold text-[#2c221e]">مطحنة ومقهى الغرباوي • خمسة عقود من صناعة الكيف الأصيل</p>
+    <footer class="text-center py-6 text-[11px] text-[#7a6b63] border-t border-[#dfd3c3] mt-auto bg-[#ffffff] space-y-1">
+        <p class="font-bold text-[#1f1714]">بن ومقهى الغرباوي • أصالة التراث وعراقة الصنعة</p>
         <p>جميع الحقوق محفوظة © 2026 ☕</p>
     </footer>
 
     <script>
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_egypt_v4')) || [
-            { id: 1, name: 'توليفة الغرباوي الملكية | Royal House Blend', category: 'توليفة الغرباوي الخاصة', price: 45, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'توليفة البن الخاصة بنا بخبرة 50 عاماً.. طعم أصيل لا يُقارن.' },
-            { id: 2, name: 'إسبريسو | Espresso', category: 'قهوة ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'شوت قهوة مركز على أصوله يعدل الدماغ.' },
-            { id: 3, name: 'كابتشينو | Cappuccino', category: 'قهوة ساخنة', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو مظبوط مع حليب مبخر ورغوة ناعمة تكيف المزاج.' },
-            { id: 4, name: 'كافيه لاتيه | Café Latte', category: 'قهوة ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'مزيج ناعم وكريمي من الإسبريسو والحليب الطازج.' },
-            { id: 5, name: 'سبانيش لاتيه | Spanish Latte', category: 'قهوة مختصة', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'طعم مميز وحلو مع الإسبريسو والحليب المكثف الفاخر.' },
-            { id: 6, name: 'في 60 دريب | V60 Pour Over', category: 'قهوة مختصة', price: 80, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'قهوة مختصة محضرة يدوياً بدقة لعشاق المزاج العالي.' },
-            { id: 7, name: 'أمريكانو مثلج | Iced Americano', category: 'مشروبات مثلجة', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'انتعاش الصيف.. إسبريسو مصبوب فوق الثلج والمية الساقعة.' },
-            { id: 8, name: 'كاراميل ماكياتو بارد | Iced Caramel Macchiato', category: 'مشروبات مثلجة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو وحليب مثلج مع صوص الكراميل الخطير.' },
-            { id: 9, name: 'موكا فرابتشينو | Mocha Frappe', category: 'فرابتشينو', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'ثلج مجروش مع شوكولاتة وإسبريسو ومغطى بالكريمة المخفوقة.' },
-            { id: 10, name: 'ميلك شيك أوريو | Oreo Milkshake', category: 'ميلك شيك', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', desc: 'آيس كريم فانيليا غني مضروب مع بسكويت الأوريو المقرمش.' },
-            { id: 11, name: 'سموذي مانجو | Mango Smoothie', category: 'سموذي فواكه', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', desc: 'عصير مانجو طازج ومجروش بالثلج يروي العطش.' },
-            { id: 12, name: 'هوت شوكليت | Hot Belgian Chocolate', category: 'مشروبات ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'مشروب شيكولاتة دافي وكثيف يظبط الدماغ.' },
-            { id: 13, name: 'موهيتو نعناع وليمون | Classic Mint Mojito', category: 'موهيتو ومنعشات', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'سودا منعشة مع نعناع طازج وشرائح الليمون والثلج.' },
-            { id: 14, name: 'كوكا كولا | Coca-Cola', category: 'مياه ومشروبات غازية', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', desc: 'مشروب غازي مثلج ومظبوط.' },
-            { id: 15, name: 'عصير برتقال فريش | Fresh Orange Juice', category: 'عصائر طازجة', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', desc: 'برتقال بلدي معصور طازج قدامك 100% طبيعي.' },
-            { id: 16, name: 'تارط وكيك شوكولاتة | Chocolate Cake', category: 'حلويات وكيك', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', desc: 'حتة كيك شوكولاتة غارقة في الصوص وطعمها يدوخ.' },
-            { id: 17, name: 'ساندويتش تركي مدخن | Smoked Turkey Sandwich', category: 'ساندويتشات باردة', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', desc: 'تركي مدخن مع الجبن والخس في عيش طازج.' },
-            { id: 18, name: 'باستا دجاج مشوي | Grilled Chicken Pasta', category: 'وجبات رئيسية', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', desc: 'مكرونة بصوص أبيض كريمي وقطع فراخ مشوية طرية.' },
-            { id: 19, name: 'سلطة سيزر بالفراخ | Caesar Salad', category: 'سلطات', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', desc: 'خس مقرمش، عيش محمص، جبن بارميزان وصوص السيزر الأصلي.' },
-            { id: 20, name: 'كرواسون زبدة | Butter Croissant', category: 'معجنات ومخبوزات', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', desc: 'كرواسون هش ومقرمش مخبوز بالزبدة الطازجة.' },
-            { id: 21, name: 'فطار الغرباوي | Breakfast Platter', category: 'إفطار صباحي', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', desc: 'بيضوية، توست، جبن متنوع وسلطة خضراء تفتح النفس.' }
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_final_v1')) || [
+            { id: 1, name: 'إسبريسو', category: 'قهوة ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'شوت قهوة مركز على أصوله.' },
+            { id: 2, name: 'كابتشينو', category: 'قهوة ساخنة', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو مع حليب مبخر ورغوة ناعمة.' },
+            { id: 3, name: 'كافيه لاتيه', category: 'قهوة ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'مزيج ناعم من الإسبريسو والحليب الطازج.' },
+            { id: 4, name: 'سبانيش لاتيه', category: 'قهوة مختصة', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو وحليب مكثف محلى فاخر.' },
+            { id: 5, name: 'في 60 دريب', category: 'قهوة مختصة', price: 80, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'قهوة مختصة محضرة يدوياً.' },
+            { id: 6, name: 'أمريكانو مثلج', category: 'مشروبات مثلجة', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو مصبوب فوق الثلج والماء البارد.' },
+            { id: 7, name: 'كاراميل ماكياتو', category: 'مشروبات مثلجة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو وحليب مثلج مع صوص الكراميل.' },
+            { id: 8, name: 'هوت شوكليت', category: 'مشروبات ساخنة', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'مشروب شوكولاتة دافئ وكثيف.' }
         ];
 
         let activeCategory = 'الكل';
@@ -186,23 +162,9 @@
             const name = document.getElementById('newName').value;
             const category = document.getElementById('newCategory').value;
             const price = parseFloat(document.getElementById('newPrice').value);
-            const desc = document.getElementById('newDesc').value || 'تحضير طازج على كيف كيفك.';
-            const urlInput = document.getElementById('newImage').value;
-            const fileInput = document.getElementById('imageFile').files[0];
+            const desc = document.getElementById('newDesc').value || 'تحضير طازج.';
+            const image = document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80';
 
-            if (fileInput) {
-                const reader = new FileReader();
-                reader.onload = function(uploadEvent) {
-                    saveItemData(editId, name, category, price, uploadEvent.target.result, desc);
-                };
-                reader.readAsDataURL(fileInput);
-            } else {
-                const defaultImage = urlInput || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80';
-                saveItemData(editId, name, category, price, defaultImage, desc);
-            }
-        }
-
-        function saveItemData(editId, name, category, price, image, desc) {
             if (editId) {
                 let item = menuItems.find(i => i.id == editId);
                 if (item) {
@@ -212,21 +174,13 @@
                     item.image = image;
                     item.desc = desc;
                 }
-                alert('يا باشا تم تحديث الصنف بنجاح!');
+                alert('تم التعديل بنجاح!');
             } else {
-                const newItem = {
-                    id: Date.now(),
-                    name: name,
-                    category: category,
-                    price: price,
-                    image: image,
-                    desc: desc
-                };
-                menuItems.push(newItem);
-                alert('تم إضافة الصنف الجديد منور القائمة!');
+                menuItems.push({ id: Date.now(), name, category, price, image, desc });
+                alert('تمت الإضافة بنجاح!');
             }
 
-            localStorage.setItem('gharbaoui_menu_egypt_v4', JSON.stringify(menuItems));
+            localStorage.setItem('gharbaoui_menu_final_v1', JSON.stringify(menuItems));
             resetForm();
             renderCustomerMenu();
         }
@@ -239,11 +193,11 @@
             document.getElementById('newName').value = item.name;
             document.getElementById('newCategory').value = item.category;
             document.getElementById('newPrice').value = item.price;
-            document.getElementById('newImage').value = item.image.startsWith('data:') ? '' : item.image;
+            document.getElementById('newImage').value = item.image;
             document.getElementById('newDesc').value = item.desc;
 
-            document.getElementById('formTitle').innerText = '🛠️ تعديل صنف في القائمة';
-            document.getElementById('submitBtn').innerText = 'تحديث الصنف 💾';
+            document.getElementById('formTitle').innerText = '🛠️ تعديل الصنف';
+            document.getElementById('submitBtn').innerText = 'تحديث';
             document.getElementById('cancelEditBtn').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -257,19 +211,19 @@
         }
 
         function deleteItem(id) {
-            if (confirm('متأكد يا باشا إنك عايز تحذف الصنف ده؟')) {
+            if (confirm('هل أنت متأكد من الحذف؟')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_egypt_v4', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_final_v1', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
 
         function renderCustomerMenu() {
-            const categories = ['الكل', 'توليفة الغرباوي الخاصة', 'قهوة ساخنة', 'قهوة مختصة', 'مشروبات مثلجة', 'فرابتشينو', 'ميلك شيك', 'سموذي فواكه', 'مشروبات ساخنة', 'موهيتو ومنعشات', 'مياه ومشروبات غازية', 'عصائر طازجة', 'حلويات وكيك', 'ساندويتشات باردة', 'وجبات رئيسية', 'سلطات', 'معجنات ومخبوزات', 'إفطار صباحي'];
+            const categories = ['الكل', 'قهوة ساخنة', 'قهوة مختصة', 'مشروبات مثلجة', 'مشروبات ساخنة', 'عصائر طازجة', 'حلويات وكيك', 'ساندويتشات'];
             const tabsContainer = document.getElementById('categoryTabs');
             
             tabsContainer.innerHTML = categories.map(cat => `
-                <button onclick="filterCategory('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-[#2c221e] text-[#f3efe6] shadow-md border border-[#c5a059]' : 'bg-[#fdfbf7] text-[#6e5d53] border border-[#d6c9b3] hover:bg-[#f3efe6]'}">
+                <button onclick="filterCategory('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-[#1f1714] text-[#f7f4ed] shadow-md border border-[#b89778]' : 'bg-[#ffffff] text-[#7a6b63] border border-[#dfd3c3] hover:bg-[#f7f4ed]'}">
                     ${cat}
                 </button>
             `).join('');
@@ -293,26 +247,26 @@
             });
 
             if (filtered.length === 0) {
-                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-[#8c6d53] text-xs">عفواً، مفيش أصناف مطابقة للبحث ده.</div>`;
+                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-[#7a6b63] text-xs">لا توجد نتائج مطابقة.</div>`;
                 return;
             }
 
             gridContainer.innerHTML = filtered.map(item => `
-                <div class="bg-[#fdfbf7] rounded-2xl p-3 border border-[#d6c9b3] shadow-sm flex flex-col justify-between relative group hover:border-[#c5a059] transition">
+                <div class="luxury-card rounded-2xl p-3 flex flex-col justify-between relative group">
                     <div>
-                        <div class="relative overflow-hidden rounded-xl mb-2.5 border border-[#e6dcce]">
-                            <img src="${item.image}" class="w-full h-28 object-cover filter sepia-[0.15] group-hover:scale-105 transition duration-300">
+                        <div class="overflow-hidden rounded-xl mb-2.5 border border-[#dfd3c3]">
+                            <img src="${item.image}" class="w-full h-28 object-cover group-hover:scale-105 transition duration-500">
                         </div>
-                        <span class="text-[9px] font-bold text-[#a38244] bg-[#f3efe6] px-2 py-0.5 rounded-md inline-block mb-1 border border-[#e6dcce]">${item.category}</span>
-                        <h3 class="font-bold text-xs sm:text-sm text-[#2c221e] truncate vintage-title">${item.name}</h3>
-                        <p class="text-[10px] text-[#6e5d53] line-clamp-2 mt-0.5 leading-relaxed">${item.desc}</p>
+                        <span class="text-[9px] font-bold text-[#b89778] bg-[#f7f4ed] px-2 py-0.5 rounded-md inline-block mb-1 border border-[#dfd3c3]">${item.category}</span>
+                        <h3 class="font-bold text-xs sm:text-sm text-[#1f1714] truncate vintage-title">${item.name}</h3>
+                        <p class="text-[10px] text-[#7a6b63] line-clamp-2 mt-0.5 leading-relaxed">${item.desc}</p>
                     </div>
                     <div class="mt-3 flex items-center justify-between pt-2 border-t border-[#f0eae1]">
-                        <div class="font-black text-[#2c221e] text-xs">${item.price} <span class="text-[9px] font-normal text-[#8c6d53]">جنيه</span></div>
+                        <div class="font-black text-[#1f1714] text-xs">${item.price} <span class="text-[9px] font-normal text-[#b89778]">جنيه</span></div>
                     </div>
                     ${isAdminMode ? `
-                        <div class="absolute top-2 left-2 flex gap-1 bg-[#fdfbf7]/90 p-1 rounded-lg backdrop-blur-sm shadow-sm border border-[#d6c9b3]">
-                            <button onclick="editItem(${item.id})" class="bg-[#f3efe6] text-[#2c221e] text-[9px] px-1.5 py-0.5 rounded-md font-bold border border-[#d6c9b3] hover:bg-[#2c221e] hover:text-[#f3efe6] transition">تعديل</button>
+                        <div class="absolute top-2 left-2 flex gap-1 bg-white/95 p-1 rounded-lg backdrop-blur-sm shadow-sm border border-[#dfd3c3]">
+                            <button onclick="editItem(${item.id})" class="bg-[#f7f4ed] text-[#1f1714] text-[9px] px-1.5 py-0.5 rounded-md font-bold border border-[#dfd3c3] hover:bg-[#1f1714] hover:text-white transition">تعديل</button>
                             <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-700 text-[9px] px-1.5 py-0.5 rounded-md font-bold border border-red-200 hover:bg-red-700 hover:text-white transition">حذف</button>
                         </div>
                     ` : ''}
