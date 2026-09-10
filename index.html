@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بن الغرباوي - المنيو الرقمي</title>
-    <!-- Tailwind CSS للتصميم الاحترافي -->
+    <title>بن الغرباوي - المنيو الرقمي وإدارة الفرع</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
@@ -15,23 +15,62 @@
 </head>
 <body class="text-stone-800 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
 
-    <!-- رأس الصفحة العصري -->
+    <!-- رأس الصفحة -->
     <header class="bg-stone-900 text-white shadow-xl sticky top-0 z-40 border-b border-amber-900/30">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <img src="logo-01.png" alt="بن الغرباوي" class="w-12 h-12 object-contain bg-white rounded-2xl p-1 shadow-md">
                 <div>
                     <h1 class="text-sm font-black tracking-wide text-amber-500">بن الغرباوي</h1>
-                    <p class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
+                    <p id="headerSubtitle" class="text-[10px] text-stone-300">الفرع الرئيسي - المنيو الرقمي</p>
                 </div>
             </div>
-            <div class="text-xs text-amber-400 font-bold bg-amber-950/60 px-3 py-1.5 rounded-xl border border-amber-800/40">
+            <!-- زر لو يظهر للأدمن لو هو في وضع الإدارة -->
+            <div id="adminBadge" class="hidden text-xs text-amber-400 font-bold bg-amber-950/80 px-3 py-1.5 rounded-xl border border-amber-800/40 flex items-center gap-2">
+                <span>⚙️ لوحة التحكم نشطة</span>
+                <a href="?view=menu" class="bg-stone-800 text-stone-300 px-2 py-0.5 rounded text-[10px] hover:bg-stone-700">معاينة كزبون</a>
+            </div>
+            <div id="customerBadge" class="text-xs text-amber-400 font-bold bg-amber-950/60 px-3 py-1.5 rounded-xl border border-amber-800/40">
                 ☕ متاح طوال أيام الأسبوع
             </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto p-4 flex-grow w-full space-y-6">
+        
+        <!-- قسم لوحة التحكم (يظهر فقط للأدمن الرابط الرئيسي) -->
+        <div id="adminPanelSection" class="hidden bg-white p-6 rounded-3xl shadow-md border border-amber-900/20 space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h2 class="text-lg font-black text-amber-900">🛠️ لوحة التحكم والإضافة السريعة</h2>
+                <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full">خاص بالإدارة فقط</span>
+            </div>
+            <form id="addItemForm" onsubmit="addNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-stone-600 mb-1">اسم الصنف</label>
+                    <input type="text" id="newName" required placeholder="مثال: إسبريسو دبل" class="w-full px-3 py-2.5 bg-stone-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-600 mb-1">القسم</label>
+                    <input type="text" id="newCategory" required placeholder="مثال: قهوة مختصة" class="w-full px-3 py-2.5 bg-stone-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-600 mb-1">السعر (ج.م)</label>
+                    <input type="number" id="newPrice" required placeholder="40" class="w-full px-3 py-2.5 bg-stone-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-600 mb-1">رابط الصورة (URL)</label>
+                    <input type="url" id="newImage" placeholder="https://..." class="w-full px-3 py-2.5 bg-stone-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-900">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold text-stone-600 mb-1">الوصف المختصر</label>
+                    <input type="text" id="newDesc" placeholder="مكونات الصنف أو وصف طعمه..." class="w-full px-3 py-2.5 bg-stone-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-amber-900">
+                </div>
+                <div class="sm:col-span-2 flex justify-end gap-2">
+                    <button type="submit" class="bg-amber-900 hover:bg-amber-950 text-white px-6 py-2.5 rounded-xl text-xs font-bold transition shadow">إضافة الصنف للمنيو ➕</button>
+                </div>
+            </form>
+        </div>
+
         <!-- بانر ترحيبي فخم -->
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-white p-8 shadow-xl border border-amber-900/30 text-center flex flex-col items-center">
             <img src="logo-01.png" alt="بن الغرباوي" class="w-28 h-28 object-contain mb-3 drop-shadow-lg">
@@ -61,19 +100,60 @@
     </footer>
 
     <script>
-        const menuItems = [
-            { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة من بن الغرباوي الأصلي.', badge: 'الأكثر طلباً ⭐' },
-            { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر على الوجاق بالطريقة الأصلية.', badge: 'مميز ☕' },
-            { id: 3, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو بارد مع الحليب المثلج وصوص الكراميل الفاخر.' },
-            { id: 4, name: 'موخيتو ليمون ونعناع', category: 'عصائر فريش', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'مشروب منعش للغاية بالنعناع الفريش والليمون والصودا.', badge: 'منعش ❄️' },
-            { id: 5, name: 'تشيز كيك لوتس غني', category: 'حلويات', price: 65, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'قطعة تشيز كيك طازجة مغطاة بزبدة وبسكويت اللوتس المقرمش.' }
+        // جلب البيانات المخزنة محلياً أو استخدام الافتراضية
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu')) || [
+            { id: 1, name: 'إسبريسو دوبل ممتاز', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومكثفة من بن الغرباوي الأصلي.' },
+            { id: 2, name: 'قهوة تركي مظبوطة باللبن', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن محوج طازج محضر على الوجاق بالطريقة الأصلية.' },
+            { id: 3, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو بارد مع الحليب المثلج وصوص الكراميل الفاخر.' }
         ];
 
         let activeCategory = 'الكل';
+        let isAdminMode = false;
 
         window.onload = function() {
+            // فحص الرابط إذا كان يحتوي على ?view=menu يصبح وضع زبون، وإلا يصبح أدمن
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('view') === 'menu') {
+                isAdminMode = false;
+                document.getElementById('adminPanelSection').classList.add('hidden');
+                document.getElementById('adminBadge').classList.add('hidden');
+                document.getElementById('customerBadge').classList.remove('hidden');
+            } else {
+                isAdminMode = true;
+                document.getElementById('adminPanelSection').classList.remove('hidden');
+                document.getElementById('adminBadge').classList.remove('hidden');
+                document.getElementById('customerBadge').classList.add('hidden');
+            }
+
             renderCustomerMenu();
         };
+
+        function addNewItem(e) {
+            e.preventDefault();
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('newName').value,
+                category: document.getElementById('newCategory').value,
+                price: parseFloat(document.getElementById('newPrice').value),
+                image: document.getElementById('newImage').value || 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=500&q=80',
+                desc: document.getElementById('newDesc').value || 'مجهز طازجاً بأجود الخامات.'
+            };
+
+            menuItems.push(newItem);
+            localStorage.setItem('gharbaoui_menu', JSON.stringify(menuItems));
+            
+            document.getElementById('addItemForm').reset();
+            renderCustomerMenu();
+            alert('تمت إضافة الصنف بنجاح وتم تحديث المنيو فوراً!');
+        }
+
+        function deleteItem(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الصنف من المنيو؟')) {
+                menuItems = menuItems.filter(item => item.id !== id);
+                localStorage.setItem('gharbaoui_menu', JSON.stringify(menuItems));
+                renderCustomerMenu();
+            }
+        }
 
         function renderCustomerMenu() {
             const categories = ['الكل', ...new Set(menuItems.map(i => i.category))];
@@ -107,16 +187,16 @@
             }
 
             gridContainer.innerHTML = filtered.map(item => `
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col justify-between hover:shadow-md transition">
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col justify-between hover:shadow-md transition relative">
                     <div>
                         <div class="h-52 overflow-hidden relative bg-stone-100">
                             <img src="${item.image}" class="w-full h-full object-cover">
-                            ${item.badge ? `<span class="absolute top-3 right-3 bg-amber-900 text-amber-200 text-[10px] px-3 py-1 rounded-full font-black shadow">${item.badge}</span>` : ''}
                             <span class="absolute bottom-3 right-3 bg-stone-900/80 backdrop-blur-md text-white text-[11px] px-3 py-1 rounded-full font-bold">${item.category}</span>
+                            ${isAdminMode ? `<button onclick="deleteItem(${item.id})" class="absolute top-3 left-3 bg-red-600 text-white text-[10px] px-2.5 py-1.5 rounded-xl font-bold shadow hover:bg-red-700 transition">حذف 🗑️</button>` : ''}
                         </div>
                         <div class="p-5">
                             <h3 class="font-black text-lg text-stone-900 mb-1">${item.name}</h3>
-                            <p class="text-xs text-stone-500 leading-relaxed line-clamp-2">${item.desc || 'مجهز طازجاً بأجود الخامات.'}</p>
+                            <p class="text-xs text-stone-500 leading-relaxed line-clamp-2">${item.desc}</p>
                         </div>
                     </div>
                     <div class="p-5 pt-0 flex items-center justify-between mt-2">
