@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مطعم وكافيه الغرباوي - المنيو الرقمي</title>
+    <title>بن الغرباوي - المنيو الرقمي</title>
     <!-- Tailwind CSS للتصميم الاحترافي -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
-        /* إخفاء شريط التمرير المزعج */
+        body { font-family: 'Cairo', sans-serif; background-color: #fcfbfa; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
 
-    <!-- نافذة تسجيل دخول الأدمن المخفية (للحماية) -->
-    <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-slate-100">
-            <h3 class="text-lg font-black text-slate-900 mb-2">تسجيل دخول الإدارة</h3>
-            <p class="text-xs text-slate-500 mb-4">أدخل كلمة المرور الخاصة بلوحة التحكم:</p>
-            <input type="password" id="adminPasswordInput" placeholder="كلمة المرور..." class="w-full px-4 py-2.5 border rounded-xl text-sm mb-4 outline-none focus:ring-2 focus:ring-amber-500">
+    <!-- نافذة تسجيل دخول الأدمن المخفية -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl border border-stone-100">
+            <h3 class="text-lg font-black text-stone-900 mb-2">تسجيل دخول الإدارة</h3>
+            <p class="text-xs text-stone-500 mb-4">أدخل كلمة المرور الخاصة بلوحة التحكم:</p>
+            <input type="password" id="adminPasswordInput" placeholder="كلمة المرور..." class="w-full px-4 py-2.5 border rounded-xl text-sm mb-4 outline-none focus:ring-2 focus:ring-amber-700">
             <div class="flex gap-2">
-                <button onclick="verifyAdminPassword()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-xl font-bold text-sm transition">دخول</button>
-                <button onclick="closeAdminLogin()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 py-2 rounded-xl font-bold text-sm transition">إلغاء</button>
+                <button onclick="verifyAdminPassword()" class="flex-1 bg-amber-800 hover:bg-amber-900 text-white py-2 rounded-xl font-bold text-sm transition">دخول</button>
+                <button onclick="closeAdminLogin()" class="px-4 bg-stone-100 hover:bg-stone-200 text-stone-600 py-2 rounded-xl font-bold text-sm transition">إلغاء</button>
             </div>
         </div>
     </div>
 
     <!-- رأس الصفحة العصري (للزبون) -->
-    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+    <header class="bg-stone-900 text-white shadow-md sticky top-0 z-40 border-b border-amber-900/30">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center font-black text-xl shadow-md">غ</div>
+                <!-- استخدام اللوجو هنا -->
+                <img src="logo-01.png" alt="بن الغرباوي" class="w-12 h-12 object-contain bg-white rounded-xl p-1 shadow">
                 <div>
-                    <h1 class="text-base font-black tracking-wide">كافيه الغرباوي</h1>
-                    <p class="text-[10px] text-amber-400 font-semibold">القائمة الرقمية التفاعلية</p>
+                    <h1 class="text-sm font-black tracking-wide text-amber-500">بن الغرباوي</h1>
+                    <p class="text-[10px] text-stone-300">أصالة البن المصري الفاخر</p>
                 </div>
             </div>
-            <!-- زر سري مخفي لفتح لوحة الأدمن (موجود في الزاوية بهدوء) -->
-            <button onclick="openAdminLogin()" class="text-slate-500 hover:text-slate-300 text-xs px-2 py-1 rounded transition">
+            <!-- زر سري مخفي لفتح لوحة الأدمن -->
+            <button onclick="openAdminLogin()" class="text-stone-500 hover:text-stone-300 text-xs px-2 py-1 transition">
                 ⚙️ إعدادات الأدمن
             </button>
         </div>
@@ -50,20 +50,18 @@
 
         <!-- ================= قسم الزبون (الافتراضي للـ QR) ================= -->
         <div id="customerSection" class="space-y-6">
-            <!-- بانر ترحيبي فخم -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-amber-600 to-amber-700 text-white p-6 shadow-lg">
-                <div class="relative z-10">
-                    <h2 class="text-2xl sm:text-3xl font-black mb-1">أهلاً بك في الغرباوي</h2>
-                    <p class="text-amber-100 text-xs sm:text-sm">استمتع بتجربة مميزة من أشهى المشروبات والحلويات الطازجة.</p>
-                </div>
-                <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            <!-- بانر ترحيبي فخم يعرض اللوجو -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 text-white p-8 shadow-xl border border-amber-900/40 text-center flex flex-col items-center">
+                <img src="logo-01.png" alt="بن الغرباوي" class="w-36 h-36 object-contain mb-4 drop-shadow-md">
+                <h2 class="text-2xl sm:text-3xl font-black mb-1 text-amber-400">مرحباً بكم في بن الغرباوي</h2>
+                <p class="text-stone-300 text-xs sm:text-sm max-w-md">نقدم لك أرقى أنواح البن والمشروبات الساخنة والباردة والحلويات الطازجة.</p>
             </div>
 
             <!-- شريط البحث السريع والأقسام -->
             <div class="space-y-3">
                 <div class="relative">
-                    <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك أو طلبك المفضلة..." class="w-full px-4 py-3 pr-10 bg-white border border-slate-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-500 outline-none">
-                    <span class="absolute right-3.5 top-3.5 text-slate-400">🔍</span>
+                    <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث عن مشروبك المفضل، اسبريسو، تشيز كيك..." class="w-full px-4 py-3 pr-10 bg-white border border-stone-200 rounded-2xl text-sm shadow-sm focus:ring-2 focus:ring-amber-700 outline-none">
+                    <span class="absolute right-3.5 top-3.5 text-stone-400">🔍</span>
                 </div>
 
                 <!-- أقسام المنيو -->
@@ -80,48 +78,52 @@
 
         <!-- ================= لوحة الأدمن الاحترافية (محمية) ================= -->
         <div id="adminSection" class="hidden space-y-6">
-            <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                <h2 class="font-bold text-slate-900 text-sm">🛠️ لوحة التحكم وإدارة المنيو</h2>
-                <button onclick="logoutAdmin()" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل خروج الأدمن</button>
+            <div class="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-stone-200">
+                <div class="flex items-center gap-2">
+                    <img src="logo-01.png" class="w-8 h-8 object-contain">
+                    <h2 class="font-bold text-stone-900 text-sm">لوحة التحكم - بن الغرباوي</h2>
+                </div>
+                <button onclick="logoutAdmin()" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل خروج</button>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-base font-bold text-slate-900 mb-4 pb-2 border-b">إضافة صنف جديد</h3>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                <h3 class="text-base font-bold text-stone-900 mb-4 pb-2 border-b">إضافة صنف جديد للمنيو</h3>
                 <form id="addItemForm" onsubmit="handleAddItem(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold mb-1 text-slate-600">اسم الصنف</label>
-                        <input type="text" id="itemName" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="مثال: إبريق قهوة مظبوطة">
+                        <label class="block text-xs font-bold mb-1 text-stone-600">اسم الصنف</label>
+                        <input type="text" id="itemName" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-700 outline-none" placeholder="مثال: لاتيه فانيليا دافئ">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1 text-slate-600">القسم</label>
-                        <select id="itemCategory" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none bg-white">
+                        <label class="block text-xs font-bold mb-1 text-stone-600">القسم</label>
+                        <select id="itemCategory" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-700 outline-none bg-white">
                             <option value="مشروبات ساخنة">مشروبات ساخنة</option>
+                            <option value="قهوة مختصة">قهوة مختصة</option>
                             <option value="مشروبات باردة">مشروبات باردة</option>
+                            <option value="عصائر فريش">عصائر فريش</option>
                             <option value="حلويات">حلويات</option>
-                            <option value="وجبات سريعة">وجبات سريعة</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1 text-slate-600">السعر (ج.م)</label>
-                        <input type="number" id="itemPrice" step="0.5" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="45">
+                        <label class="block text-xs font-bold mb-1 text-stone-600">السعر (ج.م)</label>
+                        <input type="number" id="itemPrice" step="0.5" required class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-700 outline-none" placeholder="50">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1 text-slate-600">صورة الصنف</label>
-                        <input type="file" id="itemImageFile" accept="image/*" required class="w-full px-2 py-1.5 border rounded-xl text-xs bg-slate-50 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-amber-100 file:text-amber-800 font-semibold cursor-pointer">
+                        <label class="block text-xs font-bold mb-1 text-stone-600">صورة الصنف</label>
+                        <input type="file" id="itemImageFile" accept="image/*" required class="w-full px-2 py-1.5 border rounded-xl text-xs bg-stone-50 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-amber-100 file:text-amber-900 font-semibold cursor-pointer">
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-xs font-bold mb-1 text-slate-600">وصف مختصر</label>
-                        <input type="text" id="itemDesc" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none" placeholder="مكونات الصنف أو تفاصيل خفيفة...">
+                        <label class="block text-xs font-bold mb-1 text-stone-600">وصف مختصر</label>
+                        <input type="text" id="itemDesc" class="w-full px-3 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-amber-700 outline-none" placeholder="مكونات الصنف أو تفاصيل خفيفة...">
                     </div>
                     <div class="md:col-span-2">
-                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">حفظ وإضافة الصنف للمنيو</button>
+                        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-900 text-white font-bold py-3 rounded-xl transition text-sm shadow-md">حفظ وإضافة الصنف للمنيو</button>
                     </div>
                 </form>
             </div>
 
             <!-- قائمة التعديل والحذف للأدمن -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-base font-bold text-slate-900 mb-4">الأصناف الحالية المسجلة</h3>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                <h3 class="text-base font-bold text-stone-900 mb-4">الأصناف الحالية المسجلة</h3>
                 <div id="adminItemsList" class="space-y-3">
                     <!-- تتعبئ تلقائياً -->
                 </div>
@@ -130,28 +132,27 @@
 
     </main>
 
-    <footer class="text-center py-6 text-xs text-slate-400 border-t border-slate-200 mt-auto bg-white">
-        جميع الحقوق محفوظة © مطعم وكافيه الغرباوي 2026
+    <footer class="text-center py-6 text-xs text-stone-500 border-t border-stone-200 mt-auto bg-white">
+        جميع الحقوق محفوظة © بن الغرباوي 2026 ☕
     </footer>
 
     <script>
-        // قاعدة البيانات المحلية للأصناف
+        // قاعدة البيانات الافتراضية مليانة بأمثلة ممتازة للكافيه
         let menuItems = JSON.parse(localStorage.getItem('gharbawy_menu_items')) || [
-            { id: 1, name: 'قهوة تركي فاخرة', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن برازيلي محوج طازج' },
-            { id: 2, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'إسبريسو بارد مع الحليب والكراميل الغني' },
-            { id: 3, name: 'تشيز كيك لوتس', category: 'حلويات', price: 60, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'قطعة تشيز كيك غنية بصوص البسكويت المقرمش' }
+            { id: 1, name: 'إسبريسو دوبل', category: 'قهوة مختصة', price: 40, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'جرعة إسبريسو غنية ومركزة من أجود حبوب البن' },
+            { id: 2, name: 'قهوة تركي بالحليب', category: 'مشروبات ساخنة', price: 35, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'بن الغرباوي الخاص ممزوج بالحليب الطازج' },
+            { id: 3, name: 'ايس كراميل ماكياتو', category: 'مشروبات باردة', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'مزيج الإسبريسو البارد مع الحليب وصوص الكراميل الفاخر' },
+            { id: 4, name: 'موخيتو فريش', category: 'عصائر فريش', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'مشروب منعش بنكهة النعناع والليمون والصودا' },
+            { id: 5, name: 'تشيز كيك لوتس', category: 'حلويات', price: 65, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'قطعة تشيز كيك غنية بصوص وزبدة اللوتس المقرمشة' }
         ];
 
         let activeCategory = 'الكل';
 
-        // تشغيل عرض الزبون افتراضياً عند فتح الرابط بالـ QR
         window.onload = function() {
             renderCustomerMenu();
         };
 
-        // فتح نافذة كلمة السر للأدمن
         function openAdminLogin() {
-            // لو مسجل دخول قبل كده في الجلسة دي، افتح الأدمن مباشرة
             if (sessionStorage.getItem('gharbawy_is_admin') === 'true') {
                 showAdminPanel();
                 return;
@@ -167,7 +168,6 @@
 
         function verifyAdminPassword() {
             const pass = document.getElementById('adminPasswordInput').value;
-            // تقدر تغيير الباسورد هنا (حالياً محطوط: 1234)
             if (pass === '1234') {
                 sessionStorage.setItem('gharbawy_is_admin', 'true');
                 closeAdminLogin();
@@ -190,7 +190,6 @@
             renderCustomerMenu();
         }
 
-        // إضافة صنف جديد من لوحة الأدمن
         function handleAddItem(e) {
             e.preventDefault();
             const fileInput = document.getElementById('itemImageFile');
@@ -233,16 +232,16 @@
         function renderAdminItems() {
             const list = document.getElementById('adminItemsList');
             if (menuItems.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد أصناف مضافة حالياً.</p>`;
+                list.innerHTML = `<p class="text-xs text-stone-400 text-center py-4">لا توجد أصناف مضافة حالياً.</p>`;
                 return;
             }
             list.innerHTML = menuItems.map(item => `
-                <div class="flex items-center justify-between p-3 border rounded-xl bg-slate-50">
+                <div class="flex items-center justify-between p-3 border rounded-xl bg-stone-50">
                     <div class="flex items-center gap-3">
                         <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg border">
                         <div>
-                            <h4 class="font-bold text-sm text-slate-900">${item.name}</h4>
-                            <span class="text-xs text-slate-500">${item.category} | <b class="text-amber-600">${item.price} ج.م</b></span>
+                            <h4 class="font-bold text-sm text-stone-900">${item.name}</h4>
+                            <span class="text-xs text-stone-500">${item.category} | <b class="text-amber-800">${item.price} ج.م</b></span>
                         </div>
                     </div>
                     <button onclick="deleteItem(${item.id})" class="bg-red-50 text-red-600 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-red-100 transition">حذف</button>
@@ -250,13 +249,12 @@
             `).join('');
         }
 
-        // عرض المنيو الاحترافي للزبون
         function renderCustomerMenu() {
             const categories = ['الكل', ...new Set(menuItems.map(i => i.category))];
             
             const tabsContainer = document.getElementById('categoryTabs');
             tabsContainer.innerHTML = categories.map(cat => `
-                <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap shadow-sm ${activeCategory === cat ? 'bg-amber-600 text-white' : 'bg-white text-slate-600 border hover:bg-slate-50'}">
+                <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap shadow-sm ${activeCategory === cat ? 'bg-amber-800 text-white' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
                     ${cat}
                 </button>
             `).join('');
@@ -269,7 +267,6 @@
             renderCustomerMenu();
         }
 
-        // فلترة الأصناف بناءً على القسم المختار أو البحث
         function filterMenu() {
             const searchVal = document.getElementById('searchInput').value.toLowerCase();
             const gridContainer = document.getElementById('customerMenuGrid');
@@ -281,29 +278,29 @@
             });
 
             if (filtered.length === 0) {
-                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-slate-400 text-sm">عذراً، لم نجد نتائج مطابقة لبحثك.</div>`;
+                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-stone-400 text-sm">عذراً، لم نجد نتائج مطابقة لبحثك.</div>`;
                 return;
             }
 
             gridContainer.innerHTML = filtered.map(item => `
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-stone-100 flex flex-col justify-between hover:shadow-md transition-shadow">
                     <div>
-                        <div class="h-48 overflow-hidden relative bg-slate-100">
+                        <div class="h-48 overflow-hidden relative bg-stone-100">
                             <img src="${item.image}" class="w-full h-full object-cover">
-                            <span class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-white text-[11px] px-3 py-1 rounded-full font-bold shadow">${item.category}</span>
+                            <span class="absolute top-3 right-3 bg-stone-900/80 backdrop-blur-md text-white text-[11px] px-3 py-1 rounded-full font-bold shadow">${item.category}</span>
                         </div>
                         <div class="p-5">
-                            <h3 class="font-black text-lg text-slate-900 mb-1">${item.name}</h3>
-                            <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">${item.desc || 'طازج ومجهز خصيصاً لأجلك.'}</p>
+                            <h3 class="font-black text-lg text-stone-900 mb-1">${item.name}</h3>
+                            <p class="text-xs text-stone-500 leading-relaxed line-clamp-2">${item.desc || 'طازج ومجهز خصيصاً لأجلك.'}</p>
                         </div>
                     </div>
                     <div class="p-5 pt-0 flex items-center justify-between mt-2">
-                        <span class="text-amber-600 font-black text-xl">${item.price} <span class="text-xs font-normal text-slate-400">ج.م</span></span>
-                        <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm">✨</div>
+                        <span class="text-amber-800 font-black text-xl">${item.price} <span class="text-xs font-normal text-stone-400">ج.م</span></span>
+                        <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-sm">☕</div>
                     </div>
                 </div>
             `).join('');
         }
     </script>
 </body>
-</html>s
+</html>
