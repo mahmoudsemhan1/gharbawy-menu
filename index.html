@@ -21,41 +21,40 @@
 <body class="text-stone-900 min-h-screen flex flex-col selection:bg-amber-800 selection:text-white">
 
     <!-- Header -->
-    <header class="bg-white border-b border-stone-200/85 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-stone-900 rounded-xl p-1 shadow-sm flex items-center justify-center border border-amber-800/30">
+    <header class="bg-white border-b border-stone-200/85 sticky top-0 z-50 backdrop-blur-md bg-opacity-95 shadow-sm">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center gap-2">
+            
+            <!-- Logo & Brand Name -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 bg-stone-900 rounded-xl p-1 shadow-sm flex items-center justify-center border border-amber-800/30 flex-shrink-0">
                     <img src="logo-01.png" alt="Al-Gharbawy" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <h1 id="brandTitle" class="text-xs font-black tracking-wider text-stone-900 uppercase">الغرباوي</h1>
-                    <p id="brandSub" class="text-[10px] text-stone-400">القائمة الرقمية • منذ 1970</p>
+                    <p id="brandSub" class="text-[9px] text-stone-400">القائمة الرقمية</p>
                 </div>
             </div>
             
+            <!-- Actions & Controls -->
             <div class="flex items-center gap-2">
-                <!-- My Order / Cart Button -->
-                <button onclick="openCartModal()" class="relative px-3.5 py-2 bg-amber-900 hover:bg-amber-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-sm">
+                <!-- My Order Button -->
+                <button onclick="openCartModal()" class="relative px-3 py-2 bg-amber-900 hover:bg-amber-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
                     <span>📋</span>
-                    <div class="text-right">
-                        <div id="cartBtnTitle" class="leading-none">طلباتي الحالية</div>
-                        <div id="cartBtnSub" class="text-[9px] text-amber-200 font-normal mt-0.5">اعرضها على الجرسون</div>
-                    </div>
+                    <span id="cartBtnTitle">طلباتي</span>
                     <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-stone-900 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
                 </button>
 
-                <!-- Language Toggle Button -->
-                <button onclick="toggleLanguage()" class="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
-                    🌐 <span id="langBtnText">English</span>
+                <!-- Language Toggle -->
+                <button onclick="toggleLanguage()" class="px-2.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition flex items-center gap-1">
+                    🌐 <span id="langBtnText">EN</span>
                 </button>
 
-                <div id="adminBadge" class="hidden text-[11px] text-amber-800 font-bold bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">
-                    ⚙️ <span id="adminText">وضع المشرف</span>
-                </div>
-                <div id="customerBadge" class="text-[11px] text-stone-600 font-semibold bg-stone-100 px-3 py-1 rounded-lg">
-                    ☕ <span id="freshText">محمصة طازجة</span>
+                <!-- Admin Mode Indicator -->
+                <div id="adminBadge" class="hidden text-[10px] text-amber-800 font-bold bg-amber-50 px-2.5 py-1.5 rounded-xl border border-amber-200">
+                    ⚙️ <span id="adminText">مشرف</span>
                 </div>
             </div>
+
         </div>
     </header>
 
@@ -177,7 +176,6 @@
             <div class="flex justify-between items-center border-b border-stone-100 pb-3">
                 <div>
                     <h2 id="cartModalTitle" class="text-sm font-black text-stone-900">📋 طلباتي الحالية (أرها للجرسون)</h2>
-                    <p id="cartModalSub" class="text-[10px] text-stone-400 mt-0.5">قم باختيار ما ترغب به واديه لمسؤول الطاولة</p>
                 </div>
                 <button onclick="closeCartModal()" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
             </div>
@@ -301,7 +299,7 @@
         let cart = JSON.parse(localStorage.getItem('gharbaoui_cart')) || [];
         let showOnlyFavorites = false;
 
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_bilingual_v6')) || [
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_bilingual_v8')) || [
             { id: 1, nameAr: 'إسبريسو', nameEn: 'Espresso', category: 'Hot Coffee', price: 65, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة قهوة مركزة، غنية وعطرية.', descEn: 'Strong, rich, and aromatic shot of pure coffee.', inStock: true },
             { id: 2, nameAr: 'إسبريسو دبل', nameEn: 'Double Espresso', category: 'Hot Coffee', price: 80, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة مضاعفة من الإسبريسو المحمص الفاخر.', descEn: 'Double shot of concentrated premium roasted espresso.', inStock: true },
             { id: 3, nameAr: 'كابتشينو', nameEn: 'Cappuccino', category: 'Hot Coffee', price: 95, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب المبخر وطبقة غنية من الرغوة.', descEn: 'Espresso with steamed milk and a deep layer of foam.', inStock: true },
@@ -326,11 +324,9 @@
             if (isAdminMode) {
                 document.getElementById('adminPanelSection').classList.remove('hidden');
                 document.getElementById('adminBadge').classList.remove('hidden');
-                document.getElementById('customerBadge').classList.add('hidden');
             } else {
                 document.getElementById('adminPanelSection').classList.add('hidden');
                 document.getElementById('adminBadge').classList.add('hidden');
-                document.getElementById('customerBadge').classList.remove('hidden');
             }
             applyLanguageUI();
             updateCartBadge();
@@ -352,12 +348,11 @@
             if (currentLang === 'en') {
                 htmlRoot.setAttribute('lang', 'en');
                 htmlRoot.setAttribute('dir', 'ltr');
-                langBtnText.innerText = 'العربية';
+                langBtnText.innerText = 'AR';
                 document.getElementById('pageTitle').innerText = 'Al-Gharbawy - Digital Menu';
                 document.getElementById('brandTitle').innerText = 'Al-Gharbawy';
-                document.getElementById('brandSub').innerText = 'Digital Menu • Est. 1970';
-                document.getElementById('adminText').innerText = 'Admin Mode';
-                document.getElementById('freshText').innerText = 'Freshly Roasted';
+                document.getElementById('brandSub').innerText = 'Digital Menu';
+                document.getElementById('adminText').innerText = 'Admin';
                 document.getElementById('adminPanelTitle').innerText = '🛠️ Add New Menu Item';
                 document.getElementById('liveUpdateBadge').innerText = 'Live Update';
                 document.getElementById('labelNameAr').innerText = 'Item Name (Arabic)';
@@ -372,22 +367,19 @@
                 document.getElementById('modalPriceLabel').innerText = 'Price:';
                 document.getElementById('modalAddText').innerText = 'Add to My Order';
                 document.getElementById('cartBtnTitle').innerText = 'My Order';
-                document.getElementById('cartBtnSub').innerText = 'Show to Waiter';
                 document.getElementById('favFilterText').innerText = 'Favorites';
-                document.getElementById('cartModalTitle').innerText = '📋 My Current Order (Show to Waiter)';
-                document.getElementById('cartModalSub').innerText = 'Select items and show them to your table server';
+                document.getElementById('cartModalTitle').innerText = '📋 My Current Order';
                 document.getElementById('cartTotalLabel').innerText = 'Total Amount:';
-                document.getElementById('clearCartBtn').innerText = 'Clear Order & Restart 🗑️';
+                document.getElementById('clearCartBtn').innerText = 'Clear Order 🗑️';
                 document.getElementById('footerText').innerText = 'Al-Gharbawy © 2026 ☕ All Rights Reserved';
             } else {
                 htmlRoot.setAttribute('lang', 'ar');
                 htmlRoot.setAttribute('dir', 'rtl');
-                langBtnText.innerText = 'English';
+                langBtnText.innerText = 'EN';
                 document.getElementById('pageTitle').innerText = 'القائمة الرقمية - الغرباوي';
                 document.getElementById('brandTitle').innerText = 'الغرباوي';
-                document.getElementById('brandSub').innerText = 'القائمة الرقمية • منذ 1970';
-                document.getElementById('adminText').innerText = 'وضع المشرف';
-                document.getElementById('freshText').innerText = 'محمصة طازجة';
+                document.getElementById('brandSub').innerText = 'القائمة الرقمية';
+                document.getElementById('adminText').innerText = 'مشرف';
                 document.getElementById('adminPanelTitle').innerText = '🛠️ إضافة عنصر جديد للقائمة';
                 document.getElementById('liveUpdateBadge').innerText = 'تحديث فوري';
                 document.getElementById('labelNameAr').innerText = 'اسم العنصر (عربي)';
@@ -401,13 +393,11 @@
                 searchInput.placeholder = 'ابحث في القائمة...';
                 document.getElementById('modalPriceLabel').innerText = 'السعر:';
                 document.getElementById('modalAddText').innerText = 'إضافة لطلبي';
-                document.getElementById('cartBtnTitle').innerText = 'طلباتي الحالية';
-                document.getElementById('cartBtnSub').innerText = 'اعرضها على الجرسون';
+                document.getElementById('cartBtnTitle').innerText = 'طلباتي';
                 document.getElementById('favFilterText').innerText = 'المفضلة';
-                document.getElementById('cartModalTitle').innerText = '📋 طلباتي الحالية (أرها للجرسون)';
-                document.getElementById('cartModalSub').innerText = 'قم باختيار ما ترغب به واديه لمسؤول الطاولة';
+                document.getElementById('cartModalTitle').innerText = '📋 طلباتي الحالية';
                 document.getElementById('cartTotalLabel').innerText = 'إجمالي الحساب:';
-                document.getElementById('clearCartBtn').innerText = 'مسح الطلبات وإعادة الاختيار 🗑️';
+                document.getElementById('clearCartBtn').innerText = 'مسح الطلبات 🗑️';
                 document.getElementById('footerText').innerText = 'الغرباوي © 2026 ☕ جميع الحقوق محفوظة';
             }
         }
@@ -418,7 +408,7 @@
             const item = menuItems.find(i => i.id === id);
             if (item) {
                 item.inStock = item.inStock === undefined ? false : !item.inStock;
-                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v8', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
@@ -446,22 +436,24 @@
             renderCustomerMenu();
         }
 
-        // Cart Management (Direct add without OK popup)
-        function addToCart(id, event) {
+        // Cart Management (Direct add / remove toggle)
+        function toggleCartItem(id, event) {
             if (event) event.stopPropagation();
             const item = menuItems.find(i => i.id === id);
             if (!item || item.inStock === false) return;
 
-            const existing = cart.find(c => c.id === id);
-            if (existing) {
-                existing.quantity += 1;
+            const existingIndex = cart.findIndex(c => c.id === id);
+            if (existingIndex > -1) {
+                cart.splice(existingIndex, 1);
             } else {
                 cart.push({ ...item, quantity: 1 });
             }
             saveCart();
+            renderCustomerMenu();
         }
 
-        function updateCartQuantity(id, change) {
+        function updateCartQuantity(id, change, event) {
+            if (event) event.stopPropagation();
             const item = cart.find(c => c.id === id);
             if (!item) return;
             item.quantity += change;
@@ -470,6 +462,7 @@
             }
             saveCart();
             renderCartModalItems();
+            renderCustomerMenu();
         }
 
         function saveCart() {
@@ -498,11 +491,10 @@
         }
 
         function clearCart() {
-            if (confirm(currentLang === 'en' ? 'Clear all items from order?' : 'هل تريد مسح الطلبات الحالية وإعادة الاختيار؟')) {
-                cart = [];
-                saveCart();
-                renderCartModalItems();
-            }
+            cart = [];
+            saveCart();
+            renderCartModalItems();
+            renderCustomerMenu();
         }
 
         function renderCartModalItems() {
@@ -510,7 +502,7 @@
             const totalPriceEl = document.getElementById('cartTotalPrice');
 
             if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center py-10 text-stone-400 text-xs">${currentLang === 'en' ? 'No items selected yet. Tap the plus button on any item!' : 'لم تقم باختيار أي أصناف بعد. اضغط على زر الإضافة بجوار المشروب!'}</div>`;
+                container.innerHTML = `<div class="text-center py-10 text-stone-400 text-xs">${currentLang === 'en' ? 'No items selected yet.' : 'لم تقم باختيار أي أصناف بعد.'}</div>`;
                 totalPriceEl.innerText = '0 ' + (currentLang === 'en' ? 'EGP' : 'جنيه');
                 return;
             }
@@ -530,9 +522,9 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-2">
-                            <button onclick="updateCartQuantity(${item.id}, -1)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">-</button>
+                            <button onclick="updateCartQuantity(${item.id}, -1, event)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">-</button>
                             <span class="text-xs font-black w-5 text-center">${item.quantity}</span>
-                            <button onclick="updateCartQuantity(${item.id}, 1)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">+</button>
+                            <button onclick="updateCartQuantity(${item.id}, 1, event)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">+</button>
                         </div>
                     </div>
                 `;
@@ -573,7 +565,7 @@
                 inStock: true
             };
             menuItems.push(newItem);
-            localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
+            localStorage.setItem('gharbaoui_menu_bilingual_v8', JSON.stringify(menuItems));
             document.getElementById('addItemForm').reset();
             renderCustomerMenu();
             alert(currentLang === 'en' ? 'Item added successfully!' : 'تم إضافة العنصر بنجاح!');
@@ -583,7 +575,7 @@
             event.stopPropagation();
             if (confirm(currentLang === 'en' ? 'Are you sure you want to delete this item?' : 'هل أنت متأكد من حذف هذا العنصر؟')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v8', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
@@ -647,7 +639,7 @@
                     inStock: currentStock
                 };
 
-                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v8', JSON.stringify(menuItems));
                 closeEditModal();
                 renderCustomerMenu();
                 alert(currentLang === 'en' ? 'Item updated successfully!' : 'تم تحديث العنصر بنجاح!');
@@ -661,6 +653,7 @@
             const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
             const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
             const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
+            const isInCart = cart.some(c => c.id === item.id);
 
             document.getElementById('modalName').innerText = itemName;
             document.getElementById('modalCategory').innerText = catReadable;
@@ -679,9 +672,15 @@
                 document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Out of Stock' : 'غير متوفر حالياً';
             } else {
                 addBtn.disabled = false;
-                addBtn.className = 'bg-amber-900 hover:bg-amber-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm';
-                document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Add to My Order' : 'إضافة لطلبي';
-                addBtn.setAttribute('onclick', `addToCart(${item.id}); closeModal();`);
+                if (isInCart) {
+                    addBtn.className = 'bg-rose-50 hover:bg-rose-100 text-rose-600 px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm';
+                    document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Remove from Order' : 'حذف من طلبي ✕';
+                    addBtn.setAttribute('onclick', `toggleCartItem(${item.id}); closeModal();`);
+                } else {
+                    addBtn.className = 'bg-amber-900 hover:bg-amber-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm';
+                    document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Add to My Order' : 'إضافة لطلبي ➕';
+                    addBtn.setAttribute('onclick', `toggleCartItem(${item.id}); closeModal();`);
+                }
             }
 
             document.getElementById('itemModal').classList.remove('hidden');
@@ -735,6 +734,7 @@
                 const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
                 const isFav = favorites.includes(item.id);
                 const inStock = item.inStock !== false;
+                const isInCart = cart.some(c => c.id === item.id);
                 
                 let adminActions = '';
                 if (isAdminMode) {
@@ -752,11 +752,18 @@
                 const cardOpacity = inStock ? '' : 'opacity-60 bg-stone-50/80';
                 const stockBadge = inStock ? '' : `<span class="absolute top-2 start-2 bg-rose-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg shadow-sm">${currentLang === 'en' ? 'Out of Stock' : 'غير متوفر'}</span>`;
 
-                const actionButton = inStock ? 
-                    `<button onclick="addToCart(${item.id}, event)" class="px-3 py-1 bg-amber-50 hover:bg-amber-900 hover:text-white text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                let actionButton = '';
+                if (!inStock) {
+                    actionButton = `<span class="text-[10px] font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">${currentLang === 'en' ? 'Unavailable' : 'نفد المخزون'}</span>`;
+                } else if (isInCart) {
+                    actionButton = `<button onclick="toggleCartItem(${item.id}, event)" class="px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                        <span>✕</span> <span>${currentLang === 'en' ? 'Remove' : 'حذف'}</span>
+                    </button>`;
+                } else {
+                    actionButton = `<button onclick="toggleCartItem(${item.id}, event)" class="px-3 py-1 bg-amber-50 hover:bg-amber-900 hover:text-white text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
                         <span>➕</span> <span>${currentLang === 'en' ? 'Add' : 'إضافة'}</span>
-                    </button>` :
-                    `<span class="text-[10px] font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">${currentLang === 'en' ? 'Unavailable' : 'نفد المخزون'}</span>`;
+                    </button>`;
+                }
 
                 return `
                 <div onclick="openItemDetails(${item.id})" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition ${cardOpacity}">
