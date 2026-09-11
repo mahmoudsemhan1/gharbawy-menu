@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Gharbawy - Digital Menu</title>
+    <title id="pageTitle">القائمة الرقمية - الغرباوي</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfbfa; }
+        
+        body { 
+            font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfbfa; 
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -23,16 +28,23 @@
                     <img src="logo-01.png" alt="Al-Gharbawy" class="w-full h-full object-contain">
                 </div>
                 <div>
-                    <h1 class="text-xs font-black tracking-wider text-stone-900 uppercase">Al-Gharbawy</h1>
-                    <p class="text-[10px] text-stone-400">Digital Menu • Est. 1970</p>
+                    <h1 id="brandTitle" class="text-xs font-black tracking-wider text-stone-900 uppercase">الغرباوي</h1>
+                    <p id="brandSub" class="text-[10px] text-stone-400">القائمة الرقمية • منذ 1970</p>
                 </div>
             </div>
             
-            <div id="adminBadge" class="hidden text-[11px] text-amber-800 font-bold bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">
-                ⚙️ Admin Mode
-            </div>
-            <div id="customerBadge" class="text-[11px] text-stone-600 font-semibold bg-stone-100 px-3 py-1 rounded-lg">
-                ☕ Freshly Roasted
+            <div class="flex items-center gap-2">
+                <!-- Language Toggle Button -->
+                <button onclick="toggleLanguage()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                    🌐 <span id="langBtnText">English</span>
+                </button>
+
+                <div id="adminBadge" class="hidden text-[11px] text-amber-800 font-bold bg-amber-50 px-3 py-1 rounded-lg border border-amber-200">
+                    ⚙️ <span id="adminText">وضع المشرف</span>
+                </div>
+                <div id="customerBadge" class="text-[11px] text-stone-600 font-semibold bg-stone-100 px-3 py-1 rounded-lg">
+                    ☕ <span id="freshText">محمصة طازجة</span>
+                </div>
             </div>
         </div>
     </header>
@@ -42,53 +54,61 @@
         <!-- Admin Panel: Add New Item -->
         <div id="adminPanelSection" class="hidden bg-white p-5 rounded-2xl shadow-sm border border-stone-200 space-y-4">
             <div class="flex justify-between items-center border-b border-stone-100 pb-3">
-                <h2 class="text-xs font-black text-stone-900">🛠️ Add New Menu Item</h2>
-                <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-md">Live Update</span>
+                <h2 id="adminPanelTitle" class="text-xs font-black text-stone-900">🛠️ إضافة عنصر جديد للقائمة</h2>
+                <span id="liveUpdateBadge" class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-md">تحديث فوري</span>
             </div>
             
             <form id="addItemForm" onsubmit="addNewItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Item Name</label>
-                    <input type="text" id="newName" required placeholder="e.g. Spanish Latte" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                    <label id="labelNameAr" class="block text-[10px] font-bold text-stone-500 mb-1">اسم العنصر (عربي)</label>
+                    <input type="text" id="newNameAr" required placeholder="مثال: سبانش لاتيه" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Category</label>
+                    <label id="labelNameEn" class="block text-[10px] font-bold text-stone-500 mb-1">اسم العنصر (إنجليزي)</label>
+                    <input type="text" id="newNameEn" required placeholder="e.g. Spanish Latte" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition text-left" dir="ltr">
+                </div>
+                <div>
+                    <label id="labelCategory" class="block text-[10px] font-bold text-stone-500 mb-1">القسم</label>
                     <select id="newCategory" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
-                        <option value="Hot Coffee">Hot Coffee</option>
-                        <option value="Specialty Coffee">Specialty Coffee</option>
-                        <option value="Iced Coffee">Iced Coffee</option>
-                        <option value="Iced Frappe">Iced Frappe</option>
-                        <option value="Milkshake">Milkshake</option>
-                        <option value="Smoothie">Smoothie</option>
-                        <option value="Non-Coffee">Non-Coffee</option>
-                        <option value="Mojito">Mojito</option>
-                        <option value="Soft Drink">Soft Drink</option>
-                        <option value="Fresh Juice">Fresh Juice</option>
-                        <option value="Cookie & Cake">Cookie & Cake</option>
-                        <option value="Cold Sandwich">Cold Sandwich</option>
-                        <option value="Main Dish">Main Dish</option>
-                        <option value="Salad">Salad</option>
-                        <option value="Bakery">Bakery</option>
-                        <option value="Breakfast">Breakfast</option>
+                        <option value="Hot Coffee">قهوة ساخنة / Hot Coffee</option>
+                        <option value="Specialty Coffee">قهوة مختصة / Specialty Coffee</option>
+                        <option value="Iced Coffee">قهوة مثلجة / Iced Coffee</option>
+                        <option value="Iced Frappe">فرابتيه مثلج / Iced Frappe</option>
+                        <option value="Milkshake">ميلك شيك / Milkshake</option>
+                        <option value="Smoothie">سموذي / Smoothie</option>
+                        <option value="Non-Coffee">مشروبات ساخنة أخرى / Non-Coffee</option>
+                        <option value="Mojito">موهيتو / Mojito</option>
+                        <option value="Soft Drink">مشروبات غازية / Soft Drink</option>
+                        <option value="Fresh Juice">عصائر طازجة / Fresh Juice</option>
+                        <option value="Cookie & Cake">كيك وكوكيز / Cookie & Cake</option>
+                        <option value="Cold Sandwich">ساندويتشات باردة / Cold Sandwich</option>
+                        <option value="Main Dish">أطباق رئيسية / Main Dish</option>
+                        <option value="Salad">سلطات / Salad</option>
+                        <option value="Bakery">مخبوزات / Bakery</option>
+                        <option value="Breakfast">فطور / Breakfast</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Price (EGP)</label>
+                    <label id="labelPrice" class="block text-[10px] font-bold text-stone-500 mb-1">السعر (جنيه)</label>
                     <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Image Source (Choose one)</label>
+                    <label id="labelImgSource" class="block text-[10px] font-bold text-stone-500 mb-1">مصدر الصورة</label>
                     <div class="space-y-1.5">
                         <input type="file" id="newImageFile" accept="image/*" class="w-full px-2 py-1 bg-stone-50 border border-stone-200 rounded-xl text-[10px] outline-none file:mr-2 file:py-0.5 file:px-2 file:rounded-lg file:border-0 file:text-[9px] file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 transition">
-                        <input type="url" id="newImageUrl" placeholder="Or paste image URL here..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                        <input type="url" id="newImageUrl" placeholder="أو رابط الصورة..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                     </div>
                 </div>
+                <div>
+                    <label id="labelDescAr" class="block text-[10px] font-bold text-stone-500 mb-1">الوصف (عربي)</label>
+                    <input type="text" id="newDescAr" placeholder="وصف المكونات..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                </div>
                 <div class="sm:col-span-2">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Description</label>
-                    <input type="text" id="newDesc" placeholder="Short ingredients description..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                    <label id="labelDescEn" class="block text-[10px] font-bold text-stone-500 mb-1">الوصف (إنجليزي)</label>
+                    <input type="text" id="newDescEn" placeholder="Ingredients description..." class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition text-left" dir="ltr">
                 </div>
                 <div class="sm:col-span-2 flex justify-end pt-1">
-                    <button type="submit" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2 rounded-xl text-xs font-bold transition">Add Item ➕</button>
+                    <button type="submit" id="addBtnText" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2 rounded-xl text-xs font-bold transition">إضافة العنصر ➕</button>
                 </div>
             </form>
         </div>
@@ -96,8 +116,8 @@
         <!-- Search & Categories Bar -->
         <div class="space-y-3 sticky top-14 bg-[#fcfbfa] py-2 z-40">
             <div class="relative">
-                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="Search menu items..." class="w-full px-4 py-2.5 pl-10 bg-white border border-stone-200 rounded-2xl text-xs outline-none focus:border-stone-900 shadow-sm transition">
-                <span class="absolute left-3.5 top-3 text-stone-400 text-sm">🔍</span>
+                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث في القائمة..." class="w-full px-4 py-2.5 ps-10 bg-white border border-stone-200 rounded-2xl text-xs outline-none focus:border-stone-900 shadow-sm transition">
+                <span class="absolute start-3.5 top-3 text-stone-400 text-sm">🔍</span>
             </div>
             <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
                 <!-- Categories dynamically loaded -->
@@ -113,7 +133,7 @@
     <!-- Item Details Modal -->
     <div id="itemModal" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-5 space-y-4 shadow-2xl border border-stone-100 relative animate-in fade-in zoom-in duration-200">
-            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
+            <button onclick="closeModal()" class="absolute top-4 end-4 w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
             <img id="modalImage" src="" class="w-full h-48 rounded-2xl object-cover bg-stone-100 shadow-inner">
             <div class="space-y-1.5">
                 <span id="modalCategory" class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md inline-block"></span>
@@ -121,7 +141,7 @@
                 <p id="modalDesc" class="text-xs text-stone-500 leading-relaxed pt-1"></p>
             </div>
             <div class="flex justify-between items-center pt-3 border-t border-stone-100">
-                <span class="text-xs text-stone-400 font-semibold">Price:</span>
+                <span id="modalPriceLabel" class="text-xs text-stone-400 font-semibold">السعر:</span>
                 <span id="modalPrice" class="text-base font-black text-stone-900"></span>
             </div>
         </div>
@@ -131,18 +151,22 @@
     <div id="editModal" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl border border-stone-100 relative">
             <div class="flex justify-between items-center border-b border-stone-100 pb-3">
-                <h2 class="text-xs font-black text-stone-900">✏️ Edit Menu Item</h2>
+                <h2 class="text-xs font-black text-stone-900">✏️ تعديل عنصر القائمة</h2>
                 <button onclick="closeEditModal()" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
             </div>
             <form id="editItemForm" onsubmit="updateItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input type="hidden" id="editId">
                 <input type="hidden" id="editOldImage">
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Item Name</label>
-                    <input type="text" id="editName" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">الاسم (عربي)</label>
+                    <input type="text" id="editNameAr" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Category</label>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">الاسم (إنجليزي)</label>
+                    <input type="text" id="editNameEn" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition text-left" dir="ltr">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">القسم</label>
                     <select id="editCategory" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                         <option value="Hot Coffee">Hot Coffee</option>
                         <option value="Specialty Coffee">Specialty Coffee</option>
@@ -163,30 +187,34 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Price (EGP)</label>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">السعر (جنيه)</label>
                     <input type="number" id="editPrice" required class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Change Image Source</label>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">تغيير الصورة</label>
                     <div class="space-y-1.5">
                         <input type="file" id="editImageFile" accept="image/*" class="w-full px-2 py-1 bg-stone-50 border border-stone-200 rounded-xl text-[10px] outline-none file:mr-2 file:py-0.5 file:px-2 file:rounded-lg file:border-0 file:text-[9px] file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 transition">
-                        <input type="url" id="editImageUrl" placeholder="Or paste new image URL..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                        <input type="url" id="editImageUrl" placeholder="رابط صورة جديد..." class="w-full px-3 py-1.5 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                     </div>
                 </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">الوصف (عربي)</label>
+                    <input type="text" id="editDescAr" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                </div>
                 <div class="sm:col-span-2">
-                    <label class="block text-[10px] font-bold text-stone-500 mb-1">Description</label>
-                    <input type="text" id="editDesc" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                    <label class="block text-[10px] font-bold text-stone-500 mb-1">الوصف (إنجليزي)</label>
+                    <input type="text" id="editDescEn" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition text-left" dir="ltr">
                 </div>
                 <div class="sm:col-span-2 flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-stone-100 text-stone-600 rounded-xl text-xs font-bold transition">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition">Save Changes 💾</button>
+                    <button type="button" onclick="closeEditModal()" class="px-4 py-2 bg-stone-100 text-stone-600 rounded-xl text-xs font-bold transition">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition">حفظ التعديلات 💾</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <footer class="text-center py-6 text-[11px] text-stone-400 border-t border-stone-200 mt-auto bg-white">
-        Al-Gharbawy © 2026 ☕ All Rights Reserved
+    <footer id="footerText" class="text-center py-6 text-[11px] text-stone-400 border-t border-stone-200 mt-auto bg-white">
+        الغرباوي © 2026 ☕ جميع الحقوق محفوظة
     </footer>
 
     <script>
@@ -197,45 +225,51 @@
             'Salad', 'Bakery', 'Breakfast'
         ];
 
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_en_v7')) || [
-            { id: 1, name: 'Espresso', category: 'Hot Coffee', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', desc: 'Strong, rich, and aromatic shot of pure coffee.' },
-            { id: 2, name: 'Double Espresso', category: 'Hot Coffee', price: 45, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'Double shot of concentrated premium roasted espresso.' },
-            { id: 3, name: 'Cappuccino', category: 'Hot Coffee', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with steamed milk and a deep layer of foam.' },
-            { id: 4, name: 'Café Latte', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', desc: 'Smooth espresso balanced with plenty of steamed milk.' },
-            { id: 5, name: 'Flat White', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=500&q=80', desc: 'Ristretto shots topped with velvety microfoam.' },
-            { id: 6, name: 'Turkish Coffee', category: 'Hot Coffee', price: 30, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', desc: 'Traditional finely ground coffee brewed in a cezve.' },
-            { id: 7, name: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', desc: 'Espresso with textured milk and sweet condensed milk.' },
-            { id: 8, name: 'V60 Pour Over', category: 'Specialty Coffee', price: 80, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', desc: 'Single-origin craft filter coffee brewed manually.' },
-            { id: 9, name: 'Chemex Coffee', category: 'Specialty Coffee', price: 85, image: 'https://images.unsplash.com/photo-1507133754945-2f8409418a03?auto=format&fit=crop&w=500&q=80', desc: 'Clean, bright, and aromatic specialty pour over.' },
-            { id: 10, name: 'Iced Americano', category: 'Iced Coffee', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', desc: 'Espresso poured over chilled water and ice.' },
-            { id: 11, name: 'Iced Spanish Latte', category: 'Iced Coffee', price: 75, image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80', desc: 'Chilled espresso, fresh milk, and sweet condensed milk.' },
-            { id: 12, name: 'Iced Caramel Macchiato', category: 'Iced Coffee', price: 70, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=500&q=80', desc: 'Cold espresso, fresh milk, and rich caramel drizzle.' },
-            { id: 13, name: 'Mocha Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Blended ice, espresso, chocolate, and milk with whipped cream.' },
-            { id: 14, name: 'Caramel Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1589396114880-873b40098997?auto=format&fit=crop&w=500&q=80', desc: 'Blended coffee and caramel syrup with whipped topping.' },
-            { id: 15, name: 'Oreo Milkshake', category: 'Milkshake', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', desc: 'Rich vanilla ice cream blended with crushed Oreo cookies.' },
-            { id: 16, name: 'Belgian Chocolate Shake', category: 'Milkshake', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', desc: 'Thick milkshake infused with authentic Belgian chocolate.' },
-            { id: 17, name: 'Mango Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing blended fresh tropical mango fruit.' },
-            { id: 18, name: 'Strawberry Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=500&q=80', desc: 'Sweet and tangy fresh strawberry blended smooth.' },
-            { id: 19, name: 'Hot Belgian Chocolate', category: 'Non-Coffee', price: 60, image: 'https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&w=500&q=80', desc: 'Warm, thick, and rich melted chocolate drink.' },
-            { id: 20, name: 'Matcha Latte', category: 'Non-Coffee', price: 75, image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&w=500&q=80', desc: 'Ceremonial grade Japanese green tea with steamed milk.' },
-            { id: 21, name: 'Classic Mint Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', desc: 'Refreshing soda with fresh mint, lime, and mojito syrup.' },
-            { id: 22, name: 'Blue Berry Mojito', category: 'Mojito', price: 60, image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=500&q=80', desc: 'Sparkling soda infused with sweet blueberry and mint.' },
-            { id: 23, name: 'Coca-Cola', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', desc: 'Chilled classic refreshing soda.' },
-            { id: 24, name: 'Sprite', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80', desc: 'Crisp lemon-lime flavored carbonated drink.' },
-            { id: 25, name: 'Fresh Orange Juice', category: 'Fresh Juice', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', desc: 'Squeezed 100% natural fresh oranges.' },
-            { id: 26, name: 'Fresh Lemon Mint', category: 'Fresh Juice', price: 45, image: 'https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=500&q=80', desc: 'Blended fresh lemons with aromatic mint leaves.' },
-            { id: 27, name: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', desc: 'Decadent multi-layered chocolate cake slice.' },
-            { id: 28, name: 'Cheesecake Slice', category: 'Cookie & Cake', price: 70, image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=500&q=80', desc: 'New York style creamy cheesecake with berry topping.' },
-            { id: 29, name: 'Smoked Turkey Sandwich', category: 'Cold Sandwich', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', desc: 'Sliced smoked turkey with cheese and lettuce in fresh bread.' },
-            { id: 30, name: 'Roast Beef Sandwich', category: 'Cold Sandwich', price: 95, image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=500&q=80', desc: 'Tender roast beef slices with mustard and fresh veggies.' },
-            { id: 31, name: 'Grilled Chicken Pasta', category: 'Main Dish', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', desc: 'Penne pasta with creamy white sauce and tender grilled chicken.' },
-            { id: 32, name: 'Chicken Mushroom Risotto', category: 'Main Dish', price: 135, image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=500&q=80', desc: 'Creamy arborio rice with fresh mushrooms and grilled chicken.' },
-            { id: 33, name: 'Caesar Salad', category: 'Salad', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', desc: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.' },
-            { id: 34, name: 'Greek Salad', category: 'Salad', price: 70, image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80', desc: 'Fresh tomatoes, cucumbers, olives, and feta cheese.' },
-            { id: 35, name: 'Butter Croissant', category: 'Bakery', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', desc: 'Flaky, buttery, freshly baked French pastry.' },
-            { id: 36, name: 'Chocolate Danish', category: 'Bakery', price: 45, image: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=500&q=80', desc: 'Sweet pastry filled with rich Belgian chocolate.' },
-            { id: 37, name: 'Classic Breakfast Platter', category: 'Breakfast', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', desc: 'Eggs, toast, cheese, and fresh side salad.' },
-            { id: 38, name: 'Shakshuka Breakfast', category: 'Breakfast', price: 80, image: 'https://images.unsplash.com/photo-1590412200988-a46697078ad5?auto=format&fit=crop&w=500&q=80', desc: 'Eggs poached in a simmering tomato and pepper sauce with bread.' }
+        const categoryNames = {
+            'All': { ar: 'الكل', en: 'All' },
+            'Hot Coffee': { ar: 'قهوة ساخنة', en: 'Hot Coffee' },
+            'Specialty Coffee': { ar: 'قهوة مختصة', en: 'Specialty Coffee' },
+            'Iced Coffee': { ar: 'قهوة مثلجة', en: 'Iced Coffee' },
+            'Iced Frappe': { ar: 'فرابتيه مثلج', en: 'Iced Frappe' },
+            'Milkshake': { ar: 'ميلك شيك', en: 'Milkshake' },
+            'Smoothie': { ar: 'سموذي', en: 'Smoothie' },
+            'Non-Coffee': { ar: 'مشروبات ساخنة', en: 'Non-Coffee' },
+            'Mojito': { ar: 'موهيتو', en: 'Mojito' },
+            'Soft Drink': { ar: 'مشروبات غازية', en: 'Soft Drink' },
+            'Fresh Juice': { ar: 'عصائر طازجة', en: 'Fresh Juice' },
+            'Cookie & Cake': { ar: 'كيك وكوكيز', en: 'Cookie & Cake' },
+            'Cold Sandwich': { ar: 'ساندويتشات', en: 'Cold Sandwich' },
+            'Main Dish': { ar: 'أطباق رئيسية', en: 'Main Dish' },
+            'Salad': { ar: 'سلطات', en: 'Salad' },
+            'Bakery': { ar: 'مخبوزات', en: 'Bakery' },
+            'Breakfast': { ar: 'فطور', en: 'Breakfast' }
+        };
+
+        let currentLang = localStorage.getItem('gharbaoui_lang') || 'ar';
+
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_bilingual_v1')) || [
+            { id: 1, nameAr: 'إسبريسو', nameEn: 'Espresso', category: 'Hot Coffee', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة قهوة مركزة، غنية وعطرية.', descEn: 'Strong, rich, and aromatic shot of pure coffee.' },
+            { id: 2, nameAr: 'إسبريسو دبل', nameEn: 'Double Espresso', category: 'Hot Coffee', price: 45, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة مضاعفة من الإسبريسو المحمص الفاخر.', descEn: 'Double shot of concentrated premium roasted espresso.' },
+            { id: 3, nameAr: 'كابتشينو', nameEn: 'Cappuccino', category: 'Hot Coffee', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب المبخر وطبقة غنية من الرغوة.', descEn: 'Espresso with steamed milk and a deep layer of foam.' },
+            { id: 4, nameAr: 'كافيه لاتيه', nameEn: 'Café Latte', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو ناعم متوازن مع الحليب المبخر.', descEn: 'Smooth espresso balanced with plenty of steamed milk.' },
+            { id: 5, nameAr: 'فلات وايت', nameEn: 'Flat White', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=500&q=80', descAr: 'ريستريتو مغطى برغوة الحليب المخملية الناعمة.', descEn: 'Ristretto shots topped with velvety microfoam.' },
+            { id: 6, nameAr: 'قهوة تركي', nameEn: 'Turkish Coffee', category: 'Hot Coffee', price: 30, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'قهوة تقليدية مطحونة بدقة ومحضرة في الركوة.', descEn: 'Traditional finely ground coffee brewed in a cezve.' },
+            { id: 7, nameAr: 'سبانش لاتيه', nameEn: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب والحليب المكثف المحلى.', descEn: 'Espresso with textured milk and sweet condensed milk.' },
+            { id: 8, nameAr: 'في 60 قطرات', nameEn: 'V60 Pour Over', category: 'Specialty Coffee', price: 80, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', descAr: 'قهوة فلتر مختصة أحادية المصدر محضرة يدوياً.', descEn: 'Single-origin craft filter coffee brewed manually.' },
+            { id: 9, nameAr: 'إسبريسو مثلج أمريكانو', nameEn: 'Iced Americano', category: 'Iced Coffee', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مسكوب فوق الماء المثلج والثلج.', descEn: 'Espresso poured over chilled water and ice.' },
+            { id: 10, nameAr: 'سبانش لاتيه مثلج', nameEn: 'Iced Spanish Latte', category: 'Iced Coffee', price: 75, image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو بارد، حليب طازج وحليب مكثف حلو.', descEn: 'Chilled espresso, fresh milk, and sweet condensed milk.' },
+            { id: 11, nameAr: 'موكا فرابتيه', nameEn: 'Mocha Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', descAr: 'ثلج مخفوق، إسبريسو، شوكولاتة وحليب مع كريمة.', descEn: 'Blended ice, espresso, chocolate, and milk with whipped cream.' },
+            { id: 12, nameAr: 'ميلك شيك أوريو', nameEn: 'Oreo Milkshake', category: 'Milkshake', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', descAr: 'آيس كريم فانيليا غني مع قطع بسكويت أوريو.', descEn: 'Rich vanilla ice cream blended with crushed Oreo cookies.' },
+            { id: 13, nameAr: 'سموذي مانجو', nameEn: 'Mango Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', descAr: 'مانجو استوائي طازج مخفوق ومنعش.', descEn: 'Refreshing blended fresh tropical mango fruit.' },
+            { id: 14, nameAr: 'موهيتو نعناع كلاسيك', nameEn: 'Classic Mint Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', descAr: 'مشروب غازي منعش مع النعناع الطازج والليمون.', descEn: 'Refreshing soda with fresh mint, lime, and mojito syrup.' },
+            { id: 15, nameAr: 'كوكا كولا', nameEn: 'Coca-Cola', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', descAr: 'مشروب غازي بارد ومنعش.', descEn: 'Chilled classic refreshing soda.' },
+            { id: 16, nameAr: 'عصير برتقال طازج', nameEn: 'Fresh Orange Juice', category: 'Fresh Juice', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', descAr: 'برتقال طازج معصور 100% طبيعي.', descEn: 'Squeezed 100% natural fresh oranges.' },
+            { id: 17, nameAr: 'كيك فدج بالشوكولاتة', nameEn: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', descAr: 'قطعة كيك شوكولاتة غنية متعددة الطبقات.', descEn: 'Decadent multi-layered chocolate cake slice.' },
+            { id: 18, nameAr: 'ساندويتش تركي مدخن', nameEn: 'Smoked Turkey Sandwich', category: 'Cold Sandwich', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', descAr: 'تركي مدخن شرائح مع الجبن والخس في خبز طازج.', descEn: 'Sliced smoked turkey with cheese and lettuce in fresh bread.' },
+            { id: 19, nameAr: 'باستا دجاج مشوي', nameEn: 'Grilled Chicken Pasta', category: 'Main Dish', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', descAr: 'مكرونة بيني بالصوص الأبيض الكريمي ودجاج مشوي.', descEn: 'Penne pasta with creamy white sauce and tender grilled chicken.' },
+            { id: 20, nameAr: 'سلطة سيزر', nameEn: 'Caesar Salad', category: 'Salad', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', descAr: 'خس روماني مقرمش، كروتون، جبن بارميزان وصوص سيزر.', descEn: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.' },
+            { id: 21, nameAr: 'كرواسون زبدة', nameEn: 'Butter Croissant', category: 'Bakery', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', descAr: 'معجنات فرنسية مخبوزة طازجة وهشة بالزبدة.', descEn: 'Flaky, buttery, freshly baked French pastry.' },
+            { id: 22, nameAr: 'طبق فطور كلاسيكي', nameEn: 'Classic Breakfast Platter', category: 'Breakfast', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', descAr: 'بيض، توست، جبن وسلطة جانبية طازجة.', descEn: 'Eggs, toast, cheese, and fresh side salad.' }
         ];
 
         let activeCategory = 'All';
@@ -254,10 +288,69 @@
                 document.getElementById('adminBadge').classList.add('hidden');
                 document.getElementById('customerBadge').classList.remove('hidden');
             }
+            applyLanguageUI();
             renderCustomerMenu();
         };
 
-        // إضافة صنف جديد مع دعم رفع الملف أو استخدام الرابط
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('gharbaoui_lang', currentLang);
+            applyLanguageUI();
+            renderCustomerMenu();
+        }
+
+        function applyLanguageUI() {
+            const htmlRoot = document.getElementById('htmlRoot');
+            const langBtnText = document.getElementById('langBtnText');
+            const searchInput = document.getElementById('searchInput');
+
+            if (currentLang === 'en') {
+                htmlRoot.setAttribute('lang', 'en');
+                htmlRoot.setAttribute('dir', 'ltr');
+                langBtnText.innerText = 'العربية';
+                document.getElementById('pageTitle').innerText = 'Al-Gharbawy - Digital Menu';
+                document.getElementById('brandTitle').innerText = 'Al-Gharbawy';
+                document.getElementById('brandSub').innerText = 'Digital Menu • Est. 1970';
+                document.getElementById('adminText').innerText = 'Admin Mode';
+                document.getElementById('freshText').innerText = 'Freshly Roasted';
+                document.getElementById('adminPanelTitle').innerText = '🛠️ Add New Menu Item';
+                document.getElementById('liveUpdateBadge').innerText = 'Live Update';
+                document.getElementById('labelNameAr').innerText = 'Item Name (Arabic)';
+                document.getElementById('labelNameEn').innerText = 'Item Name (English)';
+                document.getElementById('labelCategory').innerText = 'Category';
+                document.getElementById('labelPrice').innerText = 'Price (EGP)';
+                document.getElementById('labelImgSource').innerText = 'Image Source';
+                document.getElementById('labelDescAr').innerText = 'Description (Arabic)';
+                document.getElementById('labelDescEn').innerText = 'Description (English)';
+                document.getElementById('addBtnText').innerText = 'Add Item ➕';
+                searchInput.placeholder = 'Search menu items...';
+                document.getElementById('modalPriceLabel').innerText = 'Price:';
+                document.getElementById('footerText').innerText = 'Al-Gharbawy © 2026 ☕ All Rights Reserved';
+            } else {
+                htmlRoot.setAttribute('lang', 'ar');
+                htmlRoot.setAttribute('dir', 'rtl');
+                langBtnText.innerText = 'English';
+                document.getElementById('pageTitle').innerText = 'القائمة الرقمية - الغرباوي';
+                document.getElementById('brandTitle').innerText = 'الغرباوي';
+                document.getElementById('brandSub').innerText = 'القائمة الرقمية • منذ 1970';
+                document.getElementById('adminText').innerText = 'وضع المشرف';
+                document.getElementById('freshText').innerText = 'محمصة طازجة';
+                document.getElementById('adminPanelTitle').innerText = '🛠️ إضافة عنصر جديد للقائمة';
+                document.getElementById('liveUpdateBadge').innerText = 'تحديث فوري';
+                document.getElementById('labelNameAr').innerText = 'اسم العنصر (عربي)';
+                document.getElementById('labelNameEn').innerText = 'اسم العنصر (إنجليزي)';
+                document.getElementById('labelCategory').innerText = 'القسم';
+                document.getElementById('labelPrice').innerText = 'السعر (جنيه)';
+                document.getElementById('labelImgSource').innerText = 'مصدر الصورة';
+                document.getElementById('labelDescAr').innerText = 'الوصف (عربي)';
+                document.getElementById('labelDescEn').innerText = 'الوصف (إنجليزي)';
+                document.getElementById('addBtnText').innerText = 'إضافة العنصر ➕';
+                searchInput.placeholder = 'ابحث في القائمة...';
+                document.getElementById('modalPriceLabel').innerText = 'السعر:';
+                document.getElementById('footerText').innerText = 'الغرباوي © 2026 ☕ جميع الحقوق محفوظة';
+            }
+        }
+
         function addNewItem(e) {
             e.preventDefault();
             const fileInput = document.getElementById('newImageFile');
@@ -279,24 +372,26 @@
         function saveNewItemData(imgSrc) {
             const newItem = {
                 id: Date.now(),
-                name: document.getElementById('newName').value,
+                nameAr: document.getElementById('newNameAr').value,
+                nameEn: document.getElementById('newNameEn').value,
                 category: document.getElementById('newCategory').value,
                 price: parseFloat(document.getElementById('newPrice').value),
                 image: imgSrc,
-                desc: document.getElementById('newDesc').value || 'Freshly prepared.'
+                descAr: document.getElementById('newDescAr').value || 'طازج ومعد بعناية.',
+                descEn: document.getElementById('newDescEn').value || 'Freshly prepared.'
             };
             menuItems.push(newItem);
-            localStorage.setItem('gharbaoui_menu_en_v7', JSON.stringify(menuItems));
+            localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
             document.getElementById('addItemForm').reset();
             renderCustomerMenu();
-            alert('Item added successfully!');
+            alert(currentLang === 'en' ? 'Item added successfully!' : 'تم إضافة العنصر بنجاح!');
         }
 
         function deleteItem(id, event) {
             event.stopPropagation();
-            if (confirm('Are you sure you want to delete this item?')) {
+            if (confirm(currentLang === 'en' ? 'Are you sure you want to delete this item?' : 'هل أنت متأكد من حذف هذا العنصر؟')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_en_v7', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
@@ -308,10 +403,12 @@
 
             document.getElementById('editId').value = item.id;
             document.getElementById('editOldImage').value = item.image;
-            document.getElementById('editName').value = item.name;
+            document.getElementById('editNameAr').value = item.nameAr;
+            document.getElementById('editNameEn').value = item.nameEn;
             document.getElementById('editCategory').value = item.category;
             document.getElementById('editPrice').value = item.price;
-            document.getElementById('editDesc').value = item.desc || '';
+            document.getElementById('editDescAr').value = item.descAr || '';
+            document.getElementById('editDescEn').value = item.descEn || '';
             document.getElementById('editImageFile').value = '';
             document.getElementById('editImageUrl').value = '';
 
@@ -322,7 +419,6 @@
             document.getElementById('editModal').classList.add('hidden');
         }
 
-        // تحديث الصنف مع دعم رفع الملف أو الرابط الجديد
         function updateItem(e) {
             e.preventDefault();
             const id = parseInt(document.getElementById('editId').value);
@@ -348,24 +444,26 @@
             if (index !== -1) {
                 menuItems[index] = {
                     id: id,
-                    name: document.getElementById('editName').value,
+                    nameAr: document.getElementById('editNameAr').value,
+                    nameEn: document.getElementById('editNameEn').value,
                     category: document.getElementById('editCategory').value,
                     price: parseFloat(document.getElementById('editPrice').value),
                     image: imgSrc,
-                    desc: document.getElementById('editDesc').value
+                    descAr: document.getElementById('editDescAr').value,
+                    descEn: document.getElementById('editDescEn').value
                 };
 
-                localStorage.setItem('gharbaoui_menu_en_v7', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
                 closeEditModal();
                 renderCustomerMenu();
-                alert('Item updated successfully!');
+                alert(currentLang === 'en' ? 'Item updated successfully!' : 'تم تحديث العنصر بنجاح!');
             }
         }
 
-        function openItemDetails(name, category, price, image, desc) {
+        function openItemDetails(name, categoryReadable, price, image, desc) {
             document.getElementById('modalName').innerText = name;
-            document.getElementById('modalCategory').innerText = category;
-            document.getElementById('modalPrice').innerText = price + ' EGP';
+            document.getElementById('modalCategory').innerText = categoryReadable;
+            document.getElementById('modalPrice').innerText = price + (currentLang === 'en' ? ' EGP' : ' جنيه');
             document.getElementById('modalImage').src = image;
             document.getElementById('modalDesc').innerText = desc;
             document.getElementById('itemModal').classList.remove('hidden');
@@ -378,11 +476,14 @@
         function renderCustomerMenu() {
             const tabsContainer = document.getElementById('categoryTabs');
             
-            tabsContainer.innerHTML = categoriesList.map(cat => `
-                <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-stone-900 text-white shadow-sm' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
-                    ${cat}
-                </button>
-            `).join('');
+            tabsContainer.innerHTML = categoriesList.map(cat => {
+                const catLabel = categoryNames[cat] ? categoryNames[cat][currentLang] : cat;
+                return `
+                    <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-stone-900 text-white shadow-sm' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
+                        ${catLabel}
+                    </button>
+                `;
+            }).join('');
 
             filterMenu();
         }
@@ -398,36 +499,47 @@
 
             let filtered = menuItems.filter(item => {
                 const matchesCategory = (activeCategory === 'All' || item.category === activeCategory);
-                const matchesSearch = item.name.toLowerCase().includes(searchVal) || (item.desc && item.desc.toLowerCase().includes(searchVal));
-                return matchesCategory && matchesSearch;
+                const nameMatch = item.nameAr.toLowerCase().includes(searchVal) || item.nameEn.toLowerCase().includes(searchVal);
+                const descMatch = (item.descAr && item.descAr.toLowerCase().includes(searchVal)) || (item.descEn && item.descEn.toLowerCase().includes(searchVal));
+                return matchesCategory && (nameMatch || descMatch);
             });
 
             if (filtered.length === 0) {
-                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-stone-400 text-xs">No items found matching your search.</div>`;
+                gridContainer.innerHTML = `<div class="col-span-full text-center py-16 text-stone-400 text-xs">${currentLang === 'en' ? 'No items found matching your search.' : 'لا توجد عناصر مطابقة لبحثك.'}</div>`;
                 return;
             }
 
             gridContainer.innerHTML = filtered.map(item => {
-                const safeName = item.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                const safeDesc = (item.desc || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
+                const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
                 
+                const safeName = itemName.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeDesc = (itemDesc || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeCatReadable = catReadable.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                let adminActions = '';
+                if (isAdminMode) {
+                    adminActions = `
+                        <div class="absolute top-2 end-2 flex gap-1 bg-white/90 backdrop-blur-sm p-1 rounded-xl shadow-sm border border-stone-200 opacity-95 sm:opacity-0 group-hover:opacity-100 transition">
+                            <button onclick="openEditModal(${item.id}, event)" class="w-6 h-6 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg flex items-center justify-center text-[10px] font-bold" title="Edit">✏️</button>
+                            <button onclick="deleteItem(${item.id}, event)" class="w-6 h-6 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-[10px] font-bold" title="Delete">🗑️</button>
+                        </div>
+                    `;
+                }
+
                 return `
-                <div onclick="openItemDetails('${safeName}', '${item.category}', ${item.price}, '${item.image}', '${safeDesc}')" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition">
+                <div onclick="openItemDetails('${safeName}', '${safeCatReadable}', ${item.price}, '${item.image}', '${safeDesc}')" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition">
                     <img src="${item.image}" class="w-20 h-20 rounded-xl object-cover bg-stone-100 flex-shrink-0">
                     <div class="flex-grow min-w-0">
-                        <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block mb-1">${item.category}</span>
-                        <h3 class="font-black text-xs sm:text-sm text-stone-900 truncate">${item.name}</h3>
-                        <p class="text-[11px] text-stone-400 truncate mt-0.5">${item.desc}</p>
-                        <div class="mt-2 font-black text-stone-900 text-xs">${item.price} <span class="text-[10px] font-normal text-stone-400">EGP</span></div>
+                        <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block mb-1">${catReadable}</span>
+                        <h3 class="font-black text-xs sm:text-sm text-stone-900 truncate">${itemName}</h3>
+                        <p class="text-[11px] text-stone-400 truncate mt-0.5">${itemDesc}</p>
+                        <div class="mt-2 font-black text-xs sm:text-sm text-stone-900">${item.price} ${currentLang === 'en' ? 'EGP' : 'جنيه'}</div>
                     </div>
-                    ${isAdminMode ? `
-                        <div class="absolute top-2 left-2 flex gap-1 z-10">
-                            <button onclick="openEditModal(${item.id}, event)" class="bg-amber-50 text-amber-800 text-[10px] px-2 py-1 rounded-lg font-bold border border-amber-200 hover:bg-amber-800 hover:text-white transition">Edit</button>
-                            <button onclick="deleteItem(${item.id}, event)" class="bg-red-50 text-red-600 text-[10px] px-2 py-1 rounded-lg font-bold border border-red-100 hover:bg-red-600 hover:text-white transition">Delete</button>
-                        </div>
-                    ` : ''}
+                    ${adminActions}
                 </div>
-            `;
+                `;
             }).join('');
         }
     </script>
