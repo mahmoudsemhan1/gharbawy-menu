@@ -34,8 +34,18 @@
             </div>
             
             <div class="flex items-center gap-2">
+                <!-- My Order / Cart Button -->
+                <button onclick="openCartModal()" class="relative px-3.5 py-2 bg-amber-900 hover:bg-amber-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-sm">
+                    <span>📋</span>
+                    <div class="text-right">
+                        <div id="cartBtnTitle" class="leading-none">طلباتي الحالية</div>
+                        <div id="cartBtnSub" class="text-[9px] text-amber-200 font-normal mt-0.5">اعرضها على الجرسون</div>
+                    </div>
+                    <span id="cartCountBadge" class="absolute -top-1.5 -right-1.5 bg-stone-900 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+                </button>
+
                 <!-- Language Toggle Button -->
-                <button onclick="toggleLanguage()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                <button onclick="toggleLanguage()" class="px-3 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                     🌐 <span id="langBtnText">English</span>
                 </button>
 
@@ -90,7 +100,7 @@
                 </div>
                 <div>
                     <label id="labelPrice" class="block text-[10px] font-bold text-stone-500 mb-1">السعر (جنيه)</label>
-                    <input type="number" id="newPrice" required placeholder="65" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
+                    <input type="number" id="newPrice" required placeholder="85" class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs outline-none focus:border-stone-900 transition">
                 </div>
                 <div>
                     <label id="labelImgSource" class="block text-[10px] font-bold text-stone-500 mb-1">مصدر الصورة</label>
@@ -115,9 +125,15 @@
 
         <!-- Search & Categories Bar -->
         <div class="space-y-3 sticky top-14 bg-[#fcfbfa] py-2 z-40">
-            <div class="relative">
-                <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث في القائمة..." class="w-full px-4 py-2.5 ps-10 bg-white border border-stone-200 rounded-2xl text-xs outline-none focus:border-stone-900 shadow-sm transition">
-                <span class="absolute start-3.5 top-3 text-stone-400 text-sm">🔍</span>
+            <div class="flex gap-2">
+                <div class="relative flex-grow">
+                    <input type="text" id="searchInput" oninput="filterMenu()" placeholder="ابحث في القائمة..." class="w-full px-4 py-2.5 ps-10 bg-white border border-stone-200 rounded-2xl text-xs outline-none focus:border-stone-900 shadow-sm transition">
+                    <span class="absolute start-3.5 top-3 text-stone-400 text-sm">🔍</span>
+                </div>
+                <!-- Favorites Filter Toggle -->
+                <button onclick="toggleFavoritesFilter()" id="favFilterBtn" class="px-4 py-2 bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm whitespace-nowrap">
+                    🤍 <span id="favFilterText">المفضلة</span>
+                </button>
             </div>
             <div id="categoryTabs" class="flex overflow-x-auto gap-2 pb-1 no-scrollbar">
                 <!-- Categories dynamically loaded -->
@@ -136,13 +152,48 @@
             <button onclick="closeModal()" class="absolute top-4 end-4 w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
             <img id="modalImage" src="" class="w-full h-48 rounded-2xl object-cover bg-stone-100 shadow-inner">
             <div class="space-y-1.5">
-                <span id="modalCategory" class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md inline-block"></span>
+                <div class="flex justify-between items-center">
+                    <span id="modalCategory" class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md inline-block"></span>
+                    <button id="modalFavBtn" onclick="" class="text-xl">🤍</button>
+                </div>
                 <h2 id="modalName" class="text-base font-black text-stone-900"></h2>
                 <p id="modalDesc" class="text-xs text-stone-500 leading-relaxed pt-1"></p>
             </div>
             <div class="flex justify-between items-center pt-3 border-t border-stone-100">
-                <span id="modalPriceLabel" class="text-xs text-stone-400 font-semibold">السعر:</span>
-                <span id="modalPrice" class="text-base font-black text-stone-900"></span>
+                <div>
+                    <span id="modalPriceLabel" class="text-xs text-stone-400 font-semibold block">السعر:</span>
+                    <span id="modalPrice" class="text-base font-black text-stone-900"></span>
+                </div>
+                <button id="modalAddToCartBtn" onclick="" class="bg-amber-900 hover:bg-amber-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <span>➕</span> <span id="modalAddText">إضافة لطلبي</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal (Show to Waiter) -->
+    <div id="cartModal" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl border border-stone-100 relative flex flex-col max-h-[85vh]">
+            <div class="flex justify-between items-center border-b border-stone-100 pb-3">
+                <div>
+                    <h2 id="cartModalTitle" class="text-sm font-black text-stone-900">📋 طلباتي الحالية (أرها للجرسون)</h2>
+                    <p id="cartModalSub" class="text-[10px] text-stone-400 mt-0.5">قم باختيار ما ترغب به واديه لمسؤول الطاولة</p>
+                </div>
+                <button onclick="closeCartModal()" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center text-stone-600 text-xs font-bold transition">✕</button>
+            </div>
+            
+            <div id="cartItemsContainer" class="overflow-y-auto space-y-3 flex-grow divide-y divide-stone-100">
+                <!-- Cart items loaded here -->
+            </div>
+
+            <div class="border-t border-stone-100 pt-3 space-y-3">
+                <div class="flex justify-between items-center text-sm font-black">
+                    <span id="cartTotalLabel">إجمالي الحساب:</span>
+                    <span id="cartTotalPrice" class="text-amber-900">0 جنيه</span>
+                </div>
+                <button onclick="clearCart()" id="clearCartBtn" class="w-full py-2.5 bg-stone-100 hover:bg-red-50 text-stone-700 hover:text-red-600 rounded-xl text-xs font-bold transition">
+                    مسح الطلبات وإعادة الاختيار 🗑️
+                </button>
             </div>
         </div>
     </div>
@@ -246,30 +297,23 @@
         };
 
         let currentLang = localStorage.getItem('gharbaoui_lang') || 'ar';
+        let favorites = JSON.parse(localStorage.getItem('gharbaoui_favorites')) || [];
+        let cart = JSON.parse(localStorage.getItem('gharbaoui_cart')) || [];
+        let showOnlyFavorites = false;
 
-        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_bilingual_v1')) || [
-            { id: 1, nameAr: 'إسبريسو', nameEn: 'Espresso', category: 'Hot Coffee', price: 35, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة قهوة مركزة، غنية وعطرية.', descEn: 'Strong, rich, and aromatic shot of pure coffee.' },
-            { id: 2, nameAr: 'إسبريسو دبل', nameEn: 'Double Espresso', category: 'Hot Coffee', price: 45, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة مضاعفة من الإسبريسو المحمص الفاخر.', descEn: 'Double shot of concentrated premium roasted espresso.' },
-            { id: 3, nameAr: 'كابتشينو', nameEn: 'Cappuccino', category: 'Hot Coffee', price: 55, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب المبخر وطبقة غنية من الرغوة.', descEn: 'Espresso with steamed milk and a deep layer of foam.' },
-            { id: 4, nameAr: 'كافيه لاتيه', nameEn: 'Café Latte', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو ناعم متوازن مع الحليب المبخر.', descEn: 'Smooth espresso balanced with plenty of steamed milk.' },
-            { id: 5, nameAr: 'فلات وايت', nameEn: 'Flat White', category: 'Hot Coffee', price: 60, image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=500&q=80', descAr: 'ريستريتو مغطى برغوة الحليب المخملية الناعمة.', descEn: 'Ristretto shots topped with velvety microfoam.' },
-            { id: 6, nameAr: 'قهوة تركي', nameEn: 'Turkish Coffee', category: 'Hot Coffee', price: 30, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'قهوة تقليدية مطحونة بدقة ومحضرة في الركوة.', descEn: 'Traditional finely ground coffee brewed in a cezve.' },
-            { id: 7, nameAr: 'سبانش لاتيه', nameEn: 'Spanish Latte', category: 'Specialty Coffee', price: 75, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب والحليب المكثف المحلى.', descEn: 'Espresso with textured milk and sweet condensed milk.' },
-            { id: 8, nameAr: 'في 60 قطرات', nameEn: 'V60 Pour Over', category: 'Specialty Coffee', price: 80, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', descAr: 'قهوة فلتر مختصة أحادية المصدر محضرة يدوياً.', descEn: 'Single-origin craft filter coffee brewed manually.' },
-            { id: 9, nameAr: 'إسبريسو مثلج أمريكانو', nameEn: 'Iced Americano', category: 'Iced Coffee', price: 50, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مسكوب فوق الماء المثلج والثلج.', descEn: 'Espresso poured over chilled water and ice.' },
-            { id: 10, nameAr: 'سبانش لاتيه مثلج', nameEn: 'Iced Spanish Latte', category: 'Iced Coffee', price: 75, image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو بارد، حليب طازج وحليب مكثف حلو.', descEn: 'Chilled espresso, fresh milk, and sweet condensed milk.' },
-            { id: 11, nameAr: 'موكا فرابتيه', nameEn: 'Mocha Frappe', category: 'Iced Frappe', price: 75, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', descAr: 'ثلج مخفوق، إسبريسو، شوكولاتة وحليب مع كريمة.', descEn: 'Blended ice, espresso, chocolate, and milk with whipped cream.' },
-            { id: 12, nameAr: 'ميلك شيك أوريو', nameEn: 'Oreo Milkshake', category: 'Milkshake', price: 70, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', descAr: 'آيس كريم فانيليا غني مع قطع بسكويت أوريو.', descEn: 'Rich vanilla ice cream blended with crushed Oreo cookies.' },
-            { id: 13, nameAr: 'سموذي مانجو', nameEn: 'Mango Smoothie', category: 'Smoothie', price: 65, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=500&q=80', descAr: 'مانجو استوائي طازج مخفوق ومنعش.', descEn: 'Refreshing blended fresh tropical mango fruit.' },
-            { id: 14, nameAr: 'موهيتو نعناع كلاسيك', nameEn: 'Classic Mint Mojito', category: 'Mojito', price: 55, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', descAr: 'مشروب غازي منعش مع النعناع الطازج والليمون.', descEn: 'Refreshing soda with fresh mint, lime, and mojito syrup.' },
-            { id: 15, nameAr: 'كوكا كولا', nameEn: 'Coca-Cola', category: 'Soft Drink', price: 30, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=500&q=80', descAr: 'مشروب غازي بارد ومنعش.', descEn: 'Chilled classic refreshing soda.' },
-            { id: 16, nameAr: 'عصير برتقال طازج', nameEn: 'Fresh Orange Juice', category: 'Fresh Juice', price: 50, image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=500&q=80', descAr: 'برتقال طازج معصور 100% طبيعي.', descEn: 'Squeezed 100% natural fresh oranges.' },
-            { id: 17, nameAr: 'كيك فدج بالشوكولاتة', nameEn: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 65, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', descAr: 'قطعة كيك شوكولاتة غنية متعددة الطبقات.', descEn: 'Decadent multi-layered chocolate cake slice.' },
-            { id: 18, nameAr: 'ساندويتش تركي مدخن', nameEn: 'Smoked Turkey Sandwich', category: 'Cold Sandwich', price: 85, image: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=500&q=80', descAr: 'تركي مدخن شرائح مع الجبن والخس في خبز طازج.', descEn: 'Sliced smoked turkey with cheese and lettuce in fresh bread.' },
-            { id: 19, nameAr: 'باستا دجاج مشوي', nameEn: 'Grilled Chicken Pasta', category: 'Main Dish', price: 120, image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=500&q=80', descAr: 'مكرونة بيني بالصوص الأبيض الكريمي ودجاج مشوي.', descEn: 'Penne pasta with creamy white sauce and tender grilled chicken.' },
-            { id: 20, nameAr: 'سلطة سيزر', nameEn: 'Caesar Salad', category: 'Salad', price: 75, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', descAr: 'خس روماني مقرمش، كروتون، جبن بارميزان وصوص سيزر.', descEn: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.' },
-            { id: 21, nameAr: 'كرواسون زبدة', nameEn: 'Butter Croissant', category: 'Bakery', price: 40, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=500&q=80', descAr: 'معجنات فرنسية مخبوزة طازجة وهشة بالزبدة.', descEn: 'Flaky, buttery, freshly baked French pastry.' },
-            { id: 22, nameAr: 'طبق فطور كلاسيكي', nameEn: 'Classic Breakfast Platter', category: 'Breakfast', price: 95, image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=500&q=80', descAr: 'بيض، توست، جبن وسلطة جانبية طازجة.', descEn: 'Eggs, toast, cheese, and fresh side salad.' }
+        let menuItems = JSON.parse(localStorage.getItem('gharbaoui_menu_bilingual_v6')) || [
+            { id: 1, nameAr: 'إسبريسو', nameEn: 'Espresso', category: 'Hot Coffee', price: 65, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة قهوة مركزة، غنية وعطرية.', descEn: 'Strong, rich, and aromatic shot of pure coffee.', inStock: true },
+            { id: 2, nameAr: 'إسبريسو دبل', nameEn: 'Double Espresso', category: 'Hot Coffee', price: 80, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80', descAr: 'جرعة مضاعفة من الإسبريسو المحمص الفاخر.', descEn: 'Double shot of concentrated premium roasted espresso.', inStock: true },
+            { id: 3, nameAr: 'كابتشينو', nameEn: 'Cappuccino', category: 'Hot Coffee', price: 95, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب المبخر وطبقة غنية من الرغوة.', descEn: 'Espresso with steamed milk and a deep layer of foam.', inStock: true },
+            { id: 4, nameAr: 'كافيه لاتيه', nameEn: 'Café Latte', category: 'Hot Coffee', price: 100, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو ناعم متوازن مع الحليب المبخر.', descEn: 'Smooth espresso balanced with plenty of steamed milk.', inStock: true },
+            { id: 5, nameAr: 'سبانش لاتيه', nameEn: 'Spanish Latte', category: 'Specialty Coffee', price: 125, image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مع الحليب والحليب المكثف المحلى.', descEn: 'Espresso with textured milk and sweet condensed milk.', inStock: true },
+            { id: 6, nameAr: 'في 60 قطرات', nameEn: 'V60 Pour Over', category: 'Specialty Coffee', price: 135, image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=500&q=80', descAr: 'قهوة فلتر مختصة أحادية المصدر محضرة يدوياً.', descEn: 'Single-origin craft filter coffee brewed manually.', inStock: true },
+            { id: 7, nameAr: 'إسبريسو مثلج أمريكانو', nameEn: 'Iced Americano', category: 'Iced Coffee', price: 85, image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=500&q=80', descAr: 'إسبريسو مسكوب فوق الماء المثلج والثلج.', descEn: 'Espresso poured over chilled water and ice.', inStock: true },
+            { id: 8, nameAr: 'موكا فرابتيه', nameEn: 'Mocha Frappe', category: 'Iced Frappe', price: 120, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=500&q=80', descAr: 'ثلج مخفوق، إسبريسو، شوكولاتة والحليب مع كريمة.', descEn: 'Blended ice, espresso, chocolate, and milk with whipped cream.', inStock: true },
+            { id: 9, nameAr: 'ميلك شيك أوريو', nameEn: 'Oreo Milkshake', category: 'Milkshake', price: 110, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=500&q=80', descAr: 'آيس كريم فانيليا غني مع قطع بسكويت أوريو.', descEn: 'Rich vanilla ice cream blended with crushed Oreo cookies.', inStock: true },
+            { id: 10, nameAr: 'موهيتو نعناع كلاسيك', nameEn: 'Classic Mint Mojito', category: 'Mojito', price: 90, image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80', descAr: 'مشروب غازي منعش مع النعناع الطازج والليمون.', descEn: 'Refreshing soda with fresh mint, lime, and mojito syrup.', inStock: true },
+            { id: 11, nameAr: 'كيك فدج بالشوكولاتة', nameEn: 'Chocolate Fudge Cake', category: 'Cookie & Cake', price: 110, image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80', descAr: 'قطعة كيك شوكولاتة غنية متعددة الطبقات.', descEn: 'Decadent multi-layered chocolate cake slice.', inStock: true },
+            { id: 12, nameAr: 'سلطة سيزر', nameEn: 'Caesar Salad', category: 'Salad', price: 130, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=500&q=80', descAr: 'خس روماني مقرمش، كروتون، جبن بارميزان وصوص سيزر.', descEn: 'Crisp romaine lettuce, croutons, parmesan, and Caesar dressing.', inStock: true }
         ];
 
         let activeCategory = 'All';
@@ -289,6 +333,7 @@
                 document.getElementById('customerBadge').classList.remove('hidden');
             }
             applyLanguageUI();
+            updateCartBadge();
             renderCustomerMenu();
         };
 
@@ -325,6 +370,14 @@
                 document.getElementById('addBtnText').innerText = 'Add Item ➕';
                 searchInput.placeholder = 'Search menu items...';
                 document.getElementById('modalPriceLabel').innerText = 'Price:';
+                document.getElementById('modalAddText').innerText = 'Add to My Order';
+                document.getElementById('cartBtnTitle').innerText = 'My Order';
+                document.getElementById('cartBtnSub').innerText = 'Show to Waiter';
+                document.getElementById('favFilterText').innerText = 'Favorites';
+                document.getElementById('cartModalTitle').innerText = '📋 My Current Order (Show to Waiter)';
+                document.getElementById('cartModalSub').innerText = 'Select items and show them to your table server';
+                document.getElementById('cartTotalLabel').innerText = 'Total Amount:';
+                document.getElementById('clearCartBtn').innerText = 'Clear Order & Restart 🗑️';
                 document.getElementById('footerText').innerText = 'Al-Gharbawy © 2026 ☕ All Rights Reserved';
             } else {
                 htmlRoot.setAttribute('lang', 'ar');
@@ -347,10 +400,148 @@
                 document.getElementById('addBtnText').innerText = 'إضافة العنصر ➕';
                 searchInput.placeholder = 'ابحث في القائمة...';
                 document.getElementById('modalPriceLabel').innerText = 'السعر:';
+                document.getElementById('modalAddText').innerText = 'إضافة لطلبي';
+                document.getElementById('cartBtnTitle').innerText = 'طلباتي الحالية';
+                document.getElementById('cartBtnSub').innerText = 'اعرضها على الجرسون';
+                document.getElementById('favFilterText').innerText = 'المفضلة';
+                document.getElementById('cartModalTitle').innerText = '📋 طلباتي الحالية (أرها للجرسون)';
+                document.getElementById('cartModalSub').innerText = 'قم باختيار ما ترغب به واديه لمسؤول الطاولة';
+                document.getElementById('cartTotalLabel').innerText = 'إجمالي الحساب:';
+                document.getElementById('clearCartBtn').innerText = 'مسح الطلبات وإعادة الاختيار 🗑️';
                 document.getElementById('footerText').innerText = 'الغرباوي © 2026 ☕ جميع الحقوق محفوظة';
             }
         }
 
+        // Toggle Stock Status (Admin Feature)
+        function toggleStock(id, event) {
+            if (event) event.stopPropagation();
+            const item = menuItems.find(i => i.id === id);
+            if (item) {
+                item.inStock = item.inStock === undefined ? false : !item.inStock;
+                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
+                renderCustomerMenu();
+            }
+        }
+
+        // Favorites Management
+        function toggleFavorite(id, event) {
+            if (event) event.stopPropagation();
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('gharbaoui_favorites', JSON.stringify(favorites));
+            renderCustomerMenu();
+        }
+
+        function toggleFavoritesFilter() {
+            showOnlyFavorites = !showOnlyFavorites;
+            const btn = document.getElementById('favFilterBtn');
+            if (showOnlyFavorites) {
+                btn.className = 'px-4 py-2 bg-amber-50 border border-amber-300 text-amber-900 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm whitespace-nowrap';
+            } else {
+                btn.className = 'px-4 py-2 bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm whitespace-nowrap';
+            }
+            renderCustomerMenu();
+        }
+
+        // Cart Management (Direct add without OK popup)
+        function addToCart(id, event) {
+            if (event) event.stopPropagation();
+            const item = menuItems.find(i => i.id === id);
+            if (!item || item.inStock === false) return;
+
+            const existing = cart.find(c => c.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...item, quantity: 1 });
+            }
+            saveCart();
+        }
+
+        function updateCartQuantity(id, change) {
+            const item = cart.find(c => c.id === id);
+            if (!item) return;
+            item.quantity += change;
+            if (item.quantity <= 0) {
+                cart = cart.filter(c => c.id !== id);
+            }
+            saveCart();
+            renderCartModalItems();
+        }
+
+        function saveCart() {
+            localStorage.setItem('gharbaoui_cart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartCountBadge');
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalCount > 0) {
+                badge.innerText = totalCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function openCartModal() {
+            renderCartModalItems();
+            document.getElementById('cartModal').classList.remove('hidden');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        function clearCart() {
+            if (confirm(currentLang === 'en' ? 'Clear all items from order?' : 'هل تريد مسح الطلبات الحالية وإعادة الاختيار؟')) {
+                cart = [];
+                saveCart();
+                renderCartModalItems();
+            }
+        }
+
+        function renderCartModalItems() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalPriceEl = document.getElementById('cartTotalPrice');
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 text-stone-400 text-xs">${currentLang === 'en' ? 'No items selected yet. Tap the plus button on any item!' : 'لم تقم باختيار أي أصناف بعد. اضغط على زر الإضافة بجوار المشروب!'}</div>`;
+                totalPriceEl.innerText = '0 ' + (currentLang === 'en' ? 'EGP' : 'جنيه');
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map(item => {
+                const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                return `
+                    <div class="flex items-center justify-between py-3">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover">
+                            <div>
+                                <h4 class="text-xs font-bold text-stone-900">${itemName}</h4>
+                                <span class="text-[10px] text-stone-400">${item.price} ${currentLang === 'en' ? 'EGP' : 'جنيه'}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateCartQuantity(${item.id}, -1)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">-</button>
+                            <span class="text-xs font-black w-5 text-center">${item.quantity}</span>
+                            <button onclick="updateCartQuantity(${item.id}, 1)" class="w-7 h-7 bg-stone-100 hover:bg-stone-200 rounded-lg text-xs font-bold">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalPriceEl.innerText = total + ' ' + (currentLang === 'en' ? 'EGP' : 'جنيه');
+        }
+
+        // Admin item management
         function addNewItem(e) {
             e.preventDefault();
             const fileInput = document.getElementById('newImageFile');
@@ -378,10 +569,11 @@
                 price: parseFloat(document.getElementById('newPrice').value),
                 image: imgSrc,
                 descAr: document.getElementById('newDescAr').value || 'طازج ومعد بعناية.',
-                descEn: document.getElementById('newDescEn').value || 'Freshly prepared.'
+                descEn: document.getElementById('newDescEn').value || 'Freshly prepared.',
+                inStock: true
             };
             menuItems.push(newItem);
-            localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
+            localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
             document.getElementById('addItemForm').reset();
             renderCustomerMenu();
             alert(currentLang === 'en' ? 'Item added successfully!' : 'تم إضافة العنصر بنجاح!');
@@ -391,7 +583,7 @@
             event.stopPropagation();
             if (confirm(currentLang === 'en' ? 'Are you sure you want to delete this item?' : 'هل أنت متأكد من حذف هذا العنصر؟')) {
                 menuItems = menuItems.filter(item => item.id !== id);
-                localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
                 renderCustomerMenu();
             }
         }
@@ -442,6 +634,7 @@
         function saveUpdatedItemData(id, imgSrc) {
             const index = menuItems.findIndex(i => i.id === id);
             if (index !== -1) {
+                const currentStock = menuItems[index].inStock !== undefined ? menuItems[index].inStock : true;
                 menuItems[index] = {
                     id: id,
                     nameAr: document.getElementById('editNameAr').value,
@@ -450,22 +643,47 @@
                     price: parseFloat(document.getElementById('editPrice').value),
                     image: imgSrc,
                     descAr: document.getElementById('editDescAr').value,
-                    descEn: document.getElementById('editDescEn').value
+                    descEn: document.getElementById('editDescEn').value,
+                    inStock: currentStock
                 };
 
-                localStorage.setItem('gharbaoui_menu_bilingual_v1', JSON.stringify(menuItems));
+                localStorage.setItem('gharbaoui_menu_bilingual_v6', JSON.stringify(menuItems));
                 closeEditModal();
                 renderCustomerMenu();
                 alert(currentLang === 'en' ? 'Item updated successfully!' : 'تم تحديث العنصر بنجاح!');
             }
         }
 
-        function openItemDetails(name, categoryReadable, price, image, desc) {
-            document.getElementById('modalName').innerText = name;
-            document.getElementById('modalCategory').innerText = categoryReadable;
-            document.getElementById('modalPrice').innerText = price + (currentLang === 'en' ? ' EGP' : ' جنيه');
-            document.getElementById('modalImage').src = image;
-            document.getElementById('modalDesc').innerText = desc;
+        function openItemDetails(id) {
+            const item = menuItems.find(i => i.id === id);
+            if (!item) return;
+
+            const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
+            const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
+            const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
+
+            document.getElementById('modalName').innerText = itemName;
+            document.getElementById('modalCategory').innerText = catReadable;
+            document.getElementById('modalPrice').innerText = item.price + (currentLang === 'en' ? ' EGP' : ' جنيه');
+            document.getElementById('modalImage').src = item.image;
+            document.getElementById('modalDesc').innerText = itemDesc;
+            
+            const favBtn = document.getElementById('modalFavBtn');
+            favBtn.innerText = favorites.includes(item.id) ? '❤️' : '🤍';
+            favBtn.setAttribute('onclick', `toggleFavorite(${item.id}); openItemDetails(${item.id});`);
+
+            const addBtn = document.getElementById('modalAddToCartBtn');
+            if (item.inStock === false) {
+                addBtn.disabled = true;
+                addBtn.className = 'bg-stone-300 text-stone-500 px-4 py-2.5 rounded-xl text-xs font-bold cursor-not-allowed flex items-center gap-1.5';
+                document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Out of Stock' : 'غير متوفر حالياً';
+            } else {
+                addBtn.disabled = false;
+                addBtn.className = 'bg-amber-900 hover:bg-amber-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm';
+                document.getElementById('modalAddText').innerText = currentLang === 'en' ? 'Add to My Order' : 'إضافة لطلبي';
+                addBtn.setAttribute('onclick', `addToCart(${item.id}); closeModal();`);
+            }
+
             document.getElementById('itemModal').classList.remove('hidden');
         }
 
@@ -479,7 +697,7 @@
             tabsContainer.innerHTML = categoriesList.map(cat => {
                 const catLabel = categoryNames[cat] ? categoryNames[cat][currentLang] : cat;
                 return `
-                    <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-stone-900 text-white shadow-sm' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
+                    <button onclick="filterCategory('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${activeCategory === cat && !showOnlyFavorites ? 'bg-stone-900 text-white shadow-sm' : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'}">
                         ${catLabel}
                     </button>
                 `;
@@ -489,6 +707,8 @@
         }
 
         function filterCategory(cat) {
+            showOnlyFavorites = false;
+            document.getElementById('favFilterBtn').className = 'px-4 py-2 bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 rounded-2xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm whitespace-nowrap';
             activeCategory = cat;
             renderCustomerMenu();
         }
@@ -498,7 +718,7 @@
             const gridContainer = document.getElementById('customerMenuGrid');
 
             let filtered = menuItems.filter(item => {
-                const matchesCategory = (activeCategory === 'All' || item.category === activeCategory);
+                const matchesCategory = (showOnlyFavorites ? favorites.includes(item.id) : (activeCategory === 'All' || item.category === activeCategory));
                 const nameMatch = item.nameAr.toLowerCase().includes(searchVal) || item.nameEn.toLowerCase().includes(searchVal);
                 const descMatch = (item.descAr && item.descAr.toLowerCase().includes(searchVal)) || (item.descEn && item.descEn.toLowerCase().includes(searchVal));
                 return matchesCategory && (nameMatch || descMatch);
@@ -513,29 +733,46 @@
                 const itemName = currentLang === 'en' ? item.nameEn : item.nameAr;
                 const itemDesc = currentLang === 'en' ? item.descEn : item.descAr;
                 const catReadable = categoryNames[item.category] ? categoryNames[item.category][currentLang] : item.category;
-                
-                const safeName = itemName.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                const safeDesc = (itemDesc || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-                const safeCatReadable = catReadable.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const isFav = favorites.includes(item.id);
+                const inStock = item.inStock !== false;
                 
                 let adminActions = '';
                 if (isAdminMode) {
+                    const stockBtnText = inStock ? '🟢 متاح' : '🔴 نفد';
+                    const stockBtnClass = inStock ? 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700' : 'bg-rose-50 hover:bg-rose-100 text-rose-700';
                     adminActions = `
-                        <div class="absolute top-2 end-2 flex gap-1 bg-white/90 backdrop-blur-sm p-1 rounded-xl shadow-sm border border-stone-200 opacity-95 sm:opacity-0 group-hover:opacity-100 transition">
+                        <div class="absolute top-2 end-2 flex gap-1 bg-white/90 backdrop-blur-sm p-1 rounded-xl shadow-sm border border-stone-200 opacity-95 sm:opacity-0 group-hover:opacity-100 transition z-10">
+                            <button onclick="toggleStock(${item.id}, event)" class="px-2 py-1 rounded-lg text-[10px] font-bold ${stockBtnClass}" title="Toggle Stock">${stockBtnText}</button>
                             <button onclick="openEditModal(${item.id}, event)" class="w-6 h-6 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg flex items-center justify-center text-[10px] font-bold" title="Edit">✏️</button>
                             <button onclick="deleteItem(${item.id}, event)" class="w-6 h-6 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-[10px] font-bold" title="Delete">🗑️</button>
                         </div>
                     `;
                 }
 
+                const cardOpacity = inStock ? '' : 'opacity-60 bg-stone-50/80';
+                const stockBadge = inStock ? '' : `<span class="absolute top-2 start-2 bg-rose-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-lg shadow-sm">${currentLang === 'en' ? 'Out of Stock' : 'غير متوفر'}</span>`;
+
+                const actionButton = inStock ? 
+                    `<button onclick="addToCart(${item.id}, event)" class="px-3 py-1 bg-amber-50 hover:bg-amber-900 hover:text-white text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                        <span>➕</span> <span>${currentLang === 'en' ? 'Add' : 'إضافة'}</span>
+                    </button>` :
+                    `<span class="text-[10px] font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg">${currentLang === 'en' ? 'Unavailable' : 'نفد المخزون'}</span>`;
+
                 return `
-                <div onclick="openItemDetails('${safeName}', '${safeCatReadable}', ${item.price}, '${item.image}', '${safeDesc}')" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition">
+                <div onclick="openItemDetails(${item.id})" class="bg-white rounded-2xl p-3 border border-stone-200/70 shadow-sm flex items-center gap-3.5 relative group hover:border-stone-400 cursor-pointer transition ${cardOpacity}">
+                    ${stockBadge}
                     <img src="${item.image}" class="w-20 h-20 rounded-xl object-cover bg-stone-100 flex-shrink-0">
                     <div class="flex-grow min-w-0">
-                        <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block mb-1">${catReadable}</span>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md inline-block">${catReadable}</span>
+                            <button onclick="toggleFavorite(${item.id}, event)" class="text-sm">${isFav ? '❤️' : '🤍'}</button>
+                        </div>
                         <h3 class="font-black text-xs sm:text-sm text-stone-900 truncate">${itemName}</h3>
                         <p class="text-[11px] text-stone-400 truncate mt-0.5">${itemDesc}</p>
-                        <div class="mt-2 font-black text-xs sm:text-sm text-stone-900">${item.price} ${currentLang === 'en' ? 'EGP' : 'جنيه'}</div>
+                        <div class="mt-2 flex justify-between items-center">
+                            <span class="font-black text-xs sm:text-sm text-stone-900">${item.price} ${currentLang === 'en' ? 'EGP' : 'جنيه'}</span>
+                            ${actionButton}
+                        </div>
                     </div>
                     ${adminActions}
                 </div>
